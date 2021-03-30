@@ -21,10 +21,10 @@ public class FxmlTest extends Application {
 //        System.out.println(getClass().getResource("TTT1.fxml").getClass());
         Parent root = (Parent)loader.load();
         Controller controller =  loader.getController();
-        controller.setLabelText("Injected Text");
+        controller.setItems();
 
         stage.setTitle("Hello World");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setScene(new Scene(root));
         stage.show();
     }
 }
