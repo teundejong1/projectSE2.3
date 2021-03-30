@@ -26,6 +26,14 @@ public class Controller {
 
 
     public void playTicTacToe(ActionEvent actionEvent) {
+        //TODO
+    }
 
+    public void TTTInfo(ActionEvent actionEvent) {
+        //TODO
+    }
+
+    public void OthelloInfo(ActionEvent actionEvent) {
+        //TODO
     }
 }
