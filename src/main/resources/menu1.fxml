@@ -18,8 +18,8 @@
             <Text layoutX="110.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TicTacToe" />
             <Rectangle accessibleText="[PH] - Othelloplaatje" arcHeight="5.0" arcWidth="5.0" fill="#68ff1f" height="95.0" layoutX="346.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="133.0" />
             <Text layoutX="393.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Othello" />
-            <Button layoutX="86.0" layoutY="206.0" mnemonicParsing="false" text="[PH] - TTTinfo" />
-            <Button layoutX="353.0" layoutY="206.0" mnemonicParsing="false" text="[PH] - Othellonfo" />
+            <Button onAction="#TTTInfo" layoutX="86.0" layoutY="206.0" mnemonicParsing="false" text="[PH] - TTTinfo" />
+            <Button onAction="#OthelloInfo" layoutX="353.0" layoutY="206.0" mnemonicParsing="false" text="[PH] - OthelloInfo" />
             <ComboBox layoutX="61.0" layoutY="150.0" prefWidth="150.0" promptText="[PH] - spelmodes" />
             <ComboBox layoutX="338.0" layoutY="150.0" prefWidth="150.0" promptText="[PH] - spelmodes" />
          </children></AnchorPane>
