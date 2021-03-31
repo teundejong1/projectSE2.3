@@ -8,24 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
 public class FxmlConnector {
+    @FXML
     public ComboBox TTTbox;
     public ComboBox othellobox;
     public AnchorPane parent;
-    public Button butt00;
-    public Button butt01;
-    public Button butt02;
-    public Button butt10;
-    public Button butt11;
-    public Button butt12;
-    public Button butt20;
-    public Button butt21;
-    public Button butt22;
-    @FXML
-    private Label label;
+    public Button butt00, butt01, butt02, butt10, butt11, butt12, butt20, butt21, butt22;
+    public GridPane tttGrid;
     private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler");
 
     public void setItems() {
@@ -56,7 +49,7 @@ public class FxmlConnector {
 
     public void setGrid(ActionEvent event) {
         if(event.getSource() == butt00) {
-            butt00.setText("test");
+            butt00.setText("O");
         } else if(event.getSource() == butt01) {
 
         } else if(event.getSource() == butt02) {

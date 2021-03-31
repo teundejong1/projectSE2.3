@@ -6,10 +6,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <Pane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.FxmlConnector">
     <children>
-      <GridPane gridLinesVisible="true" layoutY="50.0" prefHeight="310.0" prefWidth="490.0">
+      <GridPane gridLinesVisible="true" layoutY="54.0" prefHeight="310.0" prefWidth="490.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -21,15 +22,42 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="butt00" mnemonicParsing="false" prefHeight="113.0" prefWidth="181.0" onAction="#setGrid" />
-            <Button fx:id="butt01" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.rowIndex="1" onAction="#setGrid" />
-            <Button fx:id="butt02" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.rowIndex="2" onAction="#setGrid" />
-            <Button fx:id="butt10" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="1" onAction="#setGrid" />
-            <Button fx:id="butt11" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#setGrid" />
-            <Button fx:id="butt12" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#setGrid" />
-            <Button fx:id="butt20" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="2" onAction="#setGrid" />
-            <Button fx:id="butt21" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="2" GridPane.rowIndex="1" onAction="#setGrid" />
-            <Button fx:id="butt22" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="2" GridPane.rowIndex="2" onAction="#setGrid" />
+            <Button fx:id="butt00" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0">
+               <font>
+                  <Font name="System Bold" size="54.0" />
+               </font></Button>
+            <Button fx:id="butt01" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.columnIndex="1">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
+            <Button fx:id="butt02" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.columnIndex="2">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
+            <Button fx:id="butt10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.rowIndex="1">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
+            <Button fx:id="butt11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
+            <Button fx:id="butt12" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
+            <Button fx:id="butt20" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.rowIndex="2">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
+            <Button fx:id="butt21" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
+            <Button fx:id="butt22" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setGrid" prefHeight="105.0" prefWidth="164.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <font>
+                    <Font name="System Bold" size="54.0" />
+                </font></Button>
          </children>
       </GridPane>
       <Button layoutX="179.0" layoutY="2.0" mnemonicParsing="false" onAction="#opgeefActie" text="Geef op" />
