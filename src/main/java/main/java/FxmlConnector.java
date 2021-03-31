@@ -18,12 +18,11 @@ public class FxmlConnector {
     public ComboBox othellobox;
     public AnchorPane parent;
     public Button butt00, butt01, butt02, butt10, butt11, butt12, butt20, butt21, butt22;
-    public GridPane tttGrid;
     private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler");
 
-    public void setItems() {
+    /* public void setItems() {
         TTTbox.getItems().add(opties.get(0));
-    }
+    }*/
 
 
     public void opgeefActie(ActionEvent actionEvent) {
@@ -47,9 +46,15 @@ public class FxmlConnector {
         //TODO
     }
 
+    /*
+    * Do moves --> actie om een zet uit te voeren
+    */
     public void setGrid(ActionEvent event) {
         if(event.getSource() == butt00) {
             butt00.setText("O");
+            // if(GameManager.doMove(0, 1)){
+            //      butt00.setText(currentPlayer.getPlayerMark())
+            // }
         } else if(event.getSource() == butt01) {
 
         } else if(event.getSource() == butt02) {
