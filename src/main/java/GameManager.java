@@ -5,6 +5,11 @@ public abstract class GameManager implements Board{
     private Player currentPlayer;
     private char[][] board;
 
+    /**
+     *
+     * @param size
+     * @return board
+     */
     @Override
     public char[][] createBoard(int size) {
         for (int i = 0; i < size; i++) {
@@ -15,6 +20,13 @@ public abstract class GameManager implements Board{
         return board;
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return true if turn is valid and succes, false otherwise
+     *
+     */
     public boolean doMove(int row, int col) {
         if ((row >= 0) && (row < 3)) {
             if ((col >= 0) && (col < 3)) {
@@ -28,6 +40,10 @@ public abstract class GameManager implements Board{
         return false;
     }
 
+    /**
+     * method to print board
+     * @param board
+     */
     public void printBoard(char[][] board) {
         System.out.println("++++++++++++++++++++");
         for (int i = 0; i < 3; i++) {
@@ -40,6 +56,11 @@ public abstract class GameManager implements Board{
         }
     }
 
+    /**
+     * Method to check if board is full.
+     * @param board
+     * @return
+     */
     public boolean isBoardFull(char[][] board) {
         boolean isFull = true;
 

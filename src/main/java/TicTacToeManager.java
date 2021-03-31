@@ -5,6 +5,11 @@ public class TicTacToeManager extends GameManager {
     private Player player1;
     private Player player2;
 
+    /**
+     * Constructor for TicTacToe Manager
+     * @param player1
+     * @param player2
+     */
     public TicTacToeManager(Player player1, Player player2) {
 
         this.board = createBoard(3);
@@ -16,19 +21,36 @@ public class TicTacToeManager extends GameManager {
         System.out.println("Naam van player 2 : " + player2.getPlayerName());
     }
 
+    /**
+     * getter for board
+     * @return board
+     */
     public char[][] getBoard(){
         return this.board;
     }
 
+    /**
+     * getter for current player mark
+     * @return
+     */
         public char getCurrentPlayerMark()
     {
-        return currentPlayerMark;
+        return this.currentPlayerMark;
     }
 
+    /**
+     * getter for current player
+     * @return currentplayer
+     */
     public Player getCurrentPlayer(){
         return this.currentPlayer;
     }
 
+    /**
+     * Creates board
+     * @param size
+     * @return board
+     */
     @Override
     public char[][] createBoard(int size) {
         board = new char[size][size];
@@ -40,6 +62,12 @@ public class TicTacToeManager extends GameManager {
         return board;
     }
 
+    /**
+     * Places player mark on the board
+     * @param row
+     * @param col
+     * @return true if turn was correct
+     */
     @Override
     public boolean doMove(int row, int col) {
         if ((row >= 0) && (row < 3)) {
@@ -55,16 +83,28 @@ public class TicTacToeManager extends GameManager {
     }
 
 
+    /**
+     * Method to print board
+     * @param board
+     */
     @Override
     public void printBoard(char[][] board) {
         super.printBoard(board);
     }
 
+    /**
+     * Method to start game with 2 players
+     * @param player1
+     * @param player2
+     */
     @Override
     public void start(Player player1, Player player2) {
         super.start(player1, player2);
     }
 
+    /**
+     * Change current player
+     */
     @Override
     public void changePlayer() {
         if (currentPlayer.equals(player1)) {
@@ -75,6 +115,10 @@ public class TicTacToeManager extends GameManager {
         }
     }
 
+    /**
+     * Method to check if someone has won the game
+     * @return
+     */
     @Override
     public boolean checkForWin() {
         return (checkHorizonForWin() || checkVerticalForWin() || checkDiagonalForWin());
