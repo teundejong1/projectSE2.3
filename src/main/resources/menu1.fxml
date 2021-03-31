@@ -9,8 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TitledPane fx:controller="main.java.Controller" alignment="CENTER" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="[PH] - naam" textAlignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.2">
-    <Label fx:id="label" />
+<TitledPane fx:controller="main.java.FxmlConnector" alignment="CENTER" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="[PH] - naam" textAlignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.2">
     <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
          <children>
@@ -20,11 +19,11 @@
             <Text layoutX="393.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Othello" />
             <Button onAction="#TTTInfo" layoutX="86.0" layoutY="206.0" mnemonicParsing="false" text="[PH] - TTTinfo" />
             <Button onAction="#OthelloInfo" layoutX="353.0" layoutY="206.0" mnemonicParsing="false" text="[PH] - OthelloInfo" />
-            <ComboBox layoutX="61.0" layoutY="150.0" prefWidth="150.0" promptText="[PH] - spelmodes" />
-            <ComboBox layoutX="338.0" layoutY="150.0" prefWidth="150.0" promptText="[PH] - spelmodes" />
+            <ComboBox fx:id="TTTbox" layoutX="61.0" layoutY="150.0" prefWidth="150.0" promptText="[PH] - spelmodes" />
+            <ComboBox fx:id="othellobox" layoutX="338.0" layoutY="150.0" prefWidth="150.0" promptText="[PH] - spelmodes" />
          </children></AnchorPane>
   </content>
    <font>
-      <Font name="Old English Text MT" size="21.0" />
+      <Font name="Times New Roman" size="21.0" />
    </font>
 </TitledPane>

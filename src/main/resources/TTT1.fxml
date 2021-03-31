@@ -10,8 +10,7 @@
 
 
 <?import javafx.scene.control.Label?>
-<Pane fx:controller="main.java.Controller" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
-    <Label fx:id="label" />
+<Pane fx:controller="main.java.FxmlConnector" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <GridPane gridLinesVisible="true" layoutY="50.0" prefHeight="310.0" prefWidth="490.0">
         <columnConstraints>
