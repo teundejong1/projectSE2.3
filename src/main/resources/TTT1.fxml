@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -8,13 +7,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<?import javafx.scene.control.Label?>
-<Pane fx:controller="main.java.FxmlConnector" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<Pane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.FxmlConnector">
     <children>
       <GridPane gridLinesVisible="true" layoutY="50.0" prefHeight="310.0" prefWidth="490.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -23,8 +20,19 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <Button fx:id="butt00" mnemonicParsing="false" prefHeight="113.0" prefWidth="181.0" onAction="#setGrid" />
+            <Button fx:id="butt01" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.rowIndex="1" onAction="#setGrid" />
+            <Button fx:id="butt02" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.rowIndex="2" onAction="#setGrid" />
+            <Button fx:id="butt10" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="1" onAction="#setGrid" />
+            <Button fx:id="butt11" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#setGrid" />
+            <Button fx:id="butt12" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#setGrid" />
+            <Button fx:id="butt20" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="2" onAction="#setGrid" />
+            <Button fx:id="butt21" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="2" GridPane.rowIndex="1" onAction="#setGrid" />
+            <Button fx:id="butt22" mnemonicParsing="false" prefHeight="125.0" prefWidth="187.0" GridPane.columnIndex="2" GridPane.rowIndex="2" onAction="#setGrid" />
+         </children>
       </GridPane>
-      <Button layoutX="179.0" layoutY="2.0" mnemonicParsing="false" text="Geef op" onAction="#opgeefActie" />
+      <Button layoutX="179.0" layoutY="2.0" mnemonicParsing="false" onAction="#opgeefActie" text="Geef op" />
       <Button layoutX="254.0" layoutY="2.0" mnemonicParsing="false" text="hint" />
       <TextArea layoutY="-4.0" prefHeight="0.0" prefWidth="133.0" text="[PH] - spelernaam" />
       <TextArea layoutX="357.0" layoutY="-4.0" prefHeight="0.0" prefWidth="133.0" text="[PH] - tegenstandernaam" />
