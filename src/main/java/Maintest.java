@@ -13,11 +13,13 @@ public class Maintest {
     public Maintest(Player player1, Player player2) {
         this.ticTacToeManager = new TicTacToeManager(player1, player2);
         this.board = ticTacToeManager.getBoard();
+
     }
 
     public Maintest(Player player, AI AI) {
         this.ticTacToeManager = new TicTacToeManager(player, AI);
         this.board = ticTacToeManager.getBoard();
+
 
     }
 
@@ -32,8 +34,8 @@ public class Maintest {
         Thread thread = new Thread(ding);
         thread.start();
 
-
         Scanner inputScanner = new Scanner(System.in);
+      //  Scanner inputScanner = new Scanner(System.in);
 //        System.out.println("Name player1");
 //        // Naam van player 1 doorgegeven uit GUI
 //        String nameplayer1 = inputScanner.next();
@@ -46,7 +48,7 @@ public class Maintest {
         // Check of tegen AI doorgegeven
         // als wel tegen ai dan andere constructor
         String answerToAI = inputScanner.next();
-        answerToAI = answerToAI.toUpperCase();
+//        answerToAI = answerToAI.toUpperCase();
 //        if (answerToAI.equals("Y")) {
 //            AI ai = new AI('o', nameplayer2);
 //            ticTacToe = new Maintest(player1, ai);
@@ -57,10 +59,11 @@ public class Maintest {
 //        } else {
 //            System.out.println("geef normale waarde draak");
 //        }
-        //Maintest ticTacToe = new Maintest(player1, player2);
+//        Maintest ticTacToe = new Maintest(player1, player2);
 
 
         System.out.println("Tic-Tac-Toe!");
+
         do {
             System.out.println("Current board layout:");
             // current board moet omgezet worden naar scherm in gui.
