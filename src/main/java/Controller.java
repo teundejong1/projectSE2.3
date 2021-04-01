@@ -74,11 +74,15 @@ public class Controller {
 
         } else if(actionEvent.getSource() == TTTvsAI) {
             System.out.println("poep");
-            Player player = new Player('x', "[PH] - hendrik");
-            AI ai = new AI('o', "[PH]-naam");
+            Player player = new Player('x', "[PH] - FRANKENSTEIN");
+            AI ai = new AI('o', "[PH] - AI");
             Maintest.ticTacToe = new Maintest(player, ai);
             System.out.println(Maintest.ticTacToe.ticTacToeManager.getCurrentPlayer().getPlayerName());
-//            Maintest.ticTacToe.ticTacToeManager.start(player, ai);
+            try {
+                Maintest.ticTacToe.ticTacToeManager.start(player, ai);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -100,16 +104,16 @@ public class Controller {
     public void setGrid(ActionEvent event) {
 
         if(event.getSource() == butt00) {
-            butt00.setText("-");
-            char [][] test = Maintest.ticTacToe.ticTacToeManager.getBoard();
+//            butt00.setText("-");
+//            char [][] test = Maintest.ticTacToe.ticTacToeManager.getBoard();
 
 
-                butt00.setText( "" + Maintest.ticTacToe.ticTacToeManager.getCurrentPlayerMark()); //hackerman
-                Maintest.ticTacToe.ticTacToeManager.checkMove(0, 0);
-                Maintest.ticTacToe.ticTacToeManager.placeMove(0, 0);
-                System.out.println("TESTINGSSSSSSSSSSSSSSS");
-                Maintest.ticTacToe.ticTacToeManager.printBoard(Maintest.ticTacToe.ticTacToeManager.getBoard()); //print
-                Maintest.ticTacToe.ticTacToeManager.changePlayer();
+            butt00.setText( "" + Maintest.ticTacToe.ticTacToeManager.getCurrentPlayerMark()); //hackerman
+            Maintest.ticTacToe.ticTacToeManager.checkMove(0, 0);
+            Maintest.ticTacToe.ticTacToeManager.placeMove(0, 0);
+            Maintest.ticTacToe.ticTacToeManager.printBoard(Maintest.ticTacToe.ticTacToeManager.getBoard()); //print
+            Maintest.ticTacToe.ticTacToeManager.changePlayer();
+//            System.out.println("check");
 
             /*if(GameManager.checkMove(0, 1)){
                  TicTacToeManager.makeMove(0,1);

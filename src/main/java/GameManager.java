@@ -73,7 +73,7 @@ public abstract class GameManager implements Board{
     }
 
 
-    public void start(Player player1, Player player2) {
+    public void start(Player player1, Player player2) throws InterruptedException {
     }
 
     public void changePlayer(){
