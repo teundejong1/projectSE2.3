@@ -75,15 +75,33 @@ public class TicTacToeManager extends GameManager {
         if ((row >= 0) && (row < 3)) {
             if ((col >= 0) && (col < 3)) {
                 if (board[row][col] == '-') {
-                    board[row][col] = currentPlayer.getPlayerMark();
                     System.out.println(currentPlayer.getPlayerName());
                     return true;
                 }
             }
         }
+        if(!(currentPlayer instanceof AI)){
+            System.out.println("Hier staat al iets DRAAK!");
+        }
         return false;
     }
 
+    public void placeMove(int row, int col) {
+        board[row][col] = currentPlayer.getPlayerMark();
+    }
+
+    public void placeAIMove() {
+        if (!(isBoardFull(board))){
+            Random random = new Random();
+            int r1 = random.nextInt(3);
+            int r2 = random.nextInt(3);
+            if (checkMove(r1, r2))
+                placeMove(r1, r2);
+            else {
+              placeAIMove();
+            }
+        }
+    }
 
     /**
      * Method to print board
