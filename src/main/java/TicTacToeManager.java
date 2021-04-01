@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class TicTacToeManager extends GameManager {
@@ -73,8 +74,8 @@ public class TicTacToeManager extends GameManager {
      */
     @Override
     public boolean checkMove(int row, int col) {
-        if ((row >= 0) && (row < 3)) {
-            if ((col >= 0) && (col < 3)) {
+        if ((row >= 0) && (row < board.length)) {
+            if ((col >= 0) && (col < board.length)) {
                 if (board[row][col] == '-') {
                     System.out.println(currentPlayer.getPlayerName());
                     return true;
@@ -87,6 +88,7 @@ public class TicTacToeManager extends GameManager {
         return false;
     }
 
+    @Override
     public void placeMove(int row, int col) {
         board[row][col] = currentPlayer.getPlayerMark();
     }
@@ -122,14 +124,62 @@ public class TicTacToeManager extends GameManager {
      * @param player1
      * @param player2
      */
-//    @Override
-//    public void start(Player player1, Player player2) {
-//        System.out.println("NO SHIT SHERLOCK");
-//
-//
-////        super.start(player1, player2);
-//
-//    }
+    @Override
+    public void start(Player player1, Player player2) throws InterruptedException {
+        System.out.println("Tic-Tac-Toe!");
+        Scanner inputScanner = new Scanner(System.in);
+        do {
+            System.out.println("Current board layout:");
+            // current board moet omgezet worden naar scherm in gui.
+            printBoard(board);
+            int row;
+            int col;
+            // deze twee (row en col) moeten coordinaten uit gui worden op mouseclick
+            do {
+                // if player is AI
+                if (getCurrentPlayer() instanceof AI) {
+                    System.out.println("AI TURN");
+                    TimeUnit.SECONDS.sleep(1);
+
+                    placeAIMove();
+                    // hier moet ipv printboard de view in gui geupdate worden
+                    printBoard(board);
+                    changePlayer();
+                }
+                // If player is Player
+
+                System.out.println("Player " + getCurrentPlayer().getPlayerName() + ", enter an empty row and column to place your mark!");
+                row = inputScanner.nextInt() ;
+                if (row > board.length || row < 0) {
+                    System.out.println("Doe een geldige waarde joh, " + getCurrentPlayer().getPlayerName());
+                }
+                col = inputScanner.nextInt() ;
+                if (col > board.length || col < 0) {
+                    System.out.println("Doe een geldige waarde joh, " + getCurrentPlayer().getPlayerName());
+                }
+            }
+            while (!checkMove(row, col));
+            // hier voert 'ie de 2 coordinaten uit de gui uit en plaatst ze
+            placeMove(row, col);
+            changePlayer();
+        }
+        while (!checkForWin() && !isBoardFull(board));
+        if (isBoardFull(board) && !checkForWin()) {
+            System.out.println("The game was a tie!");
+        } else {
+            System.out.println("Current board layout:");
+            // hier weer view.update
+            printBoard(board);
+            if (!(getCurrentPlayer() instanceof AI)) {
+                changePlayer();
+            }
+            System.out.println(Character.toUpperCase(getCurrentPlayerMark()) + " Wins!");
+        }
+    }
+
+
+//        super.start(player1, player2);
+
 
     /**
      * Change current player
@@ -158,15 +208,16 @@ public class TicTacToeManager extends GameManager {
     }
 
     private boolean checkHorizonForWin() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (checkRowCol(board[i][0], board[i][1], board[i][2]) == true) {
                 return true;
             }
         }
         return false;
     }
+
     private boolean checkVerticalForWin() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (checkRowCol(board[0][i], board[1][i], board[2][i]) == true) {
                 return true;
             }
