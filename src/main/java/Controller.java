@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Controller {
     @FXML
@@ -30,19 +31,10 @@ public class Controller {
     public Button butt00, butt01, butt02, butt10, butt11, butt12, butt20, butt21, butt22 ;
     private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler", "speler vs AI");
 
+    FXMLLoader loader;
+    Parent root;
+    Controller controller;
 
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        for(int i = 0; i < 9; i++) {
-//            Button button =  new Button();
-//            button.setOnAction(new EventHandler<ActionEvent>() {
-//                @Override
-//                public void handle(ActionEvent event) {
-//                    System.out.println("You clicked me!");
-//                }
-//            });
-//        }
-//    }
 
 
     public void opgeefActie(ActionEvent actionEvent) {
@@ -53,29 +45,36 @@ public class Controller {
     public void TTT(ActionEvent actionEvent) {
 
         try {
-            // get a handle to the stage
+            // close menu
             Stage menu = (Stage) TTTvsAI.getScene().getWindow();
             // do what you have to do
             menu.close();
 
+            loader = new FXMLLoader(getClass().getResource("/menu1.fxml"));
+            root = loader.load();
+            controller =  loader.getController();
+
+            // open TTT
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TTT1.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("ABC");
+            stage.setTitle("Tic Tac Toe");
             stage.setScene(new Scene(root1));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // Let's Play!
         if(actionEvent.getSource() == TTTvsspeler) {
 
         } else if(actionEvent.getSource() == TTTvsAI) {
-            System.out.println("poep");
+            // maak speler
             Player player = new Player('x', "[PH] - FRANKENSTEIN");
             AI ai = new AI('o', "[PH] - AI");
+            // start a game
             Maintest.ticTacToe = new Maintest(player, ai);
             System.out.println(Maintest.ticTacToe.ticTacToeManager.getCurrentPlayer().getPlayerName());
             try {
@@ -104,9 +103,6 @@ public class Controller {
     public void setGrid(ActionEvent event) {
 
         if(event.getSource() == butt00) {
-//            butt00.setText("-");
-//            char [][] test = Maintest.ticTacToe.ticTacToeManager.getBoard();
-
 
             butt00.setText( "" + Maintest.ticTacToe.ticTacToeManager.getCurrentPlayerMark()); //hackerman
             Maintest.ticTacToe.ticTacToeManager.checkMove(0, 0);

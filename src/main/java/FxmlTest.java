@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FxmlTest extends Application{
+public class FxmlTest extends Application implements Runnable{
 
     FXMLLoader loader;
     int schermchecker = 0;
@@ -19,7 +19,7 @@ public class FxmlTest extends Application{
     public void start(Stage stage) throws Exception{
         //FXMLLoader instance
 
-        loader = new FXMLLoader(getClass().getResource("/buttonTesting.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/menu1.fxml"));
         root = loader.load();
         controller =  loader.getController();
 
@@ -47,19 +47,24 @@ public class FxmlTest extends Application{
 //        stage.setScene(new Scene(root));
 //        stage.show();
     }
-//
-//    @Override
-//    public void run() {
-//        launch();
-//    }
-//
-//    public void showMenu() {
-//        schermchecker = 0;
-//        launch();
-//    }
-//
-//    public void showTTT() {
-//        schermchecker = 1;
-//        launch();
-//    }
+
+    @Override
+    public void run() {
+        launch();
+    }
+
+    @Override
+    public void run() {
+        launch();
+    }
+
+    public void showMenu() {
+        schermchecker = 0;
+        launch();
+    }
+
+    public void showTTT() {
+        schermchecker = 1;
+        launch();
+    }
 }

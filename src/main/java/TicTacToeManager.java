@@ -99,8 +99,8 @@ public class TicTacToeManager extends GameManager {
             int r1 = random.nextInt(3);
             int r2 = random.nextInt(3);
             if (checkMove(r1, r2)) {
-                String string = "button" + r1 + r2;
-                System.out.println(string);
+                // String string = "button" + r1 + r2;
+                // System.out.println(string);
 
                 placeMove(r1, r2);
             }
@@ -229,56 +229,6 @@ public class TicTacToeManager extends GameManager {
         return ((checkRowCol(board[0][0], board[1][1], board[2][2]) == true) || (checkRowCol(board[0][2], board[1][1], board[2][0]) == true));
     }
 
-@Override
-    public void start(Player player, Player ai) throws InterruptedException{
-        System.out.println("Tic-Tac-Toe!");
-        System.out.println("Current board layout:");
-        do {
-
-            // deze twee (row en col) moeten coordinaten uit gui worden op mouseclick
-            // hier wacht op klik
-            // if player is AI
-            if (Maintest.ticTacToe.ticTacToeManager.getCurrentPlayer() instanceof AI) {
-                System.out.println("AI TURN");
-                TimeUnit.SECONDS.sleep(1);
-
-
-                Maintest.ticTacToe.ticTacToeManager.placeAIMove();
-                // hier moet ipv printboard de view in gui geupdate worden
-                Maintest.ticTacToe.ticTacToeManager.printBoard(board);
-                Maintest.ticTacToe.ticTacToeManager.changePlayer();
-            }
-            // If player is Player
-
-            //System.out.println("Player " + Maintest.ticTacToe.ticTacToeManager.getCurrentPlayer().getPlayerName() + ", enter an empty row and column to place your mark!");
-
-//                if (row > 3 || row < 0) {
-//                    System.out.println("Doe een geldige waarde joh, " + ticTacToe.ticTacToeManager.getCurrentPlayer().getPlayerName());
-//                }
-//                col = inputScanner.nextInt() - 1;
-//                if (col > 3 || col < 0) {
-//                    System.out.println("Doe een geldige waarde joh, " + ticTacToe.ticTacToeManager.getCurrentPlayer().getPlayerName());
-//                }
-        }
-//            while (!ticTacToe.ticTacToeManager.checkMove(row, col));
-//            // hier voert 'ie de 2 coordinaten uit de gui uit en plaatst ze
-//            //ticTacToe.ticTacToeManager.placeMove(row, col);
-//            //ticTacToe.ticTacToeManager.changePlayer();
-//        }
-        while (!Maintest.ticTacToe.ticTacToeManager.checkForWin() && !Maintest.ticTacToe.ticTacToeManager.isBoardFull(board));
-        if (Maintest.ticTacToe.ticTacToeManager.isBoardFull(board) && !Maintest.ticTacToe.ticTacToeManager.checkForWin()) {
-            System.out.println("The game was a tie!");
-        } else {
-            System.out.println("Current board layout:");
-            // hier weer view.update
-            //ticTacToe.ticTacToeManager.printBoard(ticTacToe.board);
-            if (!(Maintest.ticTacToe.ticTacToeManager.getCurrentPlayer() instanceof AI)) {
-                Maintest.ticTacToe.ticTacToeManager.changePlayer();
-
-            }
-            System.out.println(Character.toUpperCase(Maintest.ticTacToe.ticTacToeManager.getCurrentPlayerMark()) + " Wins!");
-        }
-    }
 }
 
 
