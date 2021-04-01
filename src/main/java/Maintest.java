@@ -36,10 +36,10 @@ public class Maintest {
         Thread ding = new Thread(fxml);
         ding.start();
 
-        //spelers aanmaken
         rotspel();
     }
     public static void rotspel() {
+        //spelers aanmaken
         Scanner inputScanner = new Scanner(System.in);
         System.out.println("Name player1");
         String nameplayer1 = inputScanner.next();

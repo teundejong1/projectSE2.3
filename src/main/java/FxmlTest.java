@@ -13,7 +13,7 @@ public class FxmlTest extends Application implements Runnable{
         //FXMLLoader instance
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TTT1.fxml"));
         Parent root = loader.load();
-        FxmlConnector controller =  loader.getController();
+        Controller view =  loader.getController();
         //controller.setItems();
 
         stage.setTitle("Zarathustra");
