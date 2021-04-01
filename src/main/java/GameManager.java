@@ -27,7 +27,7 @@ public abstract class GameManager implements Board{
      * @return true if turn is valid and succes, false otherwise
      *
      */
-    public boolean doMove(int row, int col) {
+    public boolean checkMove(int row, int col) {
         if ((row >= 0) && (row < 3)) {
             if ((col >= 0) && (col < 3)) {
                 if (board[row][col] == '-') {
@@ -45,14 +45,12 @@ public abstract class GameManager implements Board{
      * @param board
      */
     public void printBoard(char[][] board) {
-        System.out.println("++++++++++++++++++++");
         for (int i = 0; i < 3; i++) {
             System.out.print("| ");
             for (int j = 0; j <board.length; j++) {
                 System.out.print(board[i][j] + " | ");
             }
             System.out.println();
-            System.out.println("++++++++++++++++++++");
         }
     }
 

@@ -4,6 +4,7 @@
  */
 public interface Board {
     public char[][] createBoard(int size);
-    public boolean doMove(int row, int col);
+    public boolean checkMove(int row, int col);
+    public void placeMove(int row, int col);
     public void printBoard(char[][] board);
 }

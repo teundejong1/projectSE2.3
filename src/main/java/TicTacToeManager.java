@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class TicTacToeManager extends GameManager {
     private char[][] board;
     private char currentPlayerMark;
@@ -69,7 +71,7 @@ public class TicTacToeManager extends GameManager {
      * @return true if turn was correct
      */
     @Override
-    public boolean doMove(int row, int col) {
+    public boolean checkMove(int row, int col) {
         if ((row >= 0) && (row < 3)) {
             if ((col >= 0) && (col < 3)) {
                 if (board[row][col] == '-') {
@@ -99,7 +101,11 @@ public class TicTacToeManager extends GameManager {
      */
     @Override
     public void start(Player player1, Player player2) {
-        super.start(player1, player2);
+
+
+
+//        super.start(player1, player2);
+
     }
 
     /**
@@ -148,7 +154,6 @@ public class TicTacToeManager extends GameManager {
     private boolean checkDiagonalForWin() {
         return ((checkRowCol(board[0][0], board[1][1], board[2][2]) == true) || (checkRowCol(board[0][2], board[1][1], board[2][0]) == true));
     }
-
 
 }
 
