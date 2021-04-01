@@ -1,6 +1,8 @@
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,17 +12,18 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class Controller {
     @FXML
-    public ComboBox TTTbox;
-    public ComboBox othellobox;
+    public Button TTTvsspeler, TTTvsAI, Othellovsspeler, OthellovsAI;
     public AnchorPane parent;
     public Button butt00, butt01, butt02, butt10, butt11, butt12, butt20, butt21, butt22;
-    private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler");
+    private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler", "speler vs AI");
+
 
 //    @Override
 //    public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,8 +44,16 @@ public class Controller implements Initializable {
     }
 
 
-    public void openMenu(ActionEvent actionEvent) {
-        parent.getChildren().setAll();
+    public void TTT(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == TTTvsspeler) {
+
+        } else if(actionEvent.getSource() == TTTvsAI) {
+            System.out.println("poep");
+            Player player = new Player('x', "[PH] - hendrik");
+            AI ai = new AI('o', "[PH]-naam");
+            Maintest.ticTacToe = new Maintest(player, ai);
+            Maintest.ticTacToe.ticTacToeManager.start(player, ai);
+        }
     }
 
     public void playTicTacToe(ActionEvent actionEvent) {
