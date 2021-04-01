@@ -82,5 +82,9 @@ public abstract class GameManager implements Board{
     public boolean checkForWin(){
         return false;
     }
+
+    public void placeMove(int row, int col) {
+    }
 }
+
 
