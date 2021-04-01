@@ -57,7 +57,7 @@ public class Controller {
             Stage menu = (Stage) TTTvsAI.getScene().getWindow();
             // do what you have to do
             menu.close();
-            
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TTT1.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
@@ -98,11 +98,23 @@ public class Controller {
     * Do moves --> actie om een zet uit te voeren
     */
     public void setGrid(ActionEvent event) {
+
         if(event.getSource() == butt00) {
-            butt00.setText("O");
-            // if(GameManager.doMove(0, 1)){
-            //      butt00.setText(currentPlayer.getPlayerMark())
-            // }
+            butt00.setText("-");
+            char [][] test = Maintest.ticTacToe.ticTacToeManager.getBoard();
+
+
+                butt00.setText( "" + Maintest.ticTacToe.ticTacToeManager.getCurrentPlayerMark()); //hackerman
+                Maintest.ticTacToe.ticTacToeManager.checkMove(0, 0);
+                Maintest.ticTacToe.ticTacToeManager.placeMove(0, 0);
+                System.out.println("TESTINGSSSSSSSSSSSSSSS");
+                Maintest.ticTacToe.ticTacToeManager.printBoard(Maintest.ticTacToe.ticTacToeManager.getBoard()); //print
+                Maintest.ticTacToe.ticTacToeManager.changePlayer();
+
+            /*if(GameManager.checkMove(0, 1)){
+                 TicTacToeManager.makeMove(0,1);
+                  butt00.setText(currentPlayer.getPlayerMark());
+             }*/
         } else if(event.getSource() == butt01) {
 
         } else if(event.getSource() == butt02) {
