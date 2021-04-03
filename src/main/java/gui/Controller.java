@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -35,6 +36,7 @@ public class Controller {
     public AnchorPane parent;
     public Button butt00, butt01, butt02, butt10, butt11, butt12, butt20, butt21, butt22 ;
     private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler", "speler vs AI");
+    public AnchorPane gameAnchor;
 
     FXMLLoader loader;
     Parent root;
@@ -92,6 +94,7 @@ public class Controller {
 
     public void playTicTacToe(ActionEvent actionEvent) {
         //TODO
+
     }
 
     public void TTTInfo(ActionEvent actionEvent) {
@@ -140,4 +143,19 @@ public class Controller {
     }
 
 
+    public void howToTTT(ActionEvent actionEvent) {
+    }
+
+    public void howToOThello(ActionEvent actionEvent) {
+    }
+
+    public void conceid(MouseEvent mouseEvent) {
+        gameAnchor.getChildren().clear();
+        gameAnchor.getChildren().add(View.setOthello());
+    }
+
+    public void getHint(MouseEvent mouseEvent) {
+        gameAnchor.getChildren().clear();
+        gameAnchor.getChildren().add(View.setTTT());
+    }
 }

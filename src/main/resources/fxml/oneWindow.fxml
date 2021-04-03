@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WindowController">
+<BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -94,10 +94,9 @@
       <Label fx:id="scoreP2" text="ScoreP2" BorderPane.alignment="CENTER" />
    </right>
    <center>
+      <!-- hier komt het spel-->
       <AnchorPane fx:id="gameAnchor" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="mainScreen" alignment="CENTER" layoutX="222.0" layoutY="147.0" prefHeight="309.6" prefWidth="510.4" text="Main Screen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
+
       </AnchorPane>
    </center>
 </BorderPane>

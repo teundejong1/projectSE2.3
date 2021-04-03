@@ -23,7 +23,7 @@ public class FxmlTest extends Application implements Runnable{
     public void start(Stage stage) throws Exception{
         //FXMLLoader instance
 
-        loader = new FXMLLoader(getClass().getResource("/fxml/menu1.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/fxml/oneWindow.fxml"));
         root = loader.load();
         controller =  loader.getController();
 
