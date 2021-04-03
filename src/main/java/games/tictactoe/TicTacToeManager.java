@@ -1,6 +1,12 @@
+package games.tictactoe;
+
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+
+import games.GameManager;
+import games.ai.AI;
+import player.Player;
 
 public class TicTacToeManager extends GameManager {
     private char[][] board;

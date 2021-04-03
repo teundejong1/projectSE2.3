@@ -1,3 +1,5 @@
+package games;
+
 /**
  * Interface for the multiple boards created (TicTacToe and Othello)
  * @author Eva Jakobs, Teun de Jong

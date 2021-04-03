@@ -1,3 +1,7 @@
+package player;
+
+
+
 /**
  * Player class
  * @author Eva Jakobs, Teun de Jong

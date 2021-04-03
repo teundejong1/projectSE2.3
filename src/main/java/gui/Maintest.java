@@ -1,10 +1,9 @@
-import com.sun.glass.ui.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
+package gui;
 
-import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
+import games.ai.AI;
+import games.tictactoe.TicTacToeManager;
+import player.Player;
+
 
 public class Maintest {
     public static Maintest ticTacToe;

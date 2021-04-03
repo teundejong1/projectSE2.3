@@ -59,7 +59,7 @@ class Parser implements Runnable {
     private HashMap<String, String> parseMap(String input) {
         HashMap<String, String> map = new HashMap<>();
 
-        final Pattern p = Pattern.compile("(\\w+):\s\"([^\"]*)\"");
+        final Pattern p = Pattern.compile("(\\w+):\\s\"([^\"]*)\"");
         Matcher m = p.matcher(input);
         
         while (m.find()) {

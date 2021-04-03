@@ -1,4 +1,8 @@
-public abstract class GameManager implements Board{
+package games;
+
+import player.Player;
+
+public abstract class GameManager implements Board {
 //    private Game game;
     private Player player1;
     private Player player2;

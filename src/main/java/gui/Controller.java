@@ -1,3 +1,5 @@
+package gui;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import player.Player;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -23,6 +26,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import games.ai.AI;
 
 public class Controller {
     @FXML

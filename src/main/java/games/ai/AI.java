@@ -1,4 +1,8 @@
-public class AI extends Player{
+package games.ai;
+
+import player.Player;
+
+public class AI extends Player {
     /**
      * Constructor for class Player
      *
