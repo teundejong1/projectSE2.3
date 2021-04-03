@@ -1,10 +1,9 @@
-package player;
+package player.inputBehaviour;
 
 import games.Move;
 import games.board.Board;
 
-public interface Player {
+public interface Input {
     public Move requestMove(Board board);
-    public String getName();
     
 }
