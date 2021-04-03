@@ -23,7 +23,7 @@ public class FxmlTest extends Application implements Runnable{
     public void start(Stage stage) throws Exception{
         //FXMLLoader instance
 
-        loader = new FXMLLoader(getClass().getResource("/menu1.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/fxml/menu1.fxml"));
         root = loader.load();
         controller =  loader.getController();
 
@@ -33,12 +33,12 @@ public class FxmlTest extends Application implements Runnable{
 
 //        switch (schermchecker) {
 //            case 1:
-//                loader = new FXMLLoader(getClass().getResource("/TTT1.fxml"));
+//                loader = new FXMLLoader(getClass().getResource("/fxml/TTT1.fxml"));
 //                root = loader.load();
 //                controller =  loader.getController();
 //                break;
 //            default:
-//                loader = new FXMLLoader(getClass().getResource("/menu1.fxml"));
+//                loader = new FXMLLoader(getClass().getResource("/fxml/menu1.fxml"));
 //                root = loader.load();
 //                controller =  loader.getController();
 //
@@ -65,5 +65,9 @@ public class FxmlTest extends Application implements Runnable{
     public void showTTT() {
         schermchecker = 1;
         launch();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

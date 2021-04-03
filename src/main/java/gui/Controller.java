@@ -55,12 +55,12 @@ public class Controller {
             // do what you have to do
             menu.close();
 
-            loader = new FXMLLoader(getClass().getResource("/menu1.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/fxml/menu1.fxml"));
             root = loader.load();
             controller =  loader.getController();
 
             // open TTT
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TTT1.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/TTT1.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
