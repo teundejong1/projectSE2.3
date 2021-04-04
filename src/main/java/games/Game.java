@@ -53,5 +53,10 @@ public abstract class Game {
     public GameStatus getStatus() {
         return status;
     };
-    
+
+    public PlayerType getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public abstract void run();
 }

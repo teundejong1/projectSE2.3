@@ -35,5 +35,10 @@ public class Othello extends Game {
         // TODO Auto-generated method stub
         
     }
-    
+
+    @Override
+    public void run() {
+
+    }
+
 }

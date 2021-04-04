@@ -9,7 +9,7 @@ public class IllegalMoveException extends Exception {
     }
 
     public IllegalMoveException(Exception e) {
-        super(e);
+        super("");
     }
 
     public IllegalMoveException(String message) {

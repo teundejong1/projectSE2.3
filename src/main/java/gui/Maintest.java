@@ -32,7 +32,10 @@ public class Maintest{
         Player p1 = PlayerFactory.createGUIPlayer("Teun");
         Player p2 = PlayerFactory.createGUIPlayer("Esther");
 
-        Game game = new TicTacToe(PlayerType.ONE);
-        game.start(p1, p2);
+
+        Thread testgame = new Thread(new TicTacToe(PlayerType.ONE));
+//        Game game = new TicTacToe(PlayerType.ONE);
+        testgame.start();
+//        game.start(p1, p2);
     }
 }

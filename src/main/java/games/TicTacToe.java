@@ -9,7 +9,7 @@ import player.Player;
 import player.PlayerType;
 import player.PlayerFactory;
 
-public class TicTacToe extends Game {
+public class TicTacToe extends Game implements Runnable {
 
     public TicTacToe(PlayerType StartingPlayer) {
         super(StartingPlayer);
@@ -88,6 +88,7 @@ public class TicTacToe extends Game {
         else currentTurn = PlayerType.ONE;
     }
 
+
     @Override
     public void start(Player one, Player two) {
         System.out.println("Tic Tac Toe!");
@@ -115,4 +116,10 @@ public class TicTacToe extends Game {
 
     }
 
+    @Override
+    public void run() {
+        Player p1 = PlayerFactory.createGUIPlayer("SORRY");
+        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN");
+        start(p1, p2);
+    }
 }
