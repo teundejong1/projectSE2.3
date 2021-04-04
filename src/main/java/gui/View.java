@@ -38,13 +38,9 @@ public class View {
                 Tile tile =  new Tile(x, y);
                 // Tile maken
                 elements.getChildren().add(tile);
-                System.out.println(elements.getChildren());
-
             }
-            System.out.println(elements.getChildren());
         }
 
-        System.out.println(elements.getChildren());
 
         return root;
     }
