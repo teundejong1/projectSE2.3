@@ -3,6 +3,7 @@ package gui;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 /**
  * @author Almas Baimagambetov (almaslvl@gmail.com)
@@ -36,6 +37,8 @@ public class Tile extends Rectangle {
         relocate(x * View.TILE_SIZE, y * View.TILE_SIZE);
 
         setFill(Color.BEIGE);
+        setStrokeType(StrokeType.INSIDE);
+        setStroke(Color.BLACK);
 
         /*
         De muisklik event
