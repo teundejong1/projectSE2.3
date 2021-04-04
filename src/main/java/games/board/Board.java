@@ -16,7 +16,7 @@ public abstract class Board {
         }
     }
 
-    public abstract String getMarker(Mark mark);
+    public abstract String getMark(Mark mark);
 
     public void setMove(int x, int y, Mark marker) throws SetOutOfBoundsException {
         if (!isInBounds(x, y)) throw new SetOutOfBoundsException("Move on board is out of bounds");
@@ -60,7 +60,7 @@ public abstract class Board {
             sb.append("|");
             for (int j = 0; j < size; j++) {
                 mark = board[i][j];
-                sb.append(getMarker(mark) + "|");
+                sb.append(getMark(mark) + "|");
             }
             sb.append(System.lineSeparator());
         }

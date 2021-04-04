@@ -1,10 +1,10 @@
 package player;
 
+import games.Game;
 import games.Move;
-import games.board.Board;
 import player.inputBehaviour.Input;
 
-public class ConcretePlayer implements Player {
+class ConcretePlayer implements Player {
 
     private final Input inputBehaviour;
     private final String name;
@@ -14,8 +14,8 @@ public class ConcretePlayer implements Player {
         this.inputBehaviour = inputBehaviour;
     }
     
-    public Move requestMove(Board board) {
-        return inputBehaviour.requestMove(board);
+    public Move requestMove(Game game) {
+        return inputBehaviour.requestMove(game);
     }
 
     public String getName() {

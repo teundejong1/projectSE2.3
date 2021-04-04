@@ -16,5 +16,10 @@ public class Move {
     public int getY() {
         return y;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Move(%d, %d)", x, y);
+    }
     
 }
