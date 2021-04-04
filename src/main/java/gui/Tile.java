@@ -10,6 +10,9 @@ import javafx.scene.shape.StrokeType;
  */
 public class Tile extends Rectangle {
 
+    private int xwaarde;
+    private int ywaarde;
+
 //    private Piece piece;
 //
 //    public boolean hasPiece() {
@@ -25,6 +28,9 @@ public class Tile extends Rectangle {
 //    }
 
     public Tile(int x, int y) {
+        xwaarde = x;
+        ywaarde = y;
+
         setWidth(View.TILE_SIZE);
         setHeight(View.TILE_SIZE);
 
@@ -45,12 +51,9 @@ public class Tile extends Rectangle {
          */
         setOnMouseReleased(e -> {
             //placeholder actie
-            Ellipse ellipse =  new Ellipse();
-            ellipse.setRadiusX(30);
-            ellipse.setRadiusY(30);
-            ellipse.setCenterX((x+0.5)*View.TILE_SIZE);
-            ellipse.setCenterY((y+0.5)*View.TILE_SIZE);
-            View.elements.getChildren().add(ellipse);
+            View.moveSet = true;
+            View.xwaarde = xwaarde;
+            View.ywaarde = ywaarde;
             //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
             setDisable(true);
         });

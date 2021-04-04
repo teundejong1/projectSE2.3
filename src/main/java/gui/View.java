@@ -12,6 +12,9 @@ public class View {
     public final static int TTT_SIZE = 3;
     public final static int OTHELLO_SIZE = 8;
     public final static int TILE_SIZE = 100;
+    public static boolean moveSet = false;
+    public static int xwaarde;
+    public static int ywaarde;
 
     //Dit is de static container
     public static Group elements = new Group();
