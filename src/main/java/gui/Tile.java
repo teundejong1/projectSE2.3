@@ -54,6 +54,8 @@ public class Tile extends Rectangle {
             View.moveSet = true;
             View.xwaarde = xwaarde;
             View.ywaarde = ywaarde;
+//            System.out.println(xwaarde);
+//            System.out.println(ywaarde);
             //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
             setDisable(true);
         });

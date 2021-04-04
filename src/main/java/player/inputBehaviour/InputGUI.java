@@ -11,8 +11,14 @@ public class InputGUI implements Input {
     public Move requestMove(Game game) {
         // TODO GUI
         System.out.println(game.getBoard());
-        while(!View.moveSet) { }
+
+        while(!View.moveSet) {
+
+        }
         Move move = new Move(View.xwaarde, View.ywaarde);
+        System.out.println(View.xwaarde);
+        System.out.println(View.ywaarde);
+        View.moveSet = false;
         return move;
     }
 }

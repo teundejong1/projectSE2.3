@@ -19,6 +19,8 @@ public class View {
     //Dit is de static container
     public static Group elements = new Group();
 
+
+
     public static Parent setTTT()  {
         Pane root = new Pane();
         root.setPrefSize(TTT_SIZE * TILE_SIZE, TTT_SIZE * TILE_SIZE);
