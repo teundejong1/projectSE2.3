@@ -3,6 +3,7 @@ package games;
 import java.util.List;
 
 import games.board.Mark;
+import player.Player;
 import player.PlayerType;
 
 public class Othello extends Game {
@@ -27,6 +28,12 @@ public class Othello extends Game {
     public List<Move> getPossibleMoves() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public void start(Player one, Player two) {
+        // TODO Auto-generated method stub
+        
     }
     
 }

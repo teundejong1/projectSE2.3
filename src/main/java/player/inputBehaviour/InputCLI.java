@@ -2,8 +2,8 @@ package player.inputBehaviour;
 
 import java.util.Scanner;
 
+import games.Game;
 import games.Move;
-import games.board.Board;
 
 public class InputCLI implements Input {
 
@@ -14,8 +14,8 @@ public class InputCLI implements Input {
     }
 
     @Override
-    public Move requestMove(Board board) {
-        System.out.println(board);
+    public Move requestMove(Game game) {
+        System.out.println(game.getBoard());
 
         System.out.print("Do a move: ");
 

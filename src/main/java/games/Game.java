@@ -5,6 +5,7 @@ import java.util.List;
 import games.board.Board;
 import games.board.Mark;
 import games.board.SetOutOfBoundsException;
+import player.Player;
 import player.PlayerType;
 
 public abstract class Game {
@@ -20,6 +21,7 @@ public abstract class Game {
         playerOne = PlayerType.ONE;
         playerTwo = PlayerType.TWO;
         currentTurn = startingPlayer;
+        status = GameStatus.READY;
     }
 
     public PlayerType whosTurn() {
@@ -31,6 +33,8 @@ public abstract class Game {
     public abstract List<Move> getPossibleMoves();
 
     public abstract boolean checkForWin();
+
+    public abstract void start(Player one, Player two);
 
     public void doMove(Move move, Mark marker) throws IllegalMoveException {
         validateMove(move, marker);

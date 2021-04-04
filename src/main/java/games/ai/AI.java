@@ -1,5 +1,8 @@
 package games.ai;
 
-public class AI {
-    
+import games.Game;
+import games.Move;
+
+public interface AI {
+    public Move getMove(Game game);
 }

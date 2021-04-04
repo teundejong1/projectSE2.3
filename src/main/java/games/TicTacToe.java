@@ -88,6 +88,7 @@ public class TicTacToe extends Game {
         else currentTurn = PlayerType.ONE;
     }
 
+    @Override
     public void start(Player one, Player two) {
         System.out.println("Tic Tac Toe!");
         status = GameStatus.PLAYING;
@@ -97,7 +98,7 @@ public class TicTacToe extends Game {
         Mark mark;
 
         do {
-            move = (currentTurn == PlayerType.ONE) ? one.requestMove(board) : two.requestMove(board);
+            move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
 
             try {
@@ -112,14 +113,6 @@ public class TicTacToe extends Game {
             
         } while (status == GameStatus.PLAYING);
 
-    }
-
-    public static void main(String[] args) {
-        Player p1 = PlayerFactory.createCLIPlayer("Teun");
-        Player p2 = PlayerFactory.createCLIPlayer("Esther");
-
-        TicTacToe game = new TicTacToe(PlayerType.ONE);
-        game.start(p1, p2);
     }
     
 }

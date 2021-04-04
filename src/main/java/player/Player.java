@@ -1,10 +1,10 @@
 package player;
 
+import games.Game;
 import games.Move;
-import games.board.Board;
 
 public interface Player {
-    public Move requestMove(Board board);
+    public Move requestMove(Game game);
     public String getName();
     
 }
