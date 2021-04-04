@@ -2,9 +2,12 @@ package games;
 
 import games.board.Mark;
 import games.board.TicTacToeBoard;
+import gui.FxmlTest;
+import javafx.fxml.FXML;
 import player.Player;
 import player.PlayerType;
 import player.PlayerFactory;
+import threadpool.ThreadPool;
 
 public class TicTacToe extends Game {
 
@@ -95,8 +98,12 @@ public class TicTacToe extends Game {
     }
 
     public static void main(String[] args) {
-        Player p1 = PlayerFactory.createCLIPlayer("Teun");
-        Player p2 = PlayerFactory.createCLIPlayer("Esther");
+        FxmlTest fxmlTest =  new FxmlTest();
+        Thread thread =  new Thread(fxmlTest);
+        thread.start();
+
+        Player p1 = PlayerFactory.createGUIPlayer("Teun");
+        Player p2 = PlayerFactory.createGUIPlayer("Esther");
 
         TicTacToe game = new TicTacToe(PlayerType.ONE);
         game.start(p1, p2);
