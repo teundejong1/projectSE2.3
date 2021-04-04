@@ -37,9 +37,11 @@ public class Controller {
     private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler", "speler vs AI");
     public AnchorPane gameAnchor;
 
+
     FXMLLoader loader;
     Parent root;
     Controller controller;
+    private View view = new View();
 
 
 
@@ -150,11 +152,11 @@ public class Controller {
 
     public void conceid(MouseEvent mouseEvent) {
         gameAnchor.getChildren().clear();
-        gameAnchor.getChildren().add(View.setOthello());
+        gameAnchor.getChildren().add(view.setOthello());
     }
 
     public void getHint(MouseEvent mouseEvent) {
         gameAnchor.getChildren().clear();
-        gameAnchor.getChildren().add(View.setTTT());
+        gameAnchor.getChildren().add(view.setTTT());
     }
 }

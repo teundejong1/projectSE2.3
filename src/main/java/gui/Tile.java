@@ -27,7 +27,7 @@ public class Tile extends Rectangle {
 //        this.piece = piece;
 //    }
 
-    public Tile(int x, int y) {
+    public Tile(int x, int y, View view) {
         xwaarde = x;
         ywaarde = y;
 
@@ -52,8 +52,8 @@ public class Tile extends Rectangle {
         setOnMouseReleased(e -> {
             //placeholder actie
             View.moveSet = true;
-            View.xwaarde = xwaarde;
-            View.ywaarde = ywaarde;
+            view.setXwaarde(xwaarde);
+            view.setYwaarde(ywaarde);
             System.out.println(xwaarde);
             System.out.println(ywaarde);
             //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
