@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -54,10 +56,23 @@ public class Tile extends Rectangle {
             View.moveSet = true;
             view.setXwaarde(xwaarde);
             view.setYwaarde(ywaarde);
-            System.out.println(xwaarde);
-            System.out.println(ywaarde);
-            //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
-            setDisable(true);
+
+            // Create cross
+            ImageView cross = new ImageView("/images/Cross.png");
+            cross.setFitWidth(View.TILE_SIZE);
+            cross.setFitHeight(View.TILE_SIZE);
+            cross.setX(x*View.TILE_SIZE);
+            cross.setY(y*View.TILE_SIZE);
+
+            // Create Circle
+            ImageView circle = new ImageView("/images/Circle.png");
+            circle.setFitWidth(View.TILE_SIZE);
+            circle.setFitHeight(View.TILE_SIZE);
+            circle.setX(x*View.TILE_SIZE);
+            circle.setY(y*View.TILE_SIZE);
+
+            //TODO change that it depends on the marker
+            View.elements.getChildren().add(circle);
         });
 
     }

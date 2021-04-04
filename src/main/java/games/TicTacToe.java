@@ -59,7 +59,7 @@ public class TicTacToe extends Game implements Runnable {
     private boolean checkHorizonForWin() {
         for (int i = 0; i < board.getSize(); i++) {
             if (checkRowCol(board.getCell(i, 0), board.getCell(i, 1),
-                    board.getCell(i, 2)) == true) {
+                    board.getCell(i, 2))) {
 
                 return true;
             }
@@ -70,7 +70,7 @@ public class TicTacToe extends Game implements Runnable {
     private boolean checkVerticalForWin() {
         for (int i = 0; i < board.getSize(); i++) {
             if (checkRowCol(board.getCell(0, i), board.getCell(1, i),
-                    board.getCell(2, i)) == true) {
+                    board.getCell(2, i))) {
 
                 return true;
             }
@@ -79,8 +79,8 @@ public class TicTacToe extends Game implements Runnable {
     }
 
     private boolean checkDiagonalForWin() {
-        return ((checkRowCol(board.getCell(0, 0), board.getCell(1, 1), board.getCell(2, 2)) == true) ||
-                (checkRowCol(board.getCell(0, 2), board.getCell(1, 1), board.getCell(2, 0)) == true));
+        return ((checkRowCol(board.getCell(0, 0), board.getCell(1, 1), board.getCell(2, 2))) ||
+                (checkRowCol(board.getCell(0, 2), board.getCell(1, 1), board.getCell(2, 0))));
     }
 
     public void changeTurn() {
