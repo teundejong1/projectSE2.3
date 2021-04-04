@@ -7,7 +7,7 @@ public class TicTacToeBoard extends Board {
     }
 
     @Override
-    public String getMarker(Mark mark) {
+    public String getMark(Mark mark) {
         String str = "";
 
         if (mark == Mark.ONE) str = "X";

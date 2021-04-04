@@ -4,7 +4,7 @@ import games.Move;
 import games.board.Board;
 import player.inputBehaviour.Input;
 
-public class ConcretePlayer implements Player {
+class ConcretePlayer implements Player {
 
     private final Input inputBehaviour;
     private final String name;

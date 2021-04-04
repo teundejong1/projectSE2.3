@@ -1,5 +1,8 @@
 package games;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import games.board.Mark;
 import games.board.TicTacToeBoard;
 import player.Player;
@@ -13,7 +16,9 @@ public class TicTacToe extends Game {
     }
 
     @Override
-    protected void validateMove(int x, int y, Mark marker) throws IllegalMoveException {
+    protected void validateMove(Move move, Mark marker) throws IllegalMoveException {
+        int x = move.getX();
+        int y = move.getY();
 
         if (currentTurn == PlayerType.ONE && !(marker == Mark.ONE))
                 throw new IllegalMoveException("Its not player ones turn");
@@ -24,6 +29,22 @@ public class TicTacToe extends Game {
 
         if (!(board.getCell(x, y) == Mark.EMPTY)) throw new IllegalMoveException("Already occupied");
 
+    }
+
+    @Override
+    public List<Move> getPossibleMoves() {
+        List<Move> possibleMoves = new ArrayList<>();
+
+        // TODO remove for-for loop, implement Iterator
+
+        for (int x = 0; x < board.getSize(); x++) {
+            for (int y = 0; y < board.getSize(); y++) {
+                Mark mark = board.getCell(x, y);
+                if (mark == Mark.EMPTY) possibleMoves.add(new Move(x, y));
+            }
+        }
+
+        return possibleMoves;
     }
 
     @Override
@@ -76,20 +97,19 @@ public class TicTacToe extends Game {
         Mark mark;
 
         do {
-            System.out.println(currentTurn);
-
             move = (currentTurn == PlayerType.ONE) ? one.requestMove(board) : two.requestMove(board);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
 
             try {
-                doMove(move.getX(), move.getY(), mark);
+                doMove(move, mark);
+                if (checkForWin()) status = GameStatus.WON;
+                else if (board.isFull()) status = GameStatus.DRAW;
+                else changeTurn();
             } catch (IllegalMoveException e) {
                 e.printStackTrace();
             }
 
-            if (checkForWin()) status = GameStatus.WON;
-            else if (board.isFull()) status = GameStatus.DRAW;
-            else changeTurn();
+            
         } while (status == GameStatus.PLAYING);
 
     }

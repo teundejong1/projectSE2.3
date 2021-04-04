@@ -1,5 +1,7 @@
 package games;
 
+import java.util.List;
+
 import games.board.Board;
 import games.board.Mark;
 import games.board.SetOutOfBoundsException;
@@ -24,15 +26,17 @@ public abstract class Game {
         return currentTurn;
     }
     
-    protected abstract void validateMove(int x, int y, Mark marker) throws IllegalMoveException;
+    protected abstract void validateMove(Move move, Mark marker) throws IllegalMoveException;
+
+    public abstract List<Move> getPossibleMoves();
 
     public abstract boolean checkForWin();
 
-    public void doMove(int x, int y, Mark marker) throws IllegalMoveException {
-        validateMove(x, y, marker);
+    public void doMove(Move move, Mark marker) throws IllegalMoveException {
+        validateMove(move, marker);
         
         try {
-            board.setMove(x, y, marker);
+            board.setMove(move.getX(), move.getY(), marker);
         } catch (SetOutOfBoundsException ime) {
             throw new IllegalMoveException(ime);
         }
