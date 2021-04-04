@@ -1,6 +1,6 @@
 package player;
 
-public enum PlayerEnum {
+public enum PlayerType {
     ONE,
     TWO,
 }

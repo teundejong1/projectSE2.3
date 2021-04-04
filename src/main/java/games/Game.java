@@ -3,24 +3,24 @@ package games;
 import games.board.Board;
 import games.board.Mark;
 import games.board.SetOutOfBoundsException;
-import player.PlayerEnum;
+import player.PlayerType;
 
 public abstract class Game {
 
     protected Board board;
     protected GameStatus status;
 
-    protected PlayerEnum playerOne;
-    protected PlayerEnum playerTwo;
-    protected PlayerEnum currentTurn;
+    protected PlayerType playerOne;
+    protected PlayerType playerTwo;
+    protected PlayerType currentTurn;
 
-    public Game(PlayerEnum startingPlayer) {
-        playerOne = PlayerEnum.ONE;
-        playerTwo = PlayerEnum.TWO;
+    public Game(PlayerType startingPlayer) {
+        playerOne = PlayerType.ONE;
+        playerTwo = PlayerType.TWO;
         currentTurn = startingPlayer;
     }
 
-    public PlayerEnum whosTurn() {
+    public PlayerType whosTurn() {
         return currentTurn;
     }
     
