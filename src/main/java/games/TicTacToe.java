@@ -2,24 +2,22 @@ package games;
 
 import games.board.Mark;
 import games.board.TicTacToeBoard;
-import gui.FxmlTest;
 import player.Player;
-import player.PlayerEnum;
+import player.PlayerType;
 import player.PlayerFactory;
-import threadpool.ThreadPool;
 
 public class TicTacToe extends Game {
 
-    public TicTacToe(PlayerEnum StartingPlayer) {
+    public TicTacToe(PlayerType StartingPlayer) {
         super(StartingPlayer);
     }
 
     @Override
     protected void validateMove(int x, int y, Mark marker) throws IllegalMoveException {
 
-        if (currentTurn == PlayerEnum.ONE && !(marker == Mark.ONE))
+        if (currentTurn == PlayerType.ONE && !(marker == Mark.ONE))
                 throw new IllegalMoveException("Its not player ones turn");
-        if (currentTurn == PlayerEnum.TWO && !(marker == Mark.TWO))
+        if (currentTurn == PlayerType.TWO && !(marker == Mark.TWO))
                 throw new IllegalMoveException("Its not player twos turn");
 
         if (!board.isInBounds(x, y)) throw new IllegalMoveException("Out of bounds");
@@ -65,15 +63,11 @@ public class TicTacToe extends Game {
     }
 
     public void changeTurn() {
-        if (currentTurn == PlayerEnum.ONE) currentTurn = PlayerEnum.TWO;
-        else currentTurn = PlayerEnum.ONE;
+        if (currentTurn == PlayerType.ONE) currentTurn = PlayerType.TWO;
+        else currentTurn = PlayerType.ONE;
     }
 
     public void start(Player one, Player two) {
-        FxmlTest fxmlTest =  new FxmlTest();
-        Thread thread = new Thread(fxmlTest);
-        thread.start();
-
         System.out.println("Tic Tac Toe!");
         status = GameStatus.PLAYING;
         board = new TicTacToeBoard(3);
@@ -84,8 +78,8 @@ public class TicTacToe extends Game {
         do {
             System.out.println(currentTurn);
 
-            move = (currentTurn == PlayerEnum.ONE) ? one.requestMove(board) : two.requestMove(board);
-            mark = (currentTurn == PlayerEnum.ONE ? Mark.ONE : Mark.TWO);
+            move = (currentTurn == PlayerType.ONE) ? one.requestMove(board) : two.requestMove(board);
+            mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
 
             try {
                 doMove(move.getX(), move.getY(), mark);
@@ -101,10 +95,10 @@ public class TicTacToe extends Game {
     }
 
     public static void main(String[] args) {
-        Player p1 = PlayerFactory.createGUIPlayer("Teun");
-        Player p2 = PlayerFactory.createGUIPlayer("Esther");
+        Player p1 = PlayerFactory.createCLIPlayer("Teun");
+        Player p2 = PlayerFactory.createCLIPlayer("Esther");
 
-        TicTacToe game = new TicTacToe(PlayerEnum.ONE);
+        TicTacToe game = new TicTacToe(PlayerType.ONE);
         game.start(p1, p2);
     }
     
