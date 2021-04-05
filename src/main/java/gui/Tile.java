@@ -31,14 +31,14 @@ public class Tile extends Rectangle {
 //        this.piece = piece;
 //    }
 
-    public Tile(int x, int y, View view) {
+    public Tile(int x, int y) {
         xwaarde = x;
         ywaarde = y;
 
-        setWidth(view.TILE_SIZE);
-        setHeight(view.TILE_SIZE);
+        setWidth(View.TILE_SIZE);
+        setHeight(View.TILE_SIZE);
 
-        relocate(x * view.TILE_SIZE, y * view.TILE_SIZE);
+        relocate(x * View.TILE_SIZE, y * View.TILE_SIZE);
 
         setFill(Color.BEIGE);
         setStrokeType(StrokeType.INSIDE);
@@ -55,10 +55,10 @@ public class Tile extends Rectangle {
          */
         setOnMouseReleased(e -> {
             //placeholder actie
-            view.setXwaarde(ywaarde);
-            view.setYwaarde(ywaarde);
+            View.xwaarde = xwaarde;
+            View.ywaarde = ywaarde;
 
-            view.setMoveSet(true);
+            View.moveSet = true;
 
 
             //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is

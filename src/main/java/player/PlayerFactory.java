@@ -15,9 +15,8 @@ public class PlayerFactory {
     }
 
     //dit ding krijgt een view mee, dat is nodig voor de inputGUI
-    public static Player createGUIPlayer(String name, View view) {
+    public static Player createGUIPlayer(String name) {
         InputGUI inputGUI = new InputGUI();
-        inputGUI.setView(view);
 
         return new ConcretePlayer(name, inputGUI);
     }

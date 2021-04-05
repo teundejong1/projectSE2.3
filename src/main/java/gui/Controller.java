@@ -153,15 +153,15 @@ public class Controller {
 
     public void conceid(MouseEvent mouseEvent) {
         gameAnchor.getChildren().clear();
-        gameAnchor.getChildren().add(view.setOthello());
+        gameAnchor.getChildren().add(View.setOthello());
     }
 
     public void getHint(MouseEvent mouseEvent) {
         gameAnchor.getChildren().clear();
-        gameAnchor.getChildren().add(view.setTTT());
+        gameAnchor.getChildren().add(View.setTTT());
     }
 
-    public void setView(View view) {
-        this.view = view;
-    }
+//    public void setView(View view) {
+//        this.view = view;
+//    }
 }

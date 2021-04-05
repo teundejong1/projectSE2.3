@@ -125,8 +125,8 @@ public class TicTacToe extends Game implements Runnable {
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("SORRY", view);
-        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN", view);
+        Player p1 = PlayerFactory.createGUIPlayer("SORRY");
+        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN");
         start(p1, p2);
     }
 }
