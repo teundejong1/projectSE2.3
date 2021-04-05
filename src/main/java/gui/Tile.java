@@ -1,5 +1,6 @@
 package gui;
 
+import games.board.Mark;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -15,7 +16,7 @@ public class Tile extends Rectangle {
 
     private int xwaarde;
     private int ywaarde;
-    private InputGUI inputGUI;
+    private Mark mark;
 
 //    private Piece piece;
 //
@@ -31,9 +32,27 @@ public class Tile extends Rectangle {
 //        this.piece = piece;
 //    }
 
+
+    public int getXwaarde() {
+        return xwaarde;
+    }
+
+    public int getYwaarde() {
+        return ywaarde;
+    }
+
+    public Mark getMark() {
+        return mark;
+    }
+
+    public void setMark(Mark mark) {
+        this.mark = mark;
+    }
+
     public Tile(int x, int y) {
         xwaarde = x;
         ywaarde = y;
+        mark = Mark.EMPTY;
 
         setWidth(View.TILE_SIZE);
         setHeight(View.TILE_SIZE);
@@ -63,24 +82,6 @@ public class Tile extends Rectangle {
 
             //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
             setDisable(true);
-
-            // Create cross
-            ImageView cross = new ImageView("/images/Cross.png");
-            cross.setFitWidth(View.TILE_SIZE);
-            cross.setFitHeight(View.TILE_SIZE);
-            cross.setX(x*View.TILE_SIZE);
-            cross.setY(y*View.TILE_SIZE);
-
-            // Create Circle
-            ImageView circle = new ImageView("/images/Circle.png");
-            circle.setFitWidth(View.TILE_SIZE);
-            circle.setFitHeight(View.TILE_SIZE);
-            circle.setX(x*View.TILE_SIZE);
-            circle.setY(y*View.TILE_SIZE);
-
-            //TODO change that it depends on the marker
-            View.elements.getChildren().add(circle);
         });
-
     }
 }
