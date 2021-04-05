@@ -18,21 +18,19 @@ public class InputGUI implements Input {
         System.out.println(game.getBoard());
 
 
-//        while (!view.isMoveSet()) {}
-//        System.out.println(view.getXwaarde());
-//        System.out.println(view.getYwaarde());
-//
-//
-//        Move move = new Move(view.getXwaarde(), view.getYwaarde());
-//        //System.out.println(View.xwaarde);
-//        System.out.println(View.xwaarde);
-//        System.out.println(View.ywaarde);
-//        view.setMoveSet(false);
+        while (!view.isMoveSet()) {
+            System.out.println(view.isMoveSet());
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException exception) {
+                exception.printStackTrace();
+            }
         }
+
         Move move = new Move(view.getXwaarde(), view.getYwaarde());
         System.out.println(view.getXwaarde());
         System.out.println(view.getYwaarde());
-        View.moveSet = false;
+        view.setMoveSet(false);
         return move;
     }
 }

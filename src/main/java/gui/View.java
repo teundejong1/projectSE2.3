@@ -79,10 +79,12 @@ public class View {
     }
 
     public void setMoveSet(boolean moveSet) {
+        System.out.println(moveSet);
         this.moveSet = moveSet;
     }
 
     public void setXwaarde(int xwaarde) {
+        System.out.println(xwaarde);
         this.xwaarde = xwaarde;
     }
 
