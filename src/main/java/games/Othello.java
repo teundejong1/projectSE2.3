@@ -145,14 +145,14 @@ public class Othello extends Game {
         int x = move.getX();
         int y = move.getY();
         System.out.println("GIREUWBHGREWIOUGFHO");
-        checkLines(x, y, 0, -1); //ww
-        checkLines(x, y, 1, -1); //sw
-        checkLines(x, y, 1, 0); //ss
-        checkLines(x, y, 1, 1); //se
-        checkLines(x, y, 0, 1); //ee
-        checkLines(x, y, -1, -1); //nw
-        checkLines(x, y, -1, 1); //ne
-        checkLines(x, y, -1, 0); //nn
+        checkLines(x, y, 0, -1); // Left
+        checkLines(x, y, 1, -1); //Bottomleft
+        checkLines(x, y, 1, 0); //Bottom
+        checkLines(x, y, 1, 1); // Bottomright
+        checkLines(x, y, 0, 1); // Right
+        checkLines(x, y, -1, -1); // Upperleft
+        checkLines(x, y, -1, 1); // Upperright
+        checkLines(x, y, -1, 0); // Upper
     }
 
     public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws SetOutOfBoundsException {
@@ -200,24 +200,23 @@ public class Othello extends Game {
     @Override
     public void start(Player one, Player two) throws SetOutOfBoundsException {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
-        status = GameStatus.PLAYING;
-        board = new OthelloBoard(8);
-        Move move;
-        Mark mark;
-        //init board, willen we probbaly niet hier
-        // TODO
-        board.setMove(3, 4, Mark.ONE);
-        board.setMove(4, 3, Mark.ONE);
-        board.setMove(3, 3, Mark.TWO);
-        board.setMove(4, 4, Mark.TWO);
+                status = GameStatus.PLAYING;
+                board = new OthelloBoard(8);
+                Move move;
+                Mark mark;
+                //init board, willen we probbaly niet hier
+                // TODO
+                board.setMove(3, 4, Mark.ONE);
+                board.setMove(4, 3, Mark.ONE);
+                board.setMove(3, 3, Mark.TWO);
+                board.setMove(4, 4, Mark.TWO);
 
-
-        do {
-            System.out.println(getPossibleMoves());
-            System.out.println("TUSSENSTAND");
-            System.out.println(Arrays.toString(score()));
-            if (getPossibleMoves().isEmpty()) {
-                System.out.println("HEBT GEEN MOVES ATM");
+                do {
+                    System.out.println(getPossibleMoves());
+                    System.out.println("TUSSENSTAND");
+                    System.out.println(Arrays.toString(score()));
+                    if (getPossibleMoves().isEmpty()) {
+                        System.out.println("HEBT GEEN MOVES ATM");
                 changeTurn();
             }
             move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
