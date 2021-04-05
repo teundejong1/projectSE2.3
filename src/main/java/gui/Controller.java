@@ -43,7 +43,6 @@ public class Controller {
     FXMLLoader loader;
     Parent root;
     Controller controller;
-    private View view = new View();
 
 
 
