@@ -74,8 +74,8 @@ public class Tile extends Rectangle {
          */
         setOnMouseReleased(e -> {
             //placeholder actie
-            View.xwaarde = xwaarde;
-            View.ywaarde = ywaarde;
+            View.xwaarde = ywaarde;
+            View.ywaarde = xwaarde;
 
             View.moveSet = true;
 
