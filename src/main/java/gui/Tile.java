@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import player.inputBehaviour.InputGUI;
 
 /**
  * @author Almas Baimagambetov (almaslvl@gmail.com)
@@ -12,6 +13,7 @@ public class Tile extends Rectangle {
 
     private int xwaarde;
     private int ywaarde;
+    private InputGUI inputGUI;
 
 //    private Piece piece;
 //
@@ -27,14 +29,14 @@ public class Tile extends Rectangle {
 //        this.piece = piece;
 //    }
 
-    public Tile(int x, int y) {
+    public Tile(int x, int y, View view) {
         xwaarde = x;
         ywaarde = y;
 
-        setWidth(View.TILE_SIZE);
-        setHeight(View.TILE_SIZE);
+        setWidth(view.TILE_SIZE);
+        setHeight(view.TILE_SIZE);
 
-        relocate(x * View.TILE_SIZE, y * View.TILE_SIZE);
+        relocate(x * view.TILE_SIZE, y * view.TILE_SIZE);
 
         setFill(Color.BEIGE);
         setStrokeType(StrokeType.INSIDE);
@@ -51,11 +53,12 @@ public class Tile extends Rectangle {
          */
         setOnMouseReleased(e -> {
             //placeholder actie
-            View.moveSet = true;
-            View.xwaarde = xwaarde;
-            View.ywaarde = ywaarde;
-            System.out.println(xwaarde);
-            System.out.println(ywaarde);
+            view.setXwaarde(ywaarde);
+            view.setYwaarde(ywaarde);
+
+            view.setMoveSet(true);
+
+
             //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
             setDisable(true);
         });

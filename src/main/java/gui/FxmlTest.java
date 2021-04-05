@@ -18,6 +18,16 @@ public class FxmlTest extends Application implements Runnable{
     int schermchecker = 0;
     Parent root;
     Controller controller;
+    View view;
+
+    public FxmlTest() {
+        view =  new View();
+    }
+
+    //Dit is hier zodat we de view vanuit de rest van het project kunnen benaderen
+    public View getView() {
+        return view;
+    }
 
     @Override
     public void start(Stage stage) throws Exception{
@@ -26,6 +36,7 @@ public class FxmlTest extends Application implements Runnable{
         loader = new FXMLLoader(getClass().getResource("/fxml/oneWindow.fxml"));
         root = loader.load();
         controller =  loader.getController();
+        controller.setView(view);
 
         stage.setTitle("Buttons");
         stage.setScene(new Scene(root));
@@ -65,9 +76,5 @@ public class FxmlTest extends Application implements Runnable{
     public void showTTT() {
         schermchecker = 1;
         launch();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

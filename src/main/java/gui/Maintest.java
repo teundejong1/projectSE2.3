@@ -25,15 +25,18 @@ public class Maintest{
 
 
         FxmlTest fxmlTest = new FxmlTest();
+        View view =  fxmlTest.getView();
         Thread thread =  new Thread(fxmlTest);
 
         thread.start();
 
-        Player p1 = PlayerFactory.createGUIPlayer("Teun");
-        Player p2 = PlayerFactory.createGUIPlayer("Esther");
+        Player p1 = PlayerFactory.createGUIPlayer("Teun", view);
+        Player p2 = PlayerFactory.createGUIPlayer("Esther", view);
 
 
-        Thread testgame = new Thread(new TicTacToe(PlayerType.ONE));
+        TicTacToe ticTacToe = new TicTacToe(PlayerType.ONE);
+        ticTacToe.setView(view);
+        Thread testgame = new Thread(ticTacToe);
 //        Game game = new TicTacToe(PlayerType.ONE);
         testgame.start();
 //        game.start(p1, p2);

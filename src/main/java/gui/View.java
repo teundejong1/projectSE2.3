@@ -12,16 +12,16 @@ public class View {
     public final static int TTT_SIZE = 3;
     public final static int OTHELLO_SIZE = 8;
     public final static int TILE_SIZE = 100;
-    public static boolean moveSet = false;
-    public static int xwaarde;
-    public static int ywaarde;
+    private boolean moveSet = false;
+    private int xwaarde;
+    private int ywaarde;
 
     //Dit is de static container
     public static Group elements = new Group();
 
 
 
-    public static Parent setTTT()  {
+    public Parent setTTT()  {
         Pane root = new Pane();
         root.setPrefSize(TTT_SIZE * TILE_SIZE, TTT_SIZE * TILE_SIZE);
 
@@ -35,9 +35,9 @@ public class View {
          */
         elements.getChildren().clear();
         root.getChildren().addAll(elements);
-        for(int x = 0; x < TTT_SIZE; x++) {
-            for (int y = 0; y < TTT_SIZE; y++) {
-                Tile tile =  new Tile(x, y);
+        for(int y = 0; y < TTT_SIZE; y++) {
+            for (int x = 0; x < TTT_SIZE; x++) {
+                Tile tile =  new Tile(x, y, this);
                 // Tile maken
                 elements.getChildren().add(tile);
             }
@@ -47,19 +47,43 @@ public class View {
         return root;
     }
 
-    public static Parent setOthello()  {
+    public Parent setOthello()  {
         Pane root = new Pane();
         root.setPrefSize(OTHELLO_SIZE * OTHELLO_SIZE, OTHELLO_SIZE * OTHELLO_SIZE);
         elements.getChildren().clear();
         root.getChildren().addAll(elements);
-        for(int x = 0; x < OTHELLO_SIZE; x++) {
-            for (int y = 0; y < OTHELLO_SIZE; y++) {
+        for(int y = 0; y < OTHELLO_SIZE; y++) {
+            for (int x = 0; x < OTHELLO_SIZE; x++) {
                 // Tile Maken
-                Tile tile =  new Tile(x, y);
+                Tile tile =  new Tile(x, y, this);
                 elements.getChildren().add(tile);
             }
         }
         return root;
+    }
+
+    public int getXwaarde() {
+        return xwaarde;
+    }
+
+    public int getYwaarde() {
+        return ywaarde;
+    }
+
+    public boolean isMoveSet() {
+        return moveSet;
+    }
+
+    public void setMoveSet(boolean moveSet) {
+        this.moveSet = moveSet;
+    }
+
+    public void setXwaarde(int xwaarde) {
+        this.xwaarde = xwaarde;
+    }
+
+    public void setYwaarde(int ywaarde) {
+        this.ywaarde = ywaarde;
     }
 
 }

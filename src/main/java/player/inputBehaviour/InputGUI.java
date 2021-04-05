@@ -7,21 +7,27 @@ import games.board.Mark;
 import gui.View;
 
 public class InputGUI implements Input {
+    private View view;
+
+    public void setView(View view) {
+        this.view = view;
+    }
 
     @Override
     public Move requestMove(Game game) {
         System.out.println(game.getBoard());
 
 
-        System.out.println(View.xwaarde);
-        System.out.println(View.ywaarde);
+        while (!view.isMoveSet()) {}
+        System.out.println(view.getXwaarde());
+        System.out.println(view.getYwaarde());
 
 
-        Move move = new Move(View.xwaarde, View.ywaarde);
+        Move move = new Move(view.getXwaarde(), view.getYwaarde());
         //System.out.println(View.xwaarde);
 //        System.out.println(View.xwaarde);
 //        System.out.println(View.ywaarde);
-        View.moveSet = false;
+        view.setMoveSet(false);
         return move;
     }
 }

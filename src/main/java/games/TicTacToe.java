@@ -5,11 +5,14 @@ import java.util.List;
 
 import games.board.Mark;
 import games.board.TicTacToeBoard;
+import gui.View;
 import player.Player;
 import player.PlayerType;
 import player.PlayerFactory;
 
 public class TicTacToe extends Game implements Runnable {
+
+    private View view;
 
     public TicTacToe(PlayerType StartingPlayer) {
         super(StartingPlayer);
@@ -116,10 +119,14 @@ public class TicTacToe extends Game implements Runnable {
 
     }
 
+    public void setView(View view) {
+        this.view = view;
+    }
+
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("SORRY");
-        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN");
+        Player p1 = PlayerFactory.createGUIPlayer("SORRY", view);
+        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN", view);
         start(p1, p2);
     }
 }

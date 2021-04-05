@@ -30,6 +30,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class Controller {
+    private View view;
+
     @FXML
     public Button TTTvsspeler, TTTvsAI, Othellovsspeler, OthellovsAI;
     public AnchorPane parent;
@@ -150,11 +152,15 @@ public class Controller {
 
     public void conceid(MouseEvent mouseEvent) {
         gameAnchor.getChildren().clear();
-        gameAnchor.getChildren().add(View.setOthello());
+        gameAnchor.getChildren().add(view.setOthello());
     }
 
     public void getHint(MouseEvent mouseEvent) {
         gameAnchor.getChildren().clear();
-        gameAnchor.getChildren().add(View.setTTT());
+        gameAnchor.getChildren().add(view.setTTT());
+    }
+
+    public void setView(View view) {
+        this.view = view;
     }
 }
