@@ -39,9 +39,11 @@ public class Controller {
     private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler", "speler vs AI");
     public AnchorPane gameAnchor;
 
+
     FXMLLoader loader;
     Parent root;
     Controller controller;
+    private View view = new View();
 
 
 

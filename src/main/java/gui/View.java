@@ -19,6 +19,10 @@ public class View {
     //Dit is de static container
     public static Group elements = new Group();
 
+    public View() {
+
+    }
+
 
 
     public Parent setTTT()  {
@@ -85,5 +89,4 @@ public class View {
     public void setYwaarde(int ywaarde) {
         this.ywaarde = ywaarde;
     }
-
 }
