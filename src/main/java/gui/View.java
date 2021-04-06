@@ -66,29 +66,4 @@ public class View {
         return root;
     }
 
-//    public int getXwaarde() {
-//        return xwaarde;
-//    }
-//
-//    public int getYwaarde() {
-//        return ywaarde;
-//    }
-//
-//    public boolean isMoveSet() {
-//        return moveSet;
-//    }
-//
-//    public void setMoveSet(boolean moveSet) {
-//        System.out.println(moveSet);
-//        this.moveSet = moveSet;
-//    }
-//
-//    public void setXwaarde(int xwaarde) {
-//        System.out.println(xwaarde);
-//        this.xwaarde = xwaarde;
-//    }
-//
-//    public void setYwaarde(int ywaarde) {
-//        this.ywaarde = ywaarde;
-//    }
 }

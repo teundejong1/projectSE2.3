@@ -161,7 +161,4 @@ public class Controller {
         gameAnchor.getChildren().add(View.setTTT());
     }
 
-//    public void setView(View view) {
-//        this.view = view;
-//    }
 }
