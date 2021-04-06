@@ -110,7 +110,8 @@ public class TicTacToe extends Game implements Runnable {
                 doMove(move, mark);
                 if (checkForWin()){
                     System.out.println(currentTurn + " has won!111!!!1@!");
-//                    board.setMove(move.getX(), move.getY(), mark);
+                    System.out.println(getBoard());
+
                     status = GameStatus.WON;
                 }
                 else if (board.isFull()) status = GameStatus.DRAW;

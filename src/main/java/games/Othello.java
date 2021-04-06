@@ -1,5 +1,6 @@
 package games;
 
+import games.ai.OthelloAI;
 import games.board.Mark;
 import games.board.OthelloBoard;
 import games.board.SetOutOfBoundsException;
@@ -31,18 +32,23 @@ public class Othello extends Game implements Runnable {
 
         if (!(board.getCell(x, y) == Mark.EMPTY)) throw new IllegalMoveException("Already occupied");
         System.out.println(move.getX());
+        System.out.println(move.getY());
         //System.out.println(getPossibleMoves());
-        for (Move placedMove : getPossibleMoves()) {
-            if (placedMove.getX() == move.getX() && placedMove.getY() == move.getY()) {
-                System.out.println("TESTINGS, MOET NOG AANPASSEN");
-                break;
-            } else {
-                throw new IllegalMoveException("HOERENKOSTENJUSETGNIUWEGFHWEIGUHN");
-            }
-        }
+        if (!isLegitMove(move)) throw new IllegalMoveException("Move mag niet uitgevoerd worden");
 //        if (!(getPossibleMoves().contains(move))) {
 //            System.out.println("zit niet in de lijst1?!?!?!");
 //        }
+    }
+    public boolean isLegitMove(Move move){
+        int x = move.getX();
+        int y = move.getY();
+        for (Move moveInList : getPossibleMoves()) {
+            if (moveInList.getX() == move.getX() && moveInList.getY() == move.getY()) {
+                System.out.println("TESTINGS, MOET NOG AANPASSEN");
+                return true;
+            }
+        }
+        return false;
     }
 
     public void changeTurn() {
@@ -219,14 +225,22 @@ public class Othello extends Game implements Runnable {
                     if (getPossibleMoves().isEmpty()) {
                         System.out.println("HEBT GEEN MOVES ATM");
                 changeTurn();
+                        System.out.println(getPossibleMoves());
+                if (getPossibleMoves().isEmpty()) {
+                            System.out.println("No more moves left for both players");
+                            System.out.println(Arrays.toString(score()));
+                        }
             }
             move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
             try {
                 doMove(move, mark);
                 flipMarks(move);
-                if (checkForWin()) status = GameStatus.WON;
-                else if (board.isFull()) status = GameStatus.DRAW; // TODO
+                //if (checkForWin()) status = GameStatus.WON;
+                if (board.isFull()){
+                    status = GameStatus.WON;
+                    System.out.println(Arrays.toString(score()));
+                }
                 else changeTurn();
 
 
@@ -240,7 +254,7 @@ public class Othello extends Game implements Runnable {
     @Override
     public void run() {
         Player p1 = PlayerFactory.createCLIPlayer("Frankenstein");
-        Player p2 = PlayerFactory.createCLIPlayer("Monster");
+        Player p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
         try {
             start(p1, p2);
         } catch (SetOutOfBoundsException e) {
