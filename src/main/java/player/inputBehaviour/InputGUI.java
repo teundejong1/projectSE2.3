@@ -25,7 +25,7 @@ public class InputGUI implements Input {
         for(Node node :View.elements.getChildren()) {
             if(node.getClass() == Tile.class) {
                 Tile tile = (Tile)node;
-                Mark mark = game.getBoard().getCell(tile.getXwaarde(), tile.getYwaarde());
+                Mark mark = game.getBoard().getCell(tile.getYwaarde(), tile.getXwaarde());
                 if (mark != tile.getMark()) {
                     if (mark == Mark.ONE) {
                         ImageView cross = new ImageView("/images/Cross.png");
@@ -53,7 +53,6 @@ public class InputGUI implements Input {
             }
         }
 
-
         while (!View.moveSet) {
             try {
                 Thread.sleep(500);
@@ -61,11 +60,9 @@ public class InputGUI implements Input {
                 exception.printStackTrace();
             }
         }
-
         Move move = new Move(View.xwaarde, View.ywaarde);
-        System.out.println(View.xwaarde);
-        System.out.println(View.ywaarde);
         View.moveSet = false;
+
         return move;
     }
 }

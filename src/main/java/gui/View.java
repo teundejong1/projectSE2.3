@@ -39,8 +39,8 @@ public class View {
          */
         elements.getChildren().clear();
         root.getChildren().addAll(elements);
-        for(int x = 0; x < TTT_SIZE; x++) {
-            for (int y = 0; y < TTT_SIZE; y++) {
+        for(int y = 0; y < TTT_SIZE; y++) {
+            for (int x = 0; x < TTT_SIZE; x++) {
                 Tile tile =  new Tile(x, y);
                 // Tile maken
                 elements.getChildren().add(tile);
@@ -56,8 +56,8 @@ public class View {
         root.setPrefSize(OTHELLO_SIZE * OTHELLO_SIZE, OTHELLO_SIZE * OTHELLO_SIZE);
         elements.getChildren().clear();
         root.getChildren().addAll(elements);
-        for(int x = 0; x < OTHELLO_SIZE; x++) {
-            for (int y = 0; y < OTHELLO_SIZE; y++) {
+        for(int y = 0; y < OTHELLO_SIZE; y++) {
+            for (int x = 0; x < OTHELLO_SIZE; x++) {
                 // Tile Maken
                 Tile tile =  new Tile(x, y);
                 elements.getChildren().add(tile);
