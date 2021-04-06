@@ -30,12 +30,15 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class Controller {
+    private View view;
+
     @FXML
     public Button TTTvsspeler, TTTvsAI, Othellovsspeler, OthellovsAI;
     public AnchorPane parent;
     public Button butt00, butt01, butt02, butt10, butt11, butt12, butt20, butt21, butt22 ;
     private final ObservableList<String> opties = FXCollections.observableArrayList("speler vs speler", "speler vs AI");
     public AnchorPane gameAnchor;
+
 
     FXMLLoader loader;
     Parent root;
@@ -157,4 +160,8 @@ public class Controller {
         gameAnchor.getChildren().clear();
         gameAnchor.getChildren().add(View.setTTT());
     }
+
+//    public void setView(View view) {
+//        this.view = view;
+//    }
 }

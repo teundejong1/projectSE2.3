@@ -62,9 +62,9 @@
                <children>
                   <Label fx:id="player1" text="Player 1" />
                   <Region prefHeight="26.0" prefWidth="7.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="conceid" mnemonicParsing="false" onMouseClicked="#conceid" text="Geef op" />
+                  <Button fx:id="conceid" mnemonicParsing="false" onMouseClicked="#conceid" text="Othello" />
                   <Label fx:id="gameName" text="Game Name" />
-                  <Button fx:id="hint" mnemonicParsing="false" onMouseClicked="#getHint" text="Hint" />
+                  <Button fx:id="hint" mnemonicParsing="false" onMouseClicked="#getHint" text="TicTacToe" />
                   <Region HBox.hgrow="ALWAYS" />
                   <Label fx:id="player2" text="Player 2" />
                </children>

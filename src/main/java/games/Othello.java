@@ -235,4 +235,10 @@ public class Othello extends Game {
         }
         while (status == GameStatus.PLAYING);
     }
+
+    @Override
+    public void run() {
+
+    }
+
 }

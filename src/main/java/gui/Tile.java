@@ -1,13 +1,22 @@
 package gui;
 
+import games.board.Mark;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
+import player.inputBehaviour.InputGUI;
 
 /**
  * @author Almas Baimagambetov (almaslvl@gmail.com)
  */
 public class Tile extends Rectangle {
+
+    private int xwaarde;
+    private int ywaarde;
+    private Mark mark;
 
 //    private Piece piece;
 //
@@ -23,13 +32,36 @@ public class Tile extends Rectangle {
 //        this.piece = piece;
 //    }
 
+
+    public int getXwaarde() {
+        return xwaarde;
+    }
+
+    public int getYwaarde() {
+        return ywaarde;
+    }
+
+    public Mark getMark() {
+        return mark;
+    }
+
+    public void setMark(Mark mark) {
+        this.mark = mark;
+    }
+
     public Tile(int x, int y) {
+        xwaarde = x;
+        ywaarde = y;
+        mark = Mark.EMPTY;
+
         setWidth(View.TILE_SIZE);
         setHeight(View.TILE_SIZE);
 
         relocate(x * View.TILE_SIZE, y * View.TILE_SIZE);
 
         setFill(Color.BEIGE);
+        setStrokeType(StrokeType.INSIDE);
+        setStroke(Color.BLACK);
 
         /*
         De muisklik event
@@ -42,15 +74,14 @@ public class Tile extends Rectangle {
          */
         setOnMouseReleased(e -> {
             //placeholder actie
-            Ellipse ellipse =  new Ellipse();
-            ellipse.setRadiusX(30);
-            ellipse.setRadiusY(30);
-            ellipse.setCenterX((x+0.5)*View.TILE_SIZE);
-            ellipse.setCenterY((y+0.5)*View.TILE_SIZE);
-            View.elements.getChildren().add(ellipse);
+            View.xwaarde = ywaarde;
+            View.ywaarde = xwaarde;
+
+            View.moveSet = true;
+
+
             //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
             setDisable(true);
         });
-
     }
 }

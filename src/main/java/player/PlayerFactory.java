@@ -1,6 +1,7 @@
 package player;
 
 import games.GameEnum;
+import gui.View;
 import player.inputBehaviour.InputAI;
 import player.inputBehaviour.InputCLI;
 import player.inputBehaviour.InputGUI;
@@ -13,8 +14,11 @@ public class PlayerFactory {
         return new ConcretePlayer(name, new InputAI(game));
     }
 
+    //dit ding krijgt een view mee, dat is nodig voor de inputGUI
     public static Player createGUIPlayer(String name) {
-        return new ConcretePlayer(name, new InputGUI());
+        InputGUI inputGUI = new InputGUI();
+
+        return new ConcretePlayer(name, inputGUI);
     }
     
     public static Player createCLIPlayer(String name) {
