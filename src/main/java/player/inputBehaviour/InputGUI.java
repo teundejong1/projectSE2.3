@@ -52,7 +52,7 @@ public class InputGUI implements Input {
 
         while (!View.moveSet) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(1);
             } catch(InterruptedException exception) {
                 exception.printStackTrace();
             }

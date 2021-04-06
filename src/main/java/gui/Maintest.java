@@ -29,15 +29,16 @@ public class Maintest{
         Thread thread =  new Thread(fxmlTest);
 
         thread.start();
-
-        Player p1 = PlayerFactory.createGUIPlayer("Teun");
-        Player p2 = PlayerFactory.createGUIPlayer("Esther");
-
-
+//
+//        Player p1 = PlayerFactory.createGUIPlayer("Teun");
+//        Player p2 = PlayerFactory.createGUIPlayer("Esther");
 //        Othello othello = new Othello(PlayerType.ONE);
-//        Thread testgame = new Thread(othello);
-////        Game game = new TicTacToe(PlayerType.ONE);
-//        testgame.start();
-////        game.start(p1, p2);
+//        Thread Othread = new Thread(othello);
+//        Othread.start();
+
+        TicTacToe ticTacToe = new TicTacToe(PlayerType.ONE);
+        Thread testgame = new Thread(ticTacToe);
+        testgame.start();
+//        game.start(p1, p2);
     }
 }
