@@ -11,20 +11,17 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 public class InputGUI implements Input {
-    private View view;
-
-    public void setView(View view) {
-        this.view = view;
-    }
 
     @Override
     public Move requestMove(Game game) {
         // TODO GUI
-        System.out.println(game.getBoard());
+
 
         for(Node node :View.elements.getChildren()) {
             if(node.getClass() == Tile.class) {
                 Tile tile = (Tile)node;
+                System.out.println(tile.getXwaarde());
+                System.out.println(tile.getYwaarde());
                 Mark mark = game.getBoard().getCell(tile.getYwaarde(), tile.getXwaarde());
                 if (mark != tile.getMark()) {
                     if (mark == Mark.ONE) {
@@ -36,7 +33,6 @@ public class InputGUI implements Input {
                         Platform.runLater(() -> {
                             View.elements.getChildren().add(cross);
                         });
-
                     }
                     if (mark == Mark.TWO) {
                         ImageView circle = new ImageView("/images/Circle.png");
@@ -52,6 +48,7 @@ public class InputGUI implements Input {
                 }
             }
         }
+        System.out.println(game.getBoard());
 
         while (!View.moveSet) {
             try {

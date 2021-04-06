@@ -1,5 +1,6 @@
 package gui;
 
+import games.Othello;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import player.Player;
+import player.PlayerType;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -154,6 +156,9 @@ public class Controller {
     public void conceid(MouseEvent mouseEvent) {
         gameAnchor.getChildren().clear();
         gameAnchor.getChildren().add(View.setOthello());
+        Othello othello = new Othello(PlayerType.ONE);
+        Thread testgame = new Thread(othello);
+        testgame.start();
     }
 
     public void getHint(MouseEvent mouseEvent) {

@@ -28,15 +28,6 @@ public class View {
     public static Parent setTTT()  {
         Pane root = new Pane();
         root.setPrefSize(TTT_SIZE * TILE_SIZE, TTT_SIZE * TILE_SIZE);
-
-        /**
-         * We moeten op één of andere manier bij de tiles komen
-         * opties:
-         * - Een static container maken en legen aan het begin van deze methode om hierna weer op te vullen met de elementen
-         * - Een manier te vinden om de view te instantieren (op dit moment is alles in de View-klasse static, foei!)
-         *
-         * creating the board can also go in 1 method. Just give the size.
-         */
         elements.getChildren().clear();
         root.getChildren().addAll(elements);
         for(int y = 0; y < TTT_SIZE; y++) {

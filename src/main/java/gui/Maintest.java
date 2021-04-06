@@ -2,6 +2,7 @@ package gui;
 
 import games.Game;
 import games.GameEnum;
+import games.Othello;
 import games.TicTacToe;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,10 +34,10 @@ public class Maintest{
         Player p2 = PlayerFactory.createGUIPlayer("Esther");
 
 
-        TicTacToe ticTacToe = new TicTacToe(PlayerType.ONE);
-        Thread testgame = new Thread(ticTacToe);
-//        Game game = new TicTacToe(PlayerType.ONE);
-        testgame.start();
-//        game.start(p1, p2);
+//        Othello othello = new Othello(PlayerType.ONE);
+//        Thread testgame = new Thread(othello);
+////        Game game = new TicTacToe(PlayerType.ONE);
+//        testgame.start();
+////        game.start(p1, p2);
     }
 }
