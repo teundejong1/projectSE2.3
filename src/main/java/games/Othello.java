@@ -4,13 +4,14 @@ import games.board.Mark;
 import games.board.OthelloBoard;
 import games.board.SetOutOfBoundsException;
 import player.Player;
+import player.PlayerFactory;
 import player.PlayerType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Othello extends Game {
+public class Othello extends Game implements Runnable {
 
     public Othello(PlayerType startingPlayer) {
         super(startingPlayer);
@@ -31,8 +32,8 @@ public class Othello extends Game {
         if (!(board.getCell(x, y) == Mark.EMPTY)) throw new IllegalMoveException("Already occupied");
         System.out.println(move.getX());
         //System.out.println(getPossibleMoves());
-        for (Move PosMOV : getPossibleMoves()) {
-            if (PosMOV.getX() == move.getX() && PosMOV.getY() == move.getY()) {
+        for (Move placedMove : getPossibleMoves()) {
+            if (placedMove.getX() == move.getX() && placedMove.getY() == move.getY()) {
                 System.out.println("TESTINGS, MOET NOG AANPASSEN");
                 break;
             } else {
@@ -63,7 +64,7 @@ public class Othello extends Game {
         for (int x = 0; x < board.getSize(); x++) {
             for (int y = 0; y < board.getSize(); y++) {
                 if (board.getCell(x, y) == (Mark.EMPTY)) {
-                    boolean left = CheckforValidMove(x, y, 0, -1); // namen veranderen van bools
+                    boolean left = CheckforValidMove(x, y, 0, -1);
                     boolean bottomleft = CheckforValidMove(x, y, 1, -1);
                     boolean bottom = CheckforValidMove(x, y, 1, 0);
                     boolean bottomright = CheckforValidMove(x, y, 1, 1);
@@ -238,7 +239,12 @@ public class Othello extends Game {
 
     @Override
     public void run() {
-
+        Player p1 = PlayerFactory.createCLIPlayer("Frankenstein");
+        Player p2 = PlayerFactory.createCLIPlayer("Monster");
+        try {
+            start(p1, p2);
+        } catch (SetOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
-
 }

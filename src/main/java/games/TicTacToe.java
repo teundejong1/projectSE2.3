@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import games.board.Mark;
+import games.board.SetOutOfBoundsException;
 import games.board.TicTacToeBoard;
 import gui.View;
 import player.Player;
@@ -107,7 +108,11 @@ public class TicTacToe extends Game implements Runnable {
 
             try {
                 doMove(move, mark);
-                if (checkForWin()) status = GameStatus.WON;
+                if (checkForWin()){
+                    System.out.println(currentTurn + " has won!111!!!1@!");
+//                    board.setMove(move.getX(), move.getY(), mark);
+                    status = GameStatus.WON;
+                }
                 else if (board.isFull()) status = GameStatus.DRAW;
                 else changeTurn();
             } catch (IllegalMoveException e) {
