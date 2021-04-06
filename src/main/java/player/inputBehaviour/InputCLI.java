@@ -19,6 +19,7 @@ public class InputCLI implements Input {
 
         System.out.print("Do a move: ");
 
+
         // TODO validate input
 
         int x = scanner.nextInt();
