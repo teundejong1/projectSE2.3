@@ -94,7 +94,7 @@ public class TicTacToe extends Game implements Runnable {
 
 
     @Override
-    public void start(Player one, Player two) {
+    public void start(Player one, Player two) throws SetOutOfBoundsException {
         System.out.println("Tic Tac Toe!");
         status = GameStatus.PLAYING;
         board = new TicTacToeBoard(3);
@@ -131,8 +131,13 @@ public class TicTacToe extends Game implements Runnable {
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("SORRY");
-        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN");
-        start(p1, p2);
+        Player p1 = PlayerFactory.createCLIPlayer("SORRY");
+//        Player p2 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
+        Player p2 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
+        try {
+            start(p1, p2);
+        } catch (SetOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
 }

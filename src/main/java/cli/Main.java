@@ -14,8 +14,8 @@ public class Main {
 //        Player p2 = PlayerFactory.createAIPlayer("Esther", GameEnum.TTT);
 
 //        Game game = new TicTacToe(PlayerType.ONE);
-//        Thread thread = new Thread(new TicTacToe(PlayerType.ONE));
-        Thread thread = new Thread(new Othello(PlayerType.ONE));
+        Thread thread = new Thread(new TicTacToe(PlayerType.ONE));
+//        Thread thread = new Thread(new Othello(PlayerType.ONE));
         thread.start();
 //        game.start(p1, p2);
 
