@@ -4,6 +4,7 @@ import games.Game;
 import games.GameEnum;
 import games.Move;
 import games.ai.AI;
+import games.ai.OthelloAI;
 import games.ai.TicTacToeAI;
 
 public class InputAI implements Input {
@@ -16,7 +17,7 @@ public class InputAI implements Input {
                 ai = new TicTacToeAI();
                 break;
             case OTHELLO:
-                ai = null;
+                ai = new OthelloAI();
                 break;
         }
     }
