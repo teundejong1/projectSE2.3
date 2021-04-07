@@ -76,7 +76,7 @@ class Parser implements Runnable {
         ArrayList<String> list = parser.parseList(games);
         System.out.println(list);
 
-        String keyvalues = "{GAMTYPE: \"<speltype>\", PLAYERTOMOVE: \"<naam speler1>\", OPPONENT: \"<naam tegenstander>\"}";
+        String keyvalues = "GET GAMELIST {GAMTYPE: \"<speltype>\", PLAYERTOMOVE: \"<naam speler1>\", OPPONENT: \"<naam tegenstander>\"}";
         HashMap<String, String> map = parser.parseMap(keyvalues);
         System.out.println(map);
     }
