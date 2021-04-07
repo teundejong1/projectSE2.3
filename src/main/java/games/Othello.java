@@ -254,7 +254,8 @@ public class Othello extends Game implements Runnable {
     @Override
     public void run() {
         Player p1 = PlayerFactory.createGUIPlayer("Frankenstein");
-        Player p2 = PlayerFactory.createGUIPlayer("Monster");
+        Player p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
+//        Player p2 = PlayerFactory.createGUIPlayer("Monster");
         try {
             start(p1, p2);
         } catch (SetOutOfBoundsException e) {

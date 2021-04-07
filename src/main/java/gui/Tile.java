@@ -89,7 +89,7 @@ public class Tile extends Rectangle {
                 Othello othello = (Othello) this.game;
                 boolean zetMogelijk = false;
                 for (Move move : othello.getPossibleMoves()) {
-                    if (move.getY() == ywaarde && move.getX() == xwaarde) {
+                    if (move.getY() == xwaarde && move.getX() == ywaarde) {
                         View.xwaarde = ywaarde;
                         View.ywaarde = xwaarde;
 
