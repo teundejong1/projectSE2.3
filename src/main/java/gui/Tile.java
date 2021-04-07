@@ -1,6 +1,11 @@
 package gui;
 
+import games.Game;
+import games.Move;
+import games.Othello;
+import games.TicTacToe;
 import games.board.Mark;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -17,8 +22,17 @@ public class Tile extends Rectangle {
     private int xwaarde;
     private int ywaarde;
     private Mark mark;
+    private Game game;
+    private Node spelStuk;
 
 
+    public Node getSpelStuk() {
+        return spelStuk;
+    }
+
+    public void setSpelStuk(Node spelStuk) {
+        this.spelStuk = spelStuk;
+    }
 
     public int getXwaarde() {
         return xwaarde;
@@ -36,10 +50,11 @@ public class Tile extends Rectangle {
         this.mark = mark;
     }
 
-    public Tile(int x, int y) {
+    public Tile(int x, int y, Game game) {
         xwaarde = x;
         ywaarde = y;
         mark = Mark.EMPTY;
+        this.game = game;
 
         setWidth(View.TILE_SIZE);
         setHeight(View.TILE_SIZE);
@@ -50,25 +65,48 @@ public class Tile extends Rectangle {
         setStrokeType(StrokeType.INSIDE);
         setStroke(Color.BLACK);
 
-        /*
-        De muisklik event
-        op dit moment staat er een placeholderactie, maar het moet natuurlijk inspelen op de gamelogica
-        er moet een methode zijn die we kunnen aanroepen die checkt wiens beurt het is en welk teken er aangemaakt moet worden
-        BELANGRIJK (relatief): we moeten een logische manier bedenken om het teken te bepalen dat hier ingevuld moet worden
-            we kunnen natuurlijk een case-switch maken voor elk mogelijk teken, dus othello en TTT (en in theoretische uitbreidingen nog meer)
-            we kunnen ook meerdere Tile sub-klassen aanmaken
-            andere opties?
-         */
-        setOnMouseReleased(e -> {
-            //placeholder actie
-            View.xwaarde = ywaarde;
-            View.ywaarde = xwaarde;
+        if(game.getClass() == TicTacToe.class) {
+            setOnMouseReleased(e -> {
+                //placeholder actie
+                View.xwaarde = ywaarde;
+                View.ywaarde = xwaarde;
 
-            View.moveSet = true;
+                View.moveSet = true;
 
 
-            //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
-            setDisable(true);
-        });
+                //dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
+                setDisable(true);
+            });
+        } else if(game.getClass() == Othello.class) {
+            setOnMouseEntered(e -> {
+                setFill(Color.WHEAT);
+            });
+            setOnMouseExited(e -> {
+                setFill(Color.BEIGE);
+            });
+
+            setOnMouseReleased(e -> {
+                Othello othello = (Othello) this.game;
+                boolean zetMogelijk = false;
+                for (Move move : othello.getPossibleMoves()) {
+                    if (move.getY() == ywaarde && move.getX() == xwaarde) {
+                        View.xwaarde = ywaarde;
+                        View.ywaarde = xwaarde;
+
+                        View.moveSet = true;
+                        zetMogelijk = true;
+
+
+                        //dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
+                        setDisable(true);
+                    }
+                }
+                if(!zetMogelijk) {
+                    /*TODO
+                    hier moet duidelijk gemaakt worden dat de zet niet mogelijk is
+                     */
+                }
+            });
+        }
     }
 }

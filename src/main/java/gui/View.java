@@ -1,5 +1,7 @@
 package gui;
 
+import games.Othello;
+import games.TicTacToe;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -25,14 +27,14 @@ public class View {
 
 
 
-    public static Parent setTTT()  {
+    public static Parent setTTT(TicTacToe ticTacToe)  {
         Pane root = new Pane();
         root.setPrefSize(TTT_SIZE * TILE_SIZE, TTT_SIZE * TILE_SIZE);
         elements.getChildren().clear();
         root.getChildren().addAll(elements);
         for(int y = 0; y < TTT_SIZE; y++) {
             for (int x = 0; x < TTT_SIZE; x++) {
-                Tile tile =  new Tile(x, y);
+                Tile tile =  new Tile(x, y, ticTacToe);
                 // Tile maken
                 elements.getChildren().add(tile);
             }
@@ -42,7 +44,7 @@ public class View {
         return root;
     }
 
-    public static Parent setOthello()  {
+    public static Parent setOthello(Othello othello)  {
         Pane root = new Pane();
         root.setPrefSize(OTHELLO_SIZE * OTHELLO_SIZE, OTHELLO_SIZE * OTHELLO_SIZE);
         elements.getChildren().clear();
@@ -50,7 +52,7 @@ public class View {
         for(int y = 0; y < OTHELLO_SIZE; y++) {
             for (int x = 0; x < OTHELLO_SIZE; x++) {
                 // Tile Maken
-                Tile tile =  new Tile(x, y);
+                Tile tile =  new Tile(x, y, othello);
                 elements.getChildren().add(tile);
             }
         }
