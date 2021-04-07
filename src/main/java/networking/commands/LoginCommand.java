@@ -12,4 +12,5 @@ public class LoginCommand implements Command {
     public String toString() {
         return String.format("LOGIN %s", name);
     }
+
 }

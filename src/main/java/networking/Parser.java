@@ -9,12 +9,12 @@ import java.util.regex.Pattern;
 
 class Parser implements Runnable {
 
-    private BlockingQueue<String> inputQueue;
+    private BlockingQueue<String> inputBuffer;
 
     public Parser() {}
 
-    public Parser(BlockingQueue<String> inputQueue) {
-        this.inputQueue = inputQueue;
+    public Parser(BlockingQueue<String> inputBuffer) {
+        this.inputBuffer = inputBuffer;
     }
 
     @Override
@@ -24,7 +24,7 @@ class Parser implements Runnable {
 
         while (true) {
             try {
-                sb = new StringBuilder(inputQueue.take());
+                sb = new StringBuilder(inputBuffer.take());
                 String moreInput;
 
                 while ((moreInput = poll()) != null) {
@@ -40,7 +40,7 @@ class Parser implements Runnable {
     }
 
     private String poll() throws InterruptedException {
-        return inputQueue.poll(50, TimeUnit.MILLISECONDS);
+        return inputBuffer.poll(50, TimeUnit.MILLISECONDS);
     }
 
     private ArrayList<String> parseList(String input) {
