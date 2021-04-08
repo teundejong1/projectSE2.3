@@ -7,7 +7,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Parser implements Runnable {
+/**
+ * haalt commando's uit inputbuffer (om te verwerken
+ */
+
+class Parser{
 
     private BlockingQueue<String> inputBuffer;
 
@@ -17,32 +21,47 @@ class Parser implements Runnable {
         this.inputBuffer = inputBuffer;
     }
 
-    @Override
-    public void run() {
 
-        StringBuilder sb;
+//    @Override
+//    public void run() {
+//
+//        // sb bestaat alleen in run?
+//
+//        StringBuilder sb;
+//
+//        while (true) {
+//            try {
+//                // krijg input van Server
+//                sb = new StringBuilder(inputBuffer.take());
+//                String moreInput;
+//
+//                // Check of er meer input is
+//                while ((moreInput = poll()) != null) {
+//                    sb.append(System.getProperty("line.separator") + moreInput);
+//                }
+//
+//                System.out.println(sb.toString());
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//    }
 
-        while (true) {
-            try {
-                sb = new StringBuilder(inputBuffer.take());
-                String moreInput;
-
-                while ((moreInput = poll()) != null) {
-                    sb.append(System.getProperty("line.separator") + moreInput);
-                }
-
-                System.out.println(sb.toString());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        
-    }
-
+    /**
+     * Checkt voor input
+     * @return nieuwe input
+     * @throws InterruptedException
+     */
     private String poll() throws InterruptedException {
         return inputBuffer.poll(50, TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * zet String om tot lijst
+     * @param input
+     * @return
+     */
     private ArrayList<String> parseList(String input) {
         ArrayList<String> list = new ArrayList<>();
 
@@ -56,6 +75,11 @@ class Parser implements Runnable {
         return list;
     }
 
+    /**
+     * zet string om tot HashMap
+     * @param input
+     * @return
+     */
     private HashMap<String, String> parseMap(String input) {
         HashMap<String, String> map = new HashMap<>();
 
@@ -69,16 +93,16 @@ class Parser implements Runnable {
         return map;
     }
 
-    public static void main(String[] args) {
-        Parser parser = new Parser();
-
-        String games = "[\"Reversi\", \"Tic-tac-toe\"]";
-        ArrayList<String> list = parser.parseList(games);
-        System.out.println(list);
-
-        String keyvalues = "GET GAMELIST {GAMTYPE: \"<speltype>\", PLAYERTOMOVE: \"<naam speler1>\", OPPONENT: \"<naam tegenstander>\"}";
-        HashMap<String, String> map = parser.parseMap(keyvalues);
-        System.out.println(map);
-    }
+//    public static void main(String[] args) {
+//        Parser parser = new Parser();
+//
+//        String games = "[\"Reversi\", \"Tic-tac-toe\"]";
+//        ArrayList<String> list = parser.parseList(games);
+//        System.out.println(list);
+//
+//        String keyvalues = "GET GAMELIST {GAMTYPE: \"<speltype>\", PLAYERTOMOVE: \"<naam speler1>\", OPPONENT: \"<naam tegenstander>\"}";
+//        HashMap<String, String> map = parser.parseMap(keyvalues);
+//        System.out.println(map);
+//    }
 
 }

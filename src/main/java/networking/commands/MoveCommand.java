@@ -41,5 +41,9 @@ public class MoveCommand implements Command {
     private int convertToCell(int x, int y, int boardSize) {
         return (x * boardSize + y);
     }
-    
+
+    @Override
+    public void execute() {
+
+    }
 }

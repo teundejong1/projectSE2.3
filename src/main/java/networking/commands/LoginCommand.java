@@ -13,4 +13,6 @@ public class LoginCommand implements Command {
         return String.format("LOGIN %s", name);
     }
 
+    @Override
+    public void execute() {}
 }

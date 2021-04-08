@@ -8,4 +8,9 @@ public class LogoutCommand implements Command {
     public String toString() {
         return "LOGOUT";
     }
+
+    @Override
+    public void execute() {
+
+    }
 }

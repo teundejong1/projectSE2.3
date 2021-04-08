@@ -15,31 +15,31 @@ import threadpool.ThreadPool;
 
 class Connection implements AutoCloseable {
 
-    // public static void main(String[] args) {
+     public static void main(String[] args) {
 
-    //     LinkedBlockingQueue<String> inputBuffer = new LinkedBlockingQueue<>();
-    //     LinkedBlockingQueue<String> outputBuffer = new LinkedBlockingQueue<>();
+         LinkedBlockingQueue<String> inputBuffer = new LinkedBlockingQueue<>();
+         LinkedBlockingQueue<String> outputBuffer = new LinkedBlockingQueue<>();
 
-    //     try (
-    //         Connection connection = new Connection(inputBuffer, outputBuffer);
-    //         Scanner scanner = new Scanner(System.in);
-    //     ) {
+         try (
+             Connection connection = new Connection(inputBuffer, outputBuffer);
+             Scanner scanner = new Scanner(System.in);
+         ) {
 
-    //         ThreadPoolExecutor tp = ThreadPool.getInstance();
+             ThreadPoolExecutor tp = ThreadPool.getInstance();
 
-    //         tp.submit(new Parser(inputBuffer));
+             tp.submit(new Parser(inputBuffer));
 
-    //         while(connection.isConnected() && !connection.isClosed()) {
-    //             connection.write(scanner.nextLine());
-    //         }
+             while(connection.isConnected() && !connection.isClosed()) {
+                 connection.write(scanner.nextLine());
+             }
 
-    //     } catch (ConnectionFailedException cfe) {
-    //         cfe.printStackTrace(); 
-    //     }
+         } catch (ConnectionFailedException cfe) {
+             cfe.printStackTrace();
+         }
 
-    //     ThreadPool.shutdown();
-    //     System.out.println("Shutdown");
-    // }
+         ThreadPool.shutdown();
+         System.out.println("Shutdown");
+     }
 
     private static final String CHECK_ONE = "Strategic Game Server Fixed [Version 1.1.0]";
     private static final String CHECK_TWO = "(C) Copyright 2015 Hanzehogeschool Groningen";

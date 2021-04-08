@@ -8,4 +8,5 @@ public enum Type {
     WIN,
     LOSS,
     DRAW
+
 }
