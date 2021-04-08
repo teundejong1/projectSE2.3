@@ -35,10 +35,10 @@ public class Maintest{
 //        Othello othello = new Othello(PlayerType.ONE);
 //        Thread Othread = new Thread(othello);
 //        Othread.start();
-
-        TicTacToe ticTacToe = new TicTacToe(PlayerType.ONE);
-        Thread testgame = new Thread(ticTacToe);
-        testgame.start();
+//
+//        TicTacToe ticTacToe = new TicTacToe(PlayerType.ONE);
+//        Thread testgame = new Thread(ticTacToe);
+//        testgame.start();
 //        game.start(p1, p2);
     }
 }

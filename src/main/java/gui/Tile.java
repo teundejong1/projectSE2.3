@@ -1,6 +1,11 @@
 package gui;
 
+import games.Game;
+import games.Move;
+import games.Othello;
+import games.TicTacToe;
 import games.board.Mark;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -17,21 +22,30 @@ public class Tile extends Rectangle {
     private int xwaarde;
     private int ywaarde;
     private Mark mark;
+    private Game game;
+    private Node spelStuk;
+    private Color defaultColor;
+    private Color normalColor;
+    private Color highlightColor;
+    private Color darkenColor;
 
-//    private Piece piece;
-//
-//    public boolean hasPiece() {
-//        return piece != null;
-//    }
-//
-//    public Piece getPiece() {
-//        return piece;
-//    }
-//
-//    public void setPiece(Piece piece) {
-//        this.piece = piece;
-//    }
 
+    public void colorDefault() {
+        normalColor = defaultColor;
+        setFill(defaultColor);
+    }
+    public void highlight() {
+        normalColor = highlightColor;
+        setFill(highlightColor);
+    }
+
+    public Node getSpelStuk() {
+        return spelStuk;
+    }
+
+    public void setSpelStuk(Node spelStuk) {
+        this.spelStuk = spelStuk;
+    }
 
     public int getXwaarde() {
         return xwaarde;
@@ -49,39 +63,68 @@ public class Tile extends Rectangle {
         this.mark = mark;
     }
 
-    public Tile(int x, int y) {
+    public Tile(int x, int y, Game game) {
         xwaarde = x;
         ywaarde = y;
         mark = Mark.EMPTY;
+        this.game = game;
+        defaultColor = Color.BEIGE;
+        normalColor = defaultColor;
+        darkenColor = Color.WHEAT;
+        highlightColor = Color.WHITESMOKE;
+
 
         setWidth(View.TILE_SIZE);
         setHeight(View.TILE_SIZE);
 
         relocate(x * View.TILE_SIZE, y * View.TILE_SIZE);
 
-        setFill(Color.BEIGE);
+        colorDefault();
         setStrokeType(StrokeType.INSIDE);
         setStroke(Color.BLACK);
 
-        /*
-        De muisklik event
-        op dit moment staat er een placeholderactie, maar het moet natuurlijk inspelen op de gamelogica
-        er moet een methode zijn die we kunnen aanroepen die checkt wiens beurt het is en welk teken er aangemaakt moet worden
-        BELANGRIJK (relatief): we moeten een logische manier bedenken om het teken te bepalen dat hier ingevuld moet worden
-            we kunnen natuurlijk een case-switch maken voor elk mogelijk teken, dus othello en TTT (en in theoretische uitbreidingen nog meer)
-            we kunnen ook meerdere Tile sub-klassen aanmaken
-            andere opties?
-         */
-        setOnMouseReleased(e -> {
-            //placeholder actie
-            View.xwaarde = ywaarde;
-            View.ywaarde = xwaarde;
+        if(game.getClass() == TicTacToe.class) {
+            setOnMouseReleased(e -> {
+                //placeholder actie
+                View.xwaarde = ywaarde;
+                View.ywaarde = xwaarde;
 
-            View.moveSet = true;
+                View.moveSet = true;
 
 
-            //dit is niet placeholder, dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
-            setDisable(true);
-        });
+                //dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
+                setDisable(true);
+            });
+        } else if(game.getClass() == Othello.class) {
+            setOnMouseEntered(e -> {
+                setFill(darkenColor);
+            });
+            setOnMouseExited(e -> {
+                setFill(normalColor);
+            });
+
+            setOnMouseReleased(e -> {
+                Othello othello = (Othello) this.game;
+                boolean zetMogelijk = false;
+                for (Move move : othello.getPossibleMoves()) {
+                    if (move.getY() == xwaarde && move.getX() == ywaarde) {
+                        View.xwaarde = ywaarde;
+                        View.ywaarde = xwaarde;
+
+                        View.moveSet = true;
+                        zetMogelijk = true;
+
+
+                        //dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
+                        setDisable(true);
+                    }
+                }
+                if(!zetMogelijk) {
+                    /*TODO
+                    hier moet duidelijk gemaakt worden dat de zet niet mogelijk is
+                     */
+                }
+            });
+        }
     }
 }
