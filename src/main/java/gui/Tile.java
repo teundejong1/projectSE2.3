@@ -24,7 +24,20 @@ public class Tile extends Rectangle {
     private Mark mark;
     private Game game;
     private Node spelStuk;
+    private Color defaultColor;
+    private Color normalColor;
+    private Color highlightColor;
+    private Color darkenColor;
 
+
+    public void colorDefault() {
+        normalColor = defaultColor;
+        setFill(defaultColor);
+    }
+    public void highlight() {
+        normalColor = highlightColor;
+        setFill(highlightColor);
+    }
 
     public Node getSpelStuk() {
         return spelStuk;
@@ -55,13 +68,18 @@ public class Tile extends Rectangle {
         ywaarde = y;
         mark = Mark.EMPTY;
         this.game = game;
+        defaultColor = Color.BEIGE;
+        normalColor = defaultColor;
+        darkenColor = Color.WHEAT;
+        highlightColor = Color.WHITESMOKE;
+
 
         setWidth(View.TILE_SIZE);
         setHeight(View.TILE_SIZE);
 
         relocate(x * View.TILE_SIZE, y * View.TILE_SIZE);
 
-        setFill(Color.BEIGE);
+        colorDefault();
         setStrokeType(StrokeType.INSIDE);
         setStroke(Color.BLACK);
 
@@ -79,10 +97,10 @@ public class Tile extends Rectangle {
             });
         } else if(game.getClass() == Othello.class) {
             setOnMouseEntered(e -> {
-                setFill(Color.WHEAT);
+                setFill(darkenColor);
             });
             setOnMouseExited(e -> {
-                setFill(Color.BEIGE);
+                setFill(normalColor);
             });
 
             setOnMouseReleased(e -> {

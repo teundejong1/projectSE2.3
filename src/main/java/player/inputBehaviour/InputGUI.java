@@ -9,8 +9,10 @@ import gui.View;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InputGUI implements Input {
 
@@ -20,10 +22,19 @@ public class InputGUI implements Input {
 
         ArrayList<Node> toAdd =  new ArrayList<>();
         ArrayList<Node> toRemove =  new ArrayList<>();
+        List<Move> moves = game.getPossibleMoves();
 
         for(Node node :View.elements.getChildren()) {
             if(node.getClass() == Tile.class) {
                 Tile tile = (Tile)node;
+                for (Move move:moves) {
+                    if(move.getY() == tile.getXwaarde() && move.getX() == tile.getYwaarde()) {
+                        tile.highlight();
+                        break;
+                    } else {
+                        tile.colorDefault();
+                    }
+                }
                 Mark mark = game.getBoard().getCell(tile.getYwaarde(), tile.getXwaarde());
                 if (mark != tile.getMark()) {
                     if(tile.getMark() == Mark.ONE || tile.getMark() == Mark.TWO) {
