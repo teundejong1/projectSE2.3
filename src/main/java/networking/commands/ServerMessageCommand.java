@@ -31,7 +31,8 @@ public class ServerMessageCommand implements Command {
     public void gameCommand(String cmd){
         String command = cmd.split(" ")[2].toLowerCase();
 
-        //MATCH | YOURTURN | MOVE | CHALLENGE | [WIN | LOSS | DRAWMATCH | YOURTURN | MOVE | CHALLENGE | [WIN | LOSS | DRAW
+        //MATCH | YOURTURN | MOVE | CHALLENGE | [WIN | LOSS | DRAW
+        // wordt gevolgd door HashMap
         switch(command){
             case "match":
                 break;

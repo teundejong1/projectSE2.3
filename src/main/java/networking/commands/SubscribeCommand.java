@@ -1,6 +1,6 @@
 package networking.commands;
 
-public class SubscribeCommand{
+public class SubscribeCommand implements Command{
 
     private String game;
 
@@ -17,4 +17,8 @@ public class SubscribeCommand{
         return String.format("SUBSCRIBE %s", game);
     }
 
+    @Override
+    public void execute() {
+        
+    }
 }

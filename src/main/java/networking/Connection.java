@@ -27,7 +27,7 @@ class Connection implements AutoCloseable {
 
              ThreadPoolExecutor tp = ThreadPool.getInstance();
 
-             tp.submit(new Parser(inputBuffer));
+             //tp.submit(new Parser(inputBuffer));
 
              while(connection.isConnected() && !connection.isClosed()) {
                  connection.write(scanner.nextLine());

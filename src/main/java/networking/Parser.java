@@ -1,5 +1,7 @@
 package networking;
 
+import networking.commands.Command;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
@@ -11,14 +13,24 @@ import java.util.regex.Pattern;
  * haalt commando's uit inputbuffer (om te verwerken
  */
 
-class Parser{
+public class Parser{
 
     private BlockingQueue<String> inputBuffer;
 
     public Parser() {}
 
-    public Parser(BlockingQueue<String> inputBuffer) {
-        this.inputBuffer = inputBuffer;
+    //public Parser(BlockingQueue<String> inputBuffer) {
+//        this.inputBuffer = inputBuffer;
+//    }
+
+    public Command parse(String input){
+        // change string to Command
+
+
+        //TODO link commandos
+
+
+        return null;
     }
 
 

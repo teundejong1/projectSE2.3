@@ -1,6 +1,6 @@
 package networking.commands;
 
-public class GetGamelistCommand {
+public class GetGamelistCommand implements Command{
     
     public GetGamelistCommand() {}
 
@@ -9,4 +9,8 @@ public class GetGamelistCommand {
         return "GET GAMELIST";
     }
 
+    @Override
+    public void execute() {
+
+    }
 }
