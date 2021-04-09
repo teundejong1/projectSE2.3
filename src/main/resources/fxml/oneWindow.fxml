@@ -44,13 +44,15 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import com.sun.javafx.scene.control.ContextMenuContent.MenuBox?>
 <BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
             <MenuBar fx:id="menuBar">
               <menus>
-                <Menu mnemonicParsing="false" text="How to Play">
+                 <Menu onAction="#setMenu" text="Naar menu" />
+                 <Menu mnemonicParsing="false" text="How to Play">
                   <items>
                     <MenuItem fx:id="howToTTT" mnemonicParsing="false" onAction="#howToTTT" text="TicTacToe" />
                         <MenuItem fx:id="howToOThello" mnemonicParsing="false" onAction="#howToOThello" text="Othello" />
@@ -62,9 +64,7 @@
                <children>
                   <Label fx:id="player1" text="Player 1" />
                   <Region prefHeight="26.0" prefWidth="7.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="conceid" mnemonicParsing="false" onMouseClicked="#conceid" text="Othello" />
                   <Label fx:id="gameName" text="Game Name" />
-                  <Button fx:id="hint" mnemonicParsing="false" onMouseClicked="#getHint" text="TicTacToe" />
                   <Region HBox.hgrow="ALWAYS" />
                   <Label fx:id="player2" text="Player 2" />
                </children>

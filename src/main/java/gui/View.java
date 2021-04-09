@@ -25,8 +25,6 @@ public class View {
 
     }
 
-
-
     public static Parent setTTT(TicTacToe ticTacToe)  {
         Pane root = new Pane();
         root.setPrefSize(TTT_SIZE * TILE_SIZE, TTT_SIZE * TILE_SIZE);
