@@ -19,6 +19,8 @@ class Connection implements AutoCloseable {
     private static final String CHECK_TWO = "(C) Copyright 2015 Hanzehogeschool Groningen";
 
     private static final int DEFAULT_PORT = 7789;
+//    private static final String DEFAULT_IP = "145.33.225.170";
+    private static final String DEFAULT_IP = "localhost";
 
     
     private Socket socket;
@@ -78,7 +80,7 @@ class Connection implements AutoCloseable {
     }
 
     private void initSocket(int port) throws IOException {
-        this.socket = new Socket("localhost", port); // TODO IP adres niet hard coded
+        this.socket = new Socket(DEFAULT_IP, port);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

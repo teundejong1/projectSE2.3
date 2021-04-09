@@ -158,6 +158,7 @@ public class Parser{
             case "win":
             case "loss":
             case "draw":
+                //TODO change game status
                 break;
             default:
                 System.out.println("none of these");
