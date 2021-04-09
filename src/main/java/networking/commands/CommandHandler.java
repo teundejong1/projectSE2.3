@@ -3,6 +3,7 @@ package networking.commands;
 import networking.Parser;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class CommandHandler implements Runnable{
@@ -12,11 +13,16 @@ public class CommandHandler implements Runnable{
     private networking.Parser parser;
 
 
-    public CommandHandler(BlockingQueue<String> inputBuffer, BlockingQueue<String> outputBuffer) {
-        this.inputBuffer = inputBuffer;
-        this.outputBuffer = outputBuffer;
-        parser = new Parser();
+//    public CommandHandler(BlockingQueue<String> inputBuffer, BlockingQueue<String> outputBuffer) {
+//        this.inputBuffer = inputBuffer;
+//        this.outputBuffer = outputBuffer;
+//        parser = new Parser();
+//
+//    }
 
+    public CommandHandler(LinkedBlockingQueue<String> inputBuffer) {
+        this.inputBuffer = inputBuffer;
+        parser = new Parser();
     }
 
     private String poll() throws InterruptedException {
@@ -33,20 +39,20 @@ public class CommandHandler implements Runnable{
             try {
                 // krijg input van Server
                 sb = new StringBuilder(inputBuffer.take());
+//                System.out.println(sb);
                 String moreInput;
 
                 // Check of er meer input is
-                while ((moreInput = poll()) != null) {
+                while ((moreInput  = poll())!= null){
 
                     sb.append(System.getProperty("line.separator") + moreInput);
                 }
 
-                System.out.println(sb.toString());
-                parser.parse(sb.toString());
+                parser.parseIn(sb.toString());
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            } // try/catch
 
         } //while
 
