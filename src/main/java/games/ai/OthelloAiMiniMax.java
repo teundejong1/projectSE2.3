@@ -76,13 +76,8 @@ public class OthelloAiMiniMax implements AI {
         Board temp = new OthelloBoard(8);
         for (int i = 0; i < game.getBoard().getSize(); i++) {
             for (int j = 0; j < game.getBoard().getSize(); j++) {
-                if (game.getBoard().getCell(i, j) == current) {
-                    temp.setMove(i, j, current);
-                } else if (game.getBoard().getCell(i, j) == opponent) {
-                    temp.setMove(i, j, opponent);
-                } else {
-                    temp.setMove(i, j, Mark.EMPTY);
-                }
+                Mark mark = game.getBoard().getCell(i, j);
+                temp.setMove(i, j, mark);
             }
         }
         return temp;
@@ -97,7 +92,7 @@ public class OthelloAiMiniMax implements AI {
         } else {
             int bestMoveVal = -99999;
             List<Move> moves = game.getPossibleMoves();
-            for (int i = 0; i < game.getPossibleMoves().size(); i++) {
+            for (int i = 0; i < moves.size(); i++) {
                 Board temp = copyBoard(game);
                 Move move = moves.get(i);
                 temp.setMove(move.getX(), move.getY(), getCurrent(game));
