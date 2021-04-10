@@ -1,6 +1,6 @@
 package games;
 
-import games.ai.OthelloAI;
+import games.board.Board;
 import games.board.Mark;
 import games.board.OthelloBoard;
 import games.board.SetOutOfBoundsException;
@@ -39,12 +39,13 @@ public class Othello extends Game implements Runnable {
 //            System.out.println("zit niet in de lijst1?!?!?!");
 //        }
     }
-    public boolean isLegitMove(Move move){
+
+    public boolean isLegitMove(Move move) {
         int x = move.getX();
         int y = move.getY();
         for (Move moveInList : getPossibleMoves()) {
             if (moveInList.getX() == move.getX() && moveInList.getY() == move.getY()) {
-                System.out.println("TESTINGS, MOET NOG AANPASSEN");
+                //System.out.println("TESTINGS, MOET NOG AANPASSEN");
                 return true;
             }
         }
@@ -64,7 +65,7 @@ public class Othello extends Game implements Runnable {
         return false;
     }
 
-    @Override
+
     public List<Move> getPossibleMoves() {
         ArrayList<Move> listPossibleMoves = new ArrayList<>();
         for (int x = 0; x < board.getSize(); x++) {
@@ -88,7 +89,7 @@ public class Othello extends Game implements Runnable {
         return listPossibleMoves;
     }
 
-    public boolean CheckforValidMove(int currentX, int currentY, int toCheckX, int toCheckY) {
+    public boolean CheckforValidMove( int currentX, int currentY, int toCheckX, int toCheckY) {
         Mark opponent = getOpponent();
 
         if ((currentX + toCheckX < 0) || (currentX + toCheckX >= board.getSize())) {
@@ -151,7 +152,7 @@ public class Othello extends Game implements Runnable {
     public void flipMarks(Move move) throws SetOutOfBoundsException {
         int x = move.getX();
         int y = move.getY();
-        System.out.println("GIREUWBHGREWIOUGFHO");
+        //System.out.println("GIREUWBHGREWIOUGFHO");
         checkLines(x, y, 0, -1); // Left
         checkLines(x, y, 1, -1); //Bottomleft
         checkLines(x, y, 1, 0); //Bottom
@@ -178,14 +179,15 @@ public class Othello extends Game implements Runnable {
         } else {
             if (checkLines(currentX + toCheckX, currentY + toCheckY, toCheckX, toCheckY)) {
                 board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
-                System.out.println("FLIPTATIONS"); //testshit moet uit
+                //System.out.println("FLIPTATIONS"); //testshit moet uit
                 return true;
             } else {
-                System.out.println("MINDER FLIPTATIONS"); //same
+                //System.out.println("MINDER FLIPTATIONS"); //same
                 return false;
             }
         }
     }
+
 
     public int[] score() {
         int[] score;
@@ -193,9 +195,9 @@ public class Othello extends Game implements Runnable {
 
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {
-                if (board.getCell(i, j) == getOpponent()) {
+                if (board.getCell(i, j) == Mark.ONE) {
                     score[0]++;
-                } else if (board.getCell(i, j) == getCurrent()) {
+                } else if (board.getCell(i, j) == Mark.TWO) {
                     score[1]++;
                 }
             }
@@ -207,29 +209,30 @@ public class Othello extends Game implements Runnable {
     @Override
     public void start(Player one, Player two) throws SetOutOfBoundsException {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
-                status = GameStatus.PLAYING;
-                board = new OthelloBoard(8);
-                Move move;
-                Mark mark;
-                //init board, willen we probbaly niet hier
-                // TODO
-                board.setMove(3, 4, Mark.ONE);
-                board.setMove(4, 3, Mark.ONE);
-                board.setMove(3, 3, Mark.TWO);
-                board.setMove(4, 4, Mark.TWO);
+        status = GameStatus.PLAYING;
+        board = new OthelloBoard(8);
+        Move move;
+        Mark mark;
+        //init board, willen we probbaly niet hier
+        // TODO
+        board.setMove(3, 4, Mark.ONE);
+        board.setMove(4, 3, Mark.ONE);
+        board.setMove(3, 3, Mark.TWO);
+        board.setMove(4, 4, Mark.TWO);
 
-                do {
-                    System.out.println(getPossibleMoves());
-                    System.out.println("TUSSENSTAND");
-                    System.out.println(Arrays.toString(score()));
-                    if (getPossibleMoves().isEmpty()) {
-                        System.out.println("HEBT GEEN MOVES ATM");
+        do {
+            System.out.println(getPossibleMoves());
+            System.out.println("TUSSENSTAND");
+            System.out.println(Arrays.toString(score()));
+            if (getPossibleMoves().isEmpty()) {
+                System.out.println("HEBT GEEN MOVES ATM");
                 changeTurn();
-                        System.out.println(getPossibleMoves());
+                System.out.println(getPossibleMoves());
                 if (getPossibleMoves().isEmpty()) {
-                            System.out.println("No more moves left for both players");
-                            System.out.println(Arrays.toString(score()));
-                        }
+                    System.out.println("No more moves left for both players");
+                    System.out.println(Arrays.toString(score()));
+                    status = GameStatus.WON;
+                }
             }
             move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
@@ -237,11 +240,10 @@ public class Othello extends Game implements Runnable {
                 doMove(move, mark);
                 flipMarks(move);
                 //if (checkForWin()) status = GameStatus.WON;
-                if (board.isFull()){
+                if (board.isFull()) {
                     status = GameStatus.WON;
                     System.out.println(Arrays.toString(score()));
-                }
-                else changeTurn();
+                } else changeTurn();
 
 
             } catch (IllegalMoveException e) {
@@ -253,9 +255,9 @@ public class Othello extends Game implements Runnable {
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein");
+        Player p1 = PlayerFactory.createCLIPlayer("Frankenstein");
         Player p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-//        Player p2 = PlayerFactory.createGUIPlayer("Monster");
+
         try {
             start(p1, p2);
         } catch (SetOutOfBoundsException e) {
@@ -263,3 +265,5 @@ public class Othello extends Game implements Runnable {
         }
     }
 }
+
+

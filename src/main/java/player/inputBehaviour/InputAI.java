@@ -3,10 +3,7 @@ package player.inputBehaviour;
 import games.Game;
 import games.GameEnum;
 import games.Move;
-import games.ai.AI;
-import games.ai.OthelloAI;
-import games.ai.TicTacToeAI;
-import games.ai.TicTacToeAiMiniMax;
+import games.ai.*;
 import games.board.SetOutOfBoundsException;
 
 public class InputAI implements Input {
@@ -20,6 +17,7 @@ public class InputAI implements Input {
 //                ai = new TicTacToeAI();
                 break;
             case OTHELLO:
+//                ai = new OthelloAiMiniMax();
                 ai = new OthelloAI();
                 break;
         }

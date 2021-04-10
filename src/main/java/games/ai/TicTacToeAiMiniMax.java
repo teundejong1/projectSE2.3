@@ -135,6 +135,7 @@ public class TicTacToeAiMiniMax implements AI {
             return best;
         }
     }
+
     public Move findBestMove(Board board, Game game) throws SetOutOfBoundsException {
         Mark markSelf;
         Move bestMove = new Move(-1, -1);
@@ -165,7 +166,5 @@ public class TicTacToeAiMiniMax implements AI {
         }
         return bestMove;
     }
-
-
 }
 

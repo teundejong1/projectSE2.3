@@ -131,7 +131,7 @@ public class TicTacToe extends Game implements Runnable {
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createCLIPlayer("SORRY");
+        Player p1 = PlayerFactory.createGUIPlayer("TOMMIEBOY");
 //        Player p2 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
         Player p2 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
         try {
