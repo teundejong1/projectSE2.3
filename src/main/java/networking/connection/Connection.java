@@ -11,6 +11,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import networking.commands.Command;
 import threadpool.ThreadPool;
 
+/***
+ * Class for setting up the connection with the server
+ * @author Jeroen Lammersma
+ */
 public class Connection implements AutoCloseable {
 
     private static final String CHECK_ONE = "Strategic Game Server Fixed [Version 1.1.0]";
@@ -22,12 +26,19 @@ public class Connection implements AutoCloseable {
 
     private final BlockingQueue<String> inputBuffer;
 
+    /**
+     * Constructor
+     * @param socket for the connection
+     * @param inputBuffer to receive all data the server sends
+     * @throws ConnectionFailedException when connection can't be established
+     */
     public Connection(Socket socket, BlockingQueue<String> inputBuffer)
             throws ConnectionFailedException {
 
         this.socket = socket;
         this.inputBuffer = inputBuffer;
 
+        // try setting up a connection, then initiate the InputListener
         try {
             initIO();
             initInputListener();
@@ -37,21 +48,33 @@ public class Connection implements AutoCloseable {
 
     }
 
+    /**
+     * @return boolean wether a connection has been established with the server
+     */
     public boolean isConnected() {
         return socket.isConnected();
     }
 
+    /**
+     * @return boolean wether socket has been closed
+     */
     public boolean isClosed() {
         return socket.isClosed();
     }
 
+    /**
+     * @param command to be send to the server
+     */
     public void write(Command command) { // TODO must throw custom exception when not connected
         if (socket.isConnected() && !socket.isClosed()) {
             out.println(command);
         }
     }
 
-    @Override
+    /**
+     * Method to close the connection with the server
+     * @Override
+     */
     public void close() {
         try {
             socket.close();
@@ -62,10 +85,19 @@ public class Connection implements AutoCloseable {
         }
     }
 
+    /**
+     * @return wether connected server is the server we want to connect to
+     * @throws IOException
+     */
     private boolean isValidServer() throws IOException {
         return (in.readLine().equals(CHECK_ONE) && in.readLine().equals(CHECK_TWO));
     }
 
+    /**
+     * initiates the IO. creates a bufferedReader and a PrintWriter 
+     * for receiving and sending data respectively
+     * @throws IOException
+     */
     private void initIO() throws IOException {
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -75,6 +107,10 @@ public class Connection implements AutoCloseable {
         // if (!isValidServer()) throw new InvalidServerException("Server is not Strategic Game Server");
     }
 
+    /**
+     * initiates a new inputlistener. Using a ThreadPoolExecutor from a ThreadPool instance
+     * then submits a new inputlistener to the executor
+     */
     private void initInputListener() {
         ThreadPoolExecutor executor = ThreadPool.getInstance();
         executor.submit(new InputListener());
@@ -82,6 +118,7 @@ public class Connection implements AutoCloseable {
 
     /**
      * Innerclass Inputlistener
+     * uses a separate ThreadPool for receiving data
      */
     class InputListener implements Runnable {
 

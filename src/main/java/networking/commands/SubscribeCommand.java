@@ -1,7 +1,10 @@
 package networking.commands;
 
 import games.GameEnum;
-
+/**
+ * Commandclass for subscribing to a specific game
+ * @author Jeroen Lammersma
+ */
 public class SubscribeCommand implements Command {
 
     private GameEnum game;
@@ -10,17 +13,27 @@ public class SubscribeCommand implements Command {
         this.game = game;
     }
 
-    @Override
+    /**
+     * Check to confirm server received command correctly
+     * @Override
+     */
     public void validateResponse() {
         // TODO Auto-generated method stub
         
     }
 
-    @Override
+    /**
+     * writes the command to be send into string form
+     * @Override
+     */
     public String toString() {
         return String.format("SUBSCRIBE %s", getGameString());
     }
 
+    /**
+     * 
+     * @return gameString for the wanted game from the Enum to what the server understands
+     */
     private String getGameString() {
         String gameString = "";
 
