@@ -1,48 +1,109 @@
 package networking;
 
-import networking.commands.CommandHandler;
-import threadpool.ThreadPool;
-
 import java.io.IOException;
-import java.util.List;
+import java.net.Socket;
 import java.util.Scanner;
-import java.util.concurrent.Future;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
+import games.GameEnum;
+import games.Move;
+import networking.commands.Command;
+import networking.commands.LoginCommand;
+import networking.connection.Connection;
+import networking.connection.ConnectionFailedException;
+import networking.connection.SocketFactory;
+import networking.states.LoggedOutState;
+import networking.states.DisconnectedState;
+import networking.states.IllegalStateException;
+import networking.states.State;
+import threadpool.ThreadPool;
 
-public class NetworkManager{
+public class NetworkManager {
 
-    private final LinkedBlockingQueue<String> inputBuffer = new LinkedBlockingQueue<>();
-    private final LinkedBlockingQueue<String> outputBuffer = new LinkedBlockingQueue<>();
+    private ThreadPoolExecutor executor;
+    private Connection connection;
+    private State currentState;
+    private BlockingQueue<String> inputBuffer;
 
-    public static void main(String[] args) {
+    public NetworkManager() throws ConnectionFailedException {
+        executor = ThreadPool.getInstance();
+        inputBuffer = new LinkedBlockingQueue<>();
+        currentState = new DisconnectedState();
+        initConnection();
+    }
 
-        // create the buffers
-        LinkedBlockingQueue<String> inputBuffer = new LinkedBlockingQueue<>();
-        LinkedBlockingQueue<String> outputBuffer = new LinkedBlockingQueue<>();
+    public void setState(State state) {
+        this.currentState = state;
+    }
 
-        try (
-                // create connection and scanner
-                Connection connection = new Connection( inputBuffer, outputBuffer);
-                Scanner scanner = new Scanner(System.in)
-        ) {
-            // get threadpool and add CommandHandler into it
-            ThreadPoolExecutor tp = ThreadPool.getInstance();
+    public State getState() {
+        return currentState;
+    }
 
-            tp.submit(new CommandHandler(inputBuffer));
+    public BlockingQueue<String> getQueue() {
+        return this.inputBuffer;
+    }
 
-            while(connection.isConnected() && !connection.isClosed()) {
-                connection.write(scanner.nextLine());
-            }
+    public void sendCommand(Command command) {
+        executor.submit(() -> connection.write(command));
+    }
 
-        } catch (ConnectionFailedException cfe) {
-            cfe.printStackTrace();
+    public boolean isConnected() {
+        return !(currentState instanceof DisconnectedState);
+    }
+
+    public void acceptChallenge(int challengeNumber) throws IllegalStateException {
+        currentState.acceptChallenge(this, challengeNumber);
+    }
+
+    public void challengePlayer(String opponent, GameEnum game) throws IllegalStateException {
+        currentState.challengePlayer(this, opponent, game);
+    }
+
+    public void forfeit() throws IllegalStateException {
+        currentState.forfeit(this);
+    }
+
+    public void getGameList() throws IllegalStateException {
+        currentState.getGameList(this);
+    }
+
+    public void getPlayerList() throws IllegalStateException {
+        currentState.getPlayerList(this);
+    }
+
+    public void help() throws IllegalStateException {
+        currentState.help(this);
+    }
+
+    public void login(String name) throws IllegalStateException {
+        currentState.login(this, name);
+    }
+
+    public void logout() throws IllegalStateException {
+        currentState.logout(this);
+        connection.close();
+        setState(new DisconnectedState());
+    }
+
+    public void sendMove(Move move, int boardSize) throws IllegalStateException {
+        currentState.sendMove(this, move, boardSize);
+    }
+
+    public void subscribe(GameEnum game) throws IllegalStateException {
+        currentState.subscribe(this, game);
+    }
+
+    private void initConnection() throws ConnectionFailedException {
+        try {
+            Socket socket = SocketFactory.createDefaultLocalhostSocket();
+            connection = new Connection(socket, inputBuffer);
+            currentState = new LoggedOutState();
+        } catch (IOException ioe) {
+            throw new ConnectionFailedException(ioe);
         }
-
-        ThreadPool.shutdown();
-        System.out.println("Shutdown");
     }
 
 }

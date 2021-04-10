@@ -1,4 +1,4 @@
-package networking;
+package networking.connection;
 
 import java.io.IOException;
 

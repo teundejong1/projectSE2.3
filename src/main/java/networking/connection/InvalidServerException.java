@@ -1,4 +1,4 @@
-package networking;
+package networking.connection;
 
 public class InvalidServerException extends ConnectionFailedException {
 

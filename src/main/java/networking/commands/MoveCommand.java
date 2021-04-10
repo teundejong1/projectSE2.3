@@ -1,5 +1,7 @@
 package networking.commands;
 
+import games.Move;
+
 public class MoveCommand implements Command {
 
     private int cell;
@@ -25,6 +27,21 @@ public class MoveCommand implements Command {
     public MoveCommand(int x, int y, int boardSize) {
         cell = convertToCell(x, y, boardSize);
     }
+    
+    /**
+     * 
+     * @param move
+     * @param boardSize
+     */
+    public MoveCommand(Move move, int boardSize) {
+        cell = convertToCell(move.getX(), move.getY(), boardSize);
+    }
+
+    @Override
+    public void validateResponse() {
+        // TODO Auto-generated method stub
+        
+    }
 
     @Override
     public String toString() {
@@ -42,8 +59,4 @@ public class MoveCommand implements Command {
         return (x * boardSize + y);
     }
 
-    @Override
-    public void execute() {
-
-    }
 }

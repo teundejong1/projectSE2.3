@@ -1,24 +1,39 @@
 package networking.commands;
 
-public class SubscribeCommand implements Command{
+import games.GameEnum;
 
-    private String game;
+public class SubscribeCommand implements Command {
 
-    /**
-     * subscribe bij een game
-     * @param game ttt of othello
-     */
-    public SubscribeCommand(String game) {
+    private GameEnum game;
+
+    public SubscribeCommand(GameEnum game) {
         this.game = game;
     }
 
     @Override
-    public String toString() {
-        return String.format("SUBSCRIBE %s", game);
+    public void validateResponse() {
+        // TODO Auto-generated method stub
+        
     }
 
     @Override
-    public void execute() {
-        
+    public String toString() {
+        return String.format("SUBSCRIBE %s", getGameString());
     }
+
+    private String getGameString() {
+        String gameString = "";
+
+        switch (game) {
+            case TTT:
+                gameString = "Tic-tac-toe";
+                break;
+            case OTHELLO:
+                gameString = "Reversi";
+                break;
+        }
+
+        return gameString;
+    }
+
 }

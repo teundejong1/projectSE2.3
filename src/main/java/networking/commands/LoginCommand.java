@@ -9,10 +9,14 @@ public class LoginCommand implements Command {
     }
 
     @Override
+    public void validateResponse() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
     public String toString() {
         return String.format("LOGIN %s", name);
     }
 
-    @Override
-    public void execute() {}
 }

@@ -1,4 +1,4 @@
-package networking.commands;
+package networking_old.commands;
 
 public enum Type {
     MATCH,

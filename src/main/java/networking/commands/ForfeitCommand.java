@@ -1,13 +1,19 @@
 package networking.commands;
 
-public class ForfeitCommand implements Command{
+public class ForfeitCommand implements Command {
 
-    public ForfeitCommand(){
+    public ForfeitCommand() {}
 
+    @Override
+    public void validateResponse() {
+        // TODO Auto-generated method stub
+        
     }
 
     @Override
-    public void execute() {
-        //stuurt berict van opgeven
+    public String toString() {
+        return "FORFEIT";
     }
+
+    
 }

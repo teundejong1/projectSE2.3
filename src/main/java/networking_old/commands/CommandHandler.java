@@ -1,16 +1,16 @@
-package networking.commands;
-
-import networking.Parser;
+package networking_old.commands;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import networking_old.Parser;
+
 public class CommandHandler implements Runnable{
 
     private BlockingQueue<String> inputBuffer;
     private BlockingQueue<String> outputBuffer;
-    private networking.Parser parser;
+    private networking_old.Parser parser;
 
 
 //    public CommandHandler(BlockingQueue<String> inputBuffer, BlockingQueue<String> outputBuffer) {

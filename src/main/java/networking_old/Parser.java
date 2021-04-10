@@ -1,6 +1,4 @@
-package networking;
-
-import networking.commands.*;
+package networking_old;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +8,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import networking_old.commands.*;
 
 /**
  * haalt commando's uit inputbuffer (om te verwerken
