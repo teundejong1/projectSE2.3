@@ -36,6 +36,9 @@ public class LoginController {
                 menuController.rootSetNetworkManager(manager);
 
                 menuController.rootInitLobby();
+
+                Stage stage = (Stage) loginKnop.getScene().getWindow();
+                stage.close();
             }
         } catch(ConnectionFailedException e) {
             Group group = new Group();

@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,16 +20,21 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import networking.NetworkManager;
+import networking.commands.GetPlayerlistCommand;
+import networking.states.IllegalStateException;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Controller {
@@ -110,11 +116,33 @@ public class Controller {
         Parent lobby = fxmlLoader.load();
 
         LobbyController lobbyController = fxmlLoader.getController();
+        lobbyController.setController(this);
 
         mainWindow.setLeft(lobby);
     }
 
     public void lobbyRefresh() {
+        try {
+            networkManager.getPlayerList();
+        } catch (IllegalStateException e) {
+            Group group = new Group();
+            Label label = new Label("Dit is nu niet toegestaan.");
+            group.getChildren().add(label);
 
+            Stage loginScherm = new Stage();
+            loginScherm.setScene(new Scene(group));
+            loginScherm.setTitle("Fout");
+            loginScherm.show();
+        }
+        //TODO hier moet de playerlist nog gekregen worden
+        List<String> players =  new ArrayList();
+        players.add("bob");
+        players.add("greta");
+        players.add("henk");
+        players.add("ellie");
+        for (String speler:players) {
+            VBox lobby = (VBox) mainWindow.getLeft();
+            lobby.getChildren().add(new Label(speler));
+        }
     }
 }
