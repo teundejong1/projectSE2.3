@@ -1,5 +1,7 @@
 package gui;
 
+import games.Game;
+import games.GameStatus;
 import games.Othello;
 import games.TicTacToe;
 import javafx.application.Platform;
@@ -39,6 +41,8 @@ import java.util.List;
 
 public class Controller {
     NetworkManager networkManager;
+    Game game;
+    Thread gameThread;
 
     @FXML
     public AnchorPane gameAnchor;
@@ -65,10 +69,6 @@ public class Controller {
         gameAnchor.getChildren().add(menu);
     }
 
-    public void opgeefActie(ActionEvent actionEvent) {
-        System.out.println("...noob");
-    }
-
     public void TTTInfo(ActionEvent actionEvent) {
         //TODO
     }
@@ -87,27 +87,30 @@ public class Controller {
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
         Othello othello = new Othello(PlayerType.ONE, playType);
+        game = othello;
         gameAnchor.getChildren().add(View.setOthello(othello));
-        Thread testgame = new Thread(othello);
-        testgame.start();
+        gameThread = new Thread(othello);
+        gameThread.start();
     }
 
     public void setTTT(PlayEnum playType) {
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
         TicTacToe ticTacToe =  new TicTacToe(PlayerType.ONE, playType);
+        game = ticTacToe;
         gameAnchor.getChildren().add(View.setTTT(ticTacToe));
-        Thread testgame =  new Thread(ticTacToe);
-        testgame.start();
+        gameThread =  new Thread(ticTacToe);
+        gameThread.start();
     }
 
     public void forfeit(ActionEvent actionEvent) throws IOException {
         /*
         TODO
-         thread stoppen
          rekening houden met mogelijke andere spelers, verbinding verbreken
          mischien een popup maken die om bevestiging vraagt?
          */
+        game.setRunning(false);
+        gameThread.interrupt();
         setMenu();
     }
 
@@ -142,6 +145,7 @@ public class Controller {
         players.add("ellie");
         for (String speler:players) {
             VBox lobby = (VBox) mainWindow.getLeft();
+            lobby.getChildren().clear();
             lobby.getChildren().add(new Label(speler));
         }
     }

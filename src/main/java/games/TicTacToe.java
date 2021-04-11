@@ -121,19 +121,20 @@ public class TicTacToe extends Game implements Runnable {
             }
 
 
-        } while (status == GameStatus.PLAYING);
+        } while (status == GameStatus.PLAYING && running.get());
 
     }
 
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein");;
+        running.set(true);
+        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.TTT);;
         Player p2;
         if(playType == PlayEnum.PVE) {
             p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.TTT);
         } else {
-            p2 = PlayerFactory.createGUIPlayer("Monster");
+            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.TTT);
         }
         start(p1, p2);
     }

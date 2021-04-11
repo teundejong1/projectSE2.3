@@ -105,24 +105,17 @@ public class Tile extends Rectangle {
 
             setOnMouseReleased(e -> {
                 Othello othello = (Othello) this.game;
-                boolean zetMogelijk = false;
                 for (Move move : othello.getPossibleMoves()) {
                     if (move.getY() == xwaarde && move.getX() == ywaarde) {
                         View.xwaarde = ywaarde;
                         View.ywaarde = xwaarde;
 
                         View.moveSet = true;
-                        zetMogelijk = true;
 
 
                         //dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
                         setDisable(true);
                     }
-                }
-                if(!zetMogelijk) {
-                    /*TODO
-                       hier moet duidelijk gemaakt worden dat de zet niet mogelijk is
-                     */
                 }
             });
         }

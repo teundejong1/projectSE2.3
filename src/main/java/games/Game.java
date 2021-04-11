@@ -1,6 +1,7 @@
 package games;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import games.board.Board;
 import games.board.Mark;
@@ -20,12 +21,15 @@ public abstract class Game {
 
     protected PlayEnum playType;
 
+    protected final AtomicBoolean running;
+
     public Game(PlayerType startingPlayer, PlayEnum playType) {
         playerOne = PlayerType.ONE;
         playerTwo = PlayerType.TWO;
         currentTurn = startingPlayer;
         status = GameStatus.READY;
         this.playType = playType;
+        running = new AtomicBoolean();
     }
 
     public PlayerType whosTurn() {
@@ -60,6 +64,10 @@ public abstract class Game {
 
     public PlayerType getCurrentTurn() {
         return currentTurn;
+    }
+
+    public void setRunning(boolean newValue) {
+        running.set(newValue);
     }
 
     public abstract void run ()   ;

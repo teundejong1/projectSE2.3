@@ -208,29 +208,29 @@ public class Othello extends Game implements Runnable {
     @Override
     public void start(Player one, Player two) throws SetOutOfBoundsException {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
-                status = GameStatus.PLAYING;
-                board = new OthelloBoard(8);
-                Move move;
-                Mark mark;
-                //init board, willen we probbaly niet hier
-                // TODO
-                board.setMove(3, 4, Mark.ONE);
-                board.setMove(4, 3, Mark.ONE);
-                board.setMove(3, 3, Mark.TWO);
-                board.setMove(4, 4, Mark.TWO);
+        status = GameStatus.PLAYING;
+        board = new OthelloBoard(8);
+        Move move;
+        Mark mark;
+        //init board, willen we probbaly niet hier
+        // TODO
+        board.setMove(3, 4, Mark.ONE);
+        board.setMove(4, 3, Mark.ONE);
+        board.setMove(3, 3, Mark.TWO);
+        board.setMove(4, 4, Mark.TWO);
 
-                do {
-                    System.out.println(getPossibleMoves());
-                    System.out.println("TUSSENSTAND");
-                    System.out.println(Arrays.toString(score()));
-                    if (getPossibleMoves().isEmpty()) {
-                        System.out.println("HEBT GEEN MOVES ATM");
+        do {
+            System.out.println(getPossibleMoves());
+            System.out.println("TUSSENSTAND");
+            System.out.println(Arrays.toString(score()));
+            if (getPossibleMoves().isEmpty()) {
+                System.out.println("HEBT GEEN MOVES ATM");
                 changeTurn();
-                        System.out.println(getPossibleMoves());
+                System.out.println(getPossibleMoves());
                 if (getPossibleMoves().isEmpty()) {
-                            System.out.println("No more moves left for both players");
-                            System.out.println(Arrays.toString(score()));
-                        }
+                    System.out.println("No more moves left for both players");
+                    System.out.println(Arrays.toString(score()));
+                }
             }
             move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
@@ -249,17 +249,18 @@ public class Othello extends Game implements Runnable {
                 e.printStackTrace(); // TODO
             }
         }
-        while (status == GameStatus.PLAYING);
+        while (status == GameStatus.PLAYING && running.get());
     }
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein");;
+        running.set(true);
+        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);;
         Player p2;
         if(playType == PlayEnum.PVE) {
             p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
         } else {
-            p2 = PlayerFactory.createGUIPlayer("Monster");
+            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.OTHELLO);
         }
 
         try {

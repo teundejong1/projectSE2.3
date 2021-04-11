@@ -4,19 +4,17 @@ import games.Game;
 import games.GameStatus;
 import games.Move;
 import games.Othello;
-import games.board.Board;
 import games.board.Mark;
 import gui.Tile;
 import gui.View;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputGUI implements Input {
+public class InputGUIOthello extends InputGUI {
 
     @Override
     public Move requestMove(Game game) {
@@ -24,10 +22,10 @@ public class InputGUI implements Input {
         ArrayList<Node> toRemove =  new ArrayList<>();
         List<Move> moves = game.getPossibleMoves();
 
-        if(game.getClass() == Othello.class && game.getPossibleMoves().isEmpty() && game.getStatus() == GameStatus.PLAYING) {
+        if(game.getPossibleMoves().isEmpty() && game.getStatus() == GameStatus.PLAYING) {
             View.skipButton.setOnMouseClicked(e -> {
-                 Othello othello = (Othello) game;
-                 othello.changeTurn();
+                Othello othello = (Othello) game;
+                othello.changeTurn();
             });
             View.skipButton.setVisible(true);
         }
