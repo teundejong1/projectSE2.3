@@ -24,6 +24,24 @@ public class OthelloAiMiniMax implements AI {
         this.random = new Random();
     }
 
+    public int[] scoreBoard(Board board, Mark whoseturn) {
+        Mark opponent = Mark.ONE;
+        if (whoseturn == Mark.ONE){
+            opponent = Mark.TWO;
+        }
+        int[] score;
+        score = new int[2];
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+                if (board.getCell(i, j) == opponent) {
+                    score[0]++;
+                } else if (board.getCell(i, j) == whoseturn) {
+                    score[1]++;
+                }
+            }
+        }
+        return score;
+    }
     public int[] score(Game game) {
         int[] score;
         score = new int[2];
@@ -61,8 +79,8 @@ public class OthelloAiMiniMax implements AI {
         }
     }
 
-    public int heuristic(Game game) {
-        int[] score = score(game);
+    public int heuristic(Board board, Mark whoseturn) {
+        int[] score = scoreBoard(board, whoseturn);
         System.out.println(Arrays.toString(score));
         int aiScore = score[1];
         int opponentScore = score[0];
@@ -101,9 +119,10 @@ public class OthelloAiMiniMax implements AI {
                 Board temp = copyBoard(game);
                 Move move = moves.get(i);
                 temp.setMove(move.getX(), move.getY(), getCurrent(game));
-                int val = miniMaxValue(temp, game, 1, getCurrent(game));
+                int val = miniMaxValue(temp, game, 1, getCurrent(game), getCurrent(game));
                 if (val > bestMoveVal) {
                     bestMoveVal = val;
+                    System.out.println("Kom je hier minimaxdecision?");
                     bestMove.setX(move.getX());
                     bestMove.setY(move.getY());
                 }
@@ -112,26 +131,30 @@ public class OthelloAiMiniMax implements AI {
         return bestMove;
     }
 
-    public int miniMaxValue(Board board, Game game, int depth, Mark original) throws SetOutOfBoundsException {
+    public int miniMaxValue(Board board, Game game, int depth, Mark original, Mark currentTurn) throws SetOutOfBoundsException {
+        System.out.println("Kom je hier minimaxvalue start?");
         if ((depth == 5) || game.getStatus() == GameStatus.WON) {
-            return heuristic(game);
+            return heuristic(board, getCurrent(game));
         }
-        Mark opponent = getOpponent(game);
+        Mark opponent = Mark.ONE;
+        if (currentTurn == Mark.ONE){
+            opponent = Mark.TWO;
+        }
         Mark self = getCurrent(game);
         List<Move> moveList = getPossibleTempMoves(board, (Othello) game);
         if (moveList.isEmpty()) {
-            return miniMaxValue(board, game, depth + 1, original);
+            return miniMaxValue(board, game, depth + 1, original, opponent);
         } else {
             int bestMoveVal = -99999;
             if (original != getCurrent(game)) {
                 bestMoveVal = 99999;
                 for (int i = 0; i < game.getPossibleMoves().size(); i++) {
-                    Board tempBoard = new OthelloBoard(8);
+                    Board tempBoard;
                     tempBoard = copyBoard(game);
                     List<Move> tempMoves = getPossibleTempMoves(tempBoard, (Othello) game);
                     Move move = tempMoves.get(i);
                     tempBoard.setMove(move.getX(), move.getY(), getCurrent(game));
-                    int val = miniMaxValue(tempBoard, game, depth + 1, self);
+                    int val = miniMaxValue(tempBoard, game, depth + 1, original, opponent);
 
                     if (original == self) {
                         if (val > bestMoveVal) {
@@ -143,20 +166,21 @@ public class OthelloAiMiniMax implements AI {
                         }
                     }
                 }
+                System.out.println("Kom je hier?");
+                return bestMoveVal;
             }
-            return bestMoveVal;
+            return -1;
         }
-
     }
 
     @Override
     public Move getMove(Game game) throws SetOutOfBoundsException {
-        heuristic(game);
+        //heuristic(game);
         Move bestMove = null;
-        List<Move> possibleMoves = game.getPossibleMoves();
-        System.out.println("AI THINKING");
+//        List<Move> possibleMoves = game.getPossibleMoves();
+
 //        System.out.println(possibleMoves);
-        System.out.println("AI THINKING");
+
         bestMove = MiniMaxDecision(game);
         return bestMove;
 //        return possibleMoves.get(random.nextInt(possibleMoves.size()));
