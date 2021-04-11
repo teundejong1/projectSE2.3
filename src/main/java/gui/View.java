@@ -4,6 +4,7 @@ import games.Othello;
 import games.TicTacToe;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
@@ -20,6 +21,7 @@ public class View {
 
     //Dit is de static container HIER MOGEN ALLEEN TILES IN
     public static Group elements = new Group();
+    public static Button skipButton;
 
     public View() {
 
@@ -37,7 +39,9 @@ public class View {
                 elements.getChildren().add(tile);
             }
         }
-
+        skipButton = new Button();
+        root.getChildren().add(skipButton);
+        skipButton.setVisible(false);
 
         return root;
     }
@@ -54,6 +58,9 @@ public class View {
                 elements.getChildren().add(tile);
             }
         }
+        skipButton = new Button();
+        root.getChildren().add(skipButton);
+        skipButton.setVisible(false);
         return root;
     }
 

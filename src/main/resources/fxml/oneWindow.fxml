@@ -51,7 +51,6 @@
          <children>
             <MenuBar fx:id="menuBar">
               <menus>
-                 <Menu onAction="#setMenu" text="Naar menu" />
                  <Menu mnemonicParsing="false" text="How to Play">
                   <items>
                     <MenuItem fx:id="howToTTT" mnemonicParsing="false" onAction="#howToTTT" text="TicTacToe" />
@@ -80,6 +79,7 @@
          <children>
             <Region HBox.hgrow="ALWAYS" />
             <Label fx:id="status" text="show connection status? " />
+            <Button fx:id="forfeit" onAction="#forfeit" text="Opgeven" />
             <Region HBox.hgrow="ALWAYS" />
          </children>
          <padding>

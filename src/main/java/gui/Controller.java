@@ -21,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
 
@@ -28,10 +29,10 @@ import java.io.IOException;
 
 
 public class Controller {
-    private View view;
 
     @FXML
     public AnchorPane gameAnchor;
+    public Button forfeit;
 
 
     FXMLLoader menuLoader;
@@ -40,6 +41,7 @@ public class Controller {
 
 
     public void setMenu() throws IOException {
+        forfeit.setVisible(false);
         menuLoader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
         menu = menuLoader.load();
         menuController = menuLoader.getController();
@@ -67,20 +69,31 @@ public class Controller {
     public void howToOThello(ActionEvent actionEvent) {
     }
 
-    public void setOthello(MouseEvent mouseEvent) {
+    public void setOthello(PlayEnum playType) {
+        forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
-        Othello othello = new Othello(PlayerType.ONE);
+        Othello othello = new Othello(PlayerType.ONE, playType);
         gameAnchor.getChildren().add(View.setOthello(othello));
         Thread testgame = new Thread(othello);
         testgame.start();
     }
 
-    public void setTTT(MouseEvent mouseEvent) {
+    public void setTTT(PlayEnum playType) {
+        forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
-        TicTacToe ticTacToe =  new TicTacToe(PlayerType.ONE);
+        TicTacToe ticTacToe =  new TicTacToe(PlayerType.ONE, playType);
         gameAnchor.getChildren().add(View.setTTT(ticTacToe));
         Thread testgame =  new Thread(ticTacToe);
         testgame.start();
     }
 
+    public void forfeit(ActionEvent actionEvent) throws IOException {
+        /*
+        TODO
+         thread stoppen
+         rekening houden met mogelijke andere spelers, verbinding verbreken
+         mischien een popup maken die om bevestiging vraagt?
+         */
+        setMenu();
+    }
 }

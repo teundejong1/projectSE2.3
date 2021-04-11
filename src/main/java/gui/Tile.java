@@ -121,7 +121,7 @@ public class Tile extends Rectangle {
                 }
                 if(!zetMogelijk) {
                     /*TODO
-                    hier moet duidelijk gemaakt worden dat de zet niet mogelijk is
+                       hier moet duidelijk gemaakt worden dat de zet niet mogelijk is
                      */
                 }
             });

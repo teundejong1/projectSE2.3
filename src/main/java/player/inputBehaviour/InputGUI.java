@@ -1,7 +1,9 @@
 package player.inputBehaviour;
 
 import games.Game;
+import games.GameStatus;
 import games.Move;
+import games.Othello;
 import games.board.Board;
 import games.board.Mark;
 import gui.Tile;
@@ -18,11 +20,17 @@ public class InputGUI implements Input {
 
     @Override
     public Move requestMove(Game game) {
-        // TODO GUI
-
         ArrayList<Node> toAdd =  new ArrayList<>();
         ArrayList<Node> toRemove =  new ArrayList<>();
         List<Move> moves = game.getPossibleMoves();
+
+        if(game.getClass() == Othello.class && game.getPossibleMoves().isEmpty() && game.getStatus() == GameStatus.PLAYING) {
+            View.skipButton.setOnMouseClicked(e -> {
+                 Othello othello = (Othello) game;
+                 othello.changeTurn();
+            });
+            View.skipButton.setVisible(true);
+        }
 
         for(Node node :View.elements.getChildren()) {
             if(node.getClass() == Tile.class) {

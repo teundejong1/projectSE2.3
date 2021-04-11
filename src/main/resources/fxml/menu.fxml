@@ -28,15 +28,15 @@
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Lokaal" />
-                              <Button mnemonicParsing="false" onMouseClicked="#tttStart" text="1 vs 1" />
-                              <Button mnemonicParsing="false" onMouseClicked="#tttStart" text="vs AI" />
+                              <Button fx:id="localTttPvp" mnemonicParsing="false" onMouseClicked="#tttStart" text="1 vs 1" />
+                              <Button fx:id="localTttPve" mnemonicParsing="false" onMouseClicked="#tttStart" text="vs AI" />
                            </children>
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Online" />
-                              <Button mnemonicParsing="false" onMouseClicked="#tttStart" text="als Speler" />
-                              <Button mnemonicParsing="false" onMouseClicked="#tttStart" text="als AI" />
+                              <Button fx:id="onlineTttManual" mnemonicParsing="false" onMouseClicked="#tttStart" text="als Speler" />
+                              <Button fx:id="onlineTttAi" mnemonicParsing="false" onMouseClicked="#tttStart" text="als AI" />
                            </children>
                         </VBox>
                      </children>
@@ -65,15 +65,15 @@
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Lokaal" />
-                              <Button mnemonicParsing="false" onMouseClicked="#startOthello" text="1 vs 1" />
-                              <Button mnemonicParsing="false" onMouseClicked="#startOthello" text="vs AI" />
+                              <Button fx:id="localOthelloPvp" mnemonicParsing="false" onMouseClicked="#startOthello" text="1 vs 1" />
+                              <Button fx:id="localOthelloPve" mnemonicParsing="false" onMouseClicked="#startOthello" text="vs AI" />
                            </children>
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Online" />
-                              <Button mnemonicParsing="false" onMouseClicked="#startOthello" text="als Speler" />
-                              <Button mnemonicParsing="false" onMouseClicked="#startOthello" text="als AI" />
+                              <Button fx:id="onlineOthelloManual" mnemonicParsing="false" onMouseClicked="#startOthello" text="als Speler" />
+                              <Button fx:id="onlineOthelloAi" mnemonicParsing="false" onMouseClicked="#startOthello" text="als AI" />
                            </children>
                         </VBox>
                      </children>

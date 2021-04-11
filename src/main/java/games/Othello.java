@@ -4,6 +4,7 @@ import games.ai.OthelloAI;
 import games.board.Mark;
 import games.board.OthelloBoard;
 import games.board.SetOutOfBoundsException;
+import player.PlayEnum;
 import player.Player;
 import player.PlayerFactory;
 import player.PlayerType;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public class Othello extends Game implements Runnable {
 
-    public Othello(PlayerType startingPlayer) {
-        super(startingPlayer);
+    public Othello(PlayerType startingPlayer, PlayEnum playType) {
+        super(startingPlayer, playType);
     }
 
 
@@ -253,9 +254,14 @@ public class Othello extends Game implements Runnable {
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein");
-        Player p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-//        Player p2 = PlayerFactory.createGUIPlayer("Monster");
+        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein");;
+        Player p2;
+        if(playType == PlayEnum.PVE) {
+            p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
+        } else {
+            p2 = PlayerFactory.createGUIPlayer("Monster");
+        }
+
         try {
             start(p1, p2);
         } catch (SetOutOfBoundsException e) {

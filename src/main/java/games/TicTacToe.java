@@ -7,16 +7,16 @@ import games.board.Mark;
 import games.board.SetOutOfBoundsException;
 import games.board.TicTacToeBoard;
 import gui.View;
+import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
 import player.PlayerFactory;
 
 public class TicTacToe extends Game implements Runnable {
 
-    private View view;
 
-    public TicTacToe(PlayerType StartingPlayer) {
-        super(StartingPlayer);
+    public TicTacToe(PlayerType StartingPlayer, PlayEnum playType) {
+        super(StartingPlayer, playType);
     }
 
     @Override
@@ -125,24 +125,16 @@ public class TicTacToe extends Game implements Runnable {
 
     }
 
-    public void setView(View view) {
-        this.view = view;
-    }
 
     @Override
     public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("SORRY");
-<<<<<<< Updated upstream
-        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN");
-        start(p1, p2);
-=======
-//        Player p2 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
-        Player p2 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
-        try {
-            start(p1, p2);
-        } catch (SetOutOfBoundsException e) {
-            e.printStackTrace();
+        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein");;
+        Player p2;
+        if(playType == PlayEnum.PVE) {
+            p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.TTT);
+        } else {
+            p2 = PlayerFactory.createGUIPlayer("Monster");
         }
->>>>>>> Stashed changes
+        start(p1, p2);
     }
 }
