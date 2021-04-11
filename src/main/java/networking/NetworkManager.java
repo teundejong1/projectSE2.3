@@ -37,6 +37,14 @@ public class NetworkManager {
         responseHandler = new ResponseHandler(this, inputBuffer);
     }
 
+    public NetworkManager(String ip, int port) throws ConnectionFailedException {
+        executor = ThreadPool.getInstance();
+        inputBuffer = new LinkedBlockingQueue<>();
+        currentState = new DisconnectedState();
+        initConnection(ip, port);
+        responseHandler = new ResponseHandler(this, inputBuffer);
+    }
+
     public void setState(State state) {
         this.currentState = state;
     }
@@ -103,6 +111,16 @@ public class NetworkManager {
     private void initConnection() throws ConnectionFailedException {
         try {
             Socket socket = SocketFactory.createDefaultLocalhostSocket();
+            connection = new Connection(socket, inputBuffer);
+            currentState = new LoggedOutState();
+        } catch (IOException ioe) {
+            throw new ConnectionFailedException(ioe);
+        }
+    }
+
+    private void initConnection(String ip, int port) throws ConnectionFailedException {
+        try {
+            Socket socket = SocketFactory.createSocket(ip, port);
             connection = new Connection(socket, inputBuffer);
             currentState = new LoggedOutState();
         } catch (IOException ioe) {

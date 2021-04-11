@@ -35,8 +35,8 @@
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Online" />
-                              <Button fx:id="onlineTttManual" mnemonicParsing="false" onMouseClicked="#tttStart" text="als Speler" />
-                              <Button fx:id="onlineTttAi" mnemonicParsing="false" onMouseClicked="#tttStart" text="als AI" />
+                              <Button fx:id="onlineTttManual" mnemonicParsing="false" onMouseClicked="#login" text="als Speler" />
+                              <Button fx:id="onlineTttAi" mnemonicParsing="false" onMouseClicked="#login" text="als AI" />
                            </children>
                         </VBox>
                      </children>
@@ -72,8 +72,8 @@
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Online" />
-                              <Button fx:id="onlineOthelloManual" mnemonicParsing="false" onMouseClicked="#startOthello" text="als Speler" />
-                              <Button fx:id="onlineOthelloAi" mnemonicParsing="false" onMouseClicked="#startOthello" text="als AI" />
+                              <Button fx:id="onlineOthelloManual" mnemonicParsing="false" onMouseClicked="#login" text="als Speler" />
+                              <Button fx:id="onlineOthelloAi" mnemonicParsing="false" onMouseClicked="#login" text="als AI" />
                            </children>
                         </VBox>
                      </children>

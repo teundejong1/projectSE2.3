@@ -21,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import networking.NetworkManager;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
@@ -29,6 +30,7 @@ import java.io.IOException;
 
 
 public class Controller {
+    NetworkManager networkManager;
 
     @FXML
     public AnchorPane gameAnchor;
@@ -39,6 +41,9 @@ public class Controller {
     Parent menu;
     MenuController menuController;
 
+    public void setNetworkManager(NetworkManager networkManager) {
+        this.networkManager = networkManager;
+    }
 
     public void setMenu() throws IOException {
         forfeit.setVisible(false);
