@@ -30,10 +30,14 @@ public class NetworkManager {
     private ResponseHandler responseHandler;
 
     public NetworkManager() throws ConnectionFailedException {
+        this("localhost", 7789);
+    }
+
+    public NetworkManager(String ip, int port) throws ConnectionFailedException {
         executor = ThreadPool.getInstance();
         inputBuffer = new LinkedBlockingQueue<>();
         currentState = new DisconnectedState();
-        initConnection();
+        initConnection(ip, port);
         responseHandler = new ResponseHandler(this, inputBuffer);
     }
 
@@ -100,9 +104,9 @@ public class NetworkManager {
         currentState.subscribe(this, game);
     }
 
-    private void initConnection() throws ConnectionFailedException {
+    private void initConnection(String ip, int port) throws ConnectionFailedException {
         try {
-            Socket socket = SocketFactory.createDefaultLocalhostSocket();
+            Socket socket = SocketFactory.createSocket(ip, port);
             connection = new Connection(socket, inputBuffer);
             currentState = new LoggedOutState();
         } catch (IOException ioe) {
