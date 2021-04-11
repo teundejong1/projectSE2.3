@@ -22,6 +22,16 @@ public class SubscribeCommand implements Command {
         
     }
 
+    @Override
+    public boolean isReponseTwoLines() {
+        return false;
+    }
+
+    @Override
+    public boolean isValidResponse(String response) {
+        return response.equalsIgnoreCase("OK");
+    }
+
     /**
      * writes the command to be send into string form
      * @Override

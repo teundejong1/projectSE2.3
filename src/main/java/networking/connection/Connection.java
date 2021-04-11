@@ -71,6 +71,12 @@ public class Connection implements AutoCloseable {
         }
     }
 
+    public void writeUTF(String command) {
+        if (socket.isConnected() && !socket.isClosed()) {
+            out.println(command);
+        }
+    }
+
     /**
      * Method to close the connection with the server
      * @Override

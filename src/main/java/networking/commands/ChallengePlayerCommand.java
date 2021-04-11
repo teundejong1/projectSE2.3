@@ -30,13 +30,22 @@ public class ChallengePlayerCommand implements Command {
         
     }
 
+    @Override
+    public boolean isReponseTwoLines() {
+        return false;
+    }
+
+    @Override
+    public boolean isValidResponse(String response) {
+        return response.equalsIgnoreCase("OK");
+    }
+
     /**
      * writes to string to write the command properly
      * @Override
      */
     public String toString() {
-        // TODO add "" around the opponents name
-        return String.format("CHALLENGE %s %s", opponent, game);
+        return String.format("CHALLENGE \"%s\" \"%s\"", opponent, game);
     }
     
 }

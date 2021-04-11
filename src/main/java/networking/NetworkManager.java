@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import games.GameEnum;
 import games.Move;
 import networking.commands.Command;
+import networking.commands.GetGamelistCommand;
 import networking.commands.LoginCommand;
 import networking.connection.Connection;
 import networking.connection.ConnectionFailedException;
@@ -26,12 +27,14 @@ public class NetworkManager {
     private Connection connection;
     private State currentState;
     private BlockingQueue<String> inputBuffer;
+    private ResponseHandler responseHandler;
 
     public NetworkManager() throws ConnectionFailedException {
         executor = ThreadPool.getInstance();
         inputBuffer = new LinkedBlockingQueue<>();
         currentState = new DisconnectedState();
         initConnection();
+        responseHandler = new ResponseHandler(this, inputBuffer);
     }
 
     public void setState(State state) {
@@ -42,12 +45,13 @@ public class NetworkManager {
         return currentState;
     }
 
-    public BlockingQueue<String> getQueue() {
-        return this.inputBuffer;
+    public void sendCommand(Command command) {
+        responseHandler.setLastCommand(command);
+        executor.submit(() -> connection.write(command));
     }
 
-    public void sendCommand(Command command) {
-        executor.submit(() -> connection.write(command));
+    public void sendUTF(String command) {
+        executor.submit(() -> connection.writeUTF(command));
     }
 
     public boolean isConnected() {
@@ -104,6 +108,13 @@ public class NetworkManager {
         } catch (IOException ioe) {
             throw new ConnectionFailedException(ioe);
         }
+    }
+
+    public static void main(String[] args) throws ConnectionFailedException {
+        NetworkManager manager = new NetworkManager();
+
+        manager.sendCommand(new LoginCommand("jeroen"));
+        manager.sendCommand(new GetGamelistCommand());
     }
 
 }

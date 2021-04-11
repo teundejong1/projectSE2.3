@@ -10,5 +10,7 @@ public interface Command {
      * required for every command
      */
     void validateResponse();
+    boolean isValidResponse(String response);
+    boolean isReponseTwoLines();
 
 }

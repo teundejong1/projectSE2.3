@@ -1,9 +1,11 @@
 package networking;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import networking.commands.Command;
+import threadpool.ThreadPool;
 
 public class ResponseHandler {
 
@@ -16,6 +18,9 @@ public class ResponseHandler {
         
         this.manager = manager;
         this.inputBuffer = inputBuffer;
+
+        ThreadPoolExecutor executor = ThreadPool.getInstance();
+        executor.submit(new ResponseListener());
     }
 
     public void setLastCommand(Command command) {
@@ -26,19 +31,26 @@ public class ResponseHandler {
 
         @Override
         public void run() {
-            String line;
+            String response;
             
             while(manager.isConnected()) {
                 try {
-                    if ((line = poll()) != null) {
-                        if (!isOkResponse(line)) {
-                            parseResponse();
-                        } else {
+                    if ((response = poll()) != null) {
+                        if (isErrorResponse(response)) {
+                            Parser.parseError(response, lastCommand);
+                            lastCommand = null;
+                        } else if (isOkResponse(response)) {
+                            if (lastCommand.isReponseTwoLines()) {
+                                System.out.println("twolines");
+                                response += System.lineSeparator() + poll(200);
+                            }
 
-                        }
-                        // kijken of line == OK
-                        // poll
-                        // als line != OK, dan niet nog keer pollen
+                            if (lastCommand.isValidResponse(response)) {
+                                Parser.parseResponse(response, lastCommand);
+                                lastCommand = null;
+                            }
+                        } else if (response.startsWith("SVR GAME")) Parser.parseResponse(response);
+                        
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -47,14 +59,20 @@ public class ResponseHandler {
             
         }
 
-        private String poll() throws InterruptedException {
-            return inputBuffer.poll(50, TimeUnit.MILLISECONDS);
+        private String poll(int miliseconds) throws InterruptedException {
+            return inputBuffer.poll(miliseconds, TimeUnit.MILLISECONDS);
         }
 
-        private void parseResponse() {}
+        private String poll() throws InterruptedException {
+            return poll(50);
+        }
 
         private boolean isOkResponse(String line) {
             return line.equalsIgnoreCase("OK");
+        }
+
+        private boolean isErrorResponse(String line) {
+            return line.toUpperCase().startsWith("ERR");
         }
 
     }
