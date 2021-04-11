@@ -57,6 +57,5 @@ public abstract class Game {
     public PlayerType getCurrentTurn() {
         return currentTurn;
     }
-
-    public abstract void run ()   ;
+    
 }
