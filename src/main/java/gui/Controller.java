@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ import player.Player;
 import player.PlayerType;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 
 public class Controller {
@@ -35,6 +37,7 @@ public class Controller {
     @FXML
     public AnchorPane gameAnchor;
     public Button forfeit;
+    public BorderPane mainWindow;
 
 
     FXMLLoader menuLoader;
@@ -100,5 +103,18 @@ public class Controller {
          mischien een popup maken die om bevestiging vraagt?
          */
         setMenu();
+    }
+
+    public void initLobby() throws IOException {
+        FXMLLoader fxmlLoader =  new FXMLLoader(getClass().getResource("/fxml/Lobby.fxml"));
+        Parent lobby = fxmlLoader.load();
+
+        LobbyController lobbyController = fxmlLoader.getController();
+
+        mainWindow.setLeft(lobby);
+    }
+
+    public void lobbyRefresh() {
+
     }
 }

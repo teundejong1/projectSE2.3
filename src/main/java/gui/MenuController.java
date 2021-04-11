@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import networking.NetworkManager;
@@ -44,6 +45,9 @@ public class MenuController {
         LoginController loginController =  loader.getController();
         loginController.setMenuController(this);
 
+
+//        root.setText("Error");
+
         Stage loginScherm = new Stage();
         loginScherm.setScene(new Scene(root));
         loginScherm.setTitle("Login");
@@ -52,5 +56,9 @@ public class MenuController {
 
     public void rootSetNetworkManager(NetworkManager networkManager) {
         root.setNetworkManager(networkManager);
+    }
+
+    public void rootInitLobby() throws IOException {
+        root.initLobby();
     }
 }
