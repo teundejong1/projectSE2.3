@@ -42,14 +42,6 @@ public class NetworkManager {
         responseHandler = new ResponseHandler(this, inputBuffer);
     }
 
-    public NetworkManager(String ip, int port) throws ConnectionFailedException {
-        executor = ThreadPool.getInstance();
-        inputBuffer = new LinkedBlockingQueue<>();
-        currentState = new DisconnectedState();
-        initConnection(ip, port);
-        responseHandler = new ResponseHandler(this, inputBuffer);
-    }
-
     public void setState(State state) {
         this.currentState = state;
     }

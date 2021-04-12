@@ -2,10 +2,13 @@ package gui;
 
 import games.Othello;
 import games.TicTacToe;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
 import java.util.List;
@@ -21,7 +24,9 @@ public class View {
 
     //Dit is de static container HIER MOGEN ALLEEN TILES IN
     public static Group elements = new Group();
-    public static Button skipButton;
+//    public static Button skipButton;
+
+    public static VBox spelerLijst;
 
     public View() {
 
@@ -39,9 +44,9 @@ public class View {
                 elements.getChildren().add(tile);
             }
         }
-        skipButton = new Button();
-        root.getChildren().add(skipButton);
-        skipButton.setVisible(false);
+//        skipButton = new Button();
+//        root.getChildren().add(skipButton);
+//        skipButton.setVisible(false);
 
         return root;
     }
@@ -58,10 +63,22 @@ public class View {
                 elements.getChildren().add(tile);
             }
         }
-        skipButton = new Button();
-        root.getChildren().add(skipButton);
-        skipButton.setVisible(false);
+//        skipButton = new Button();
+//        root.getChildren().add(skipButton);
+//        skipButton.setVisible(false);
         return root;
     }
 
+    public static void refreshLobby(List<String> spelers) {
+        Platform.runLater(() -> {
+            spelerLijst.getChildren().clear();
+        });
+        System.out.println("lijst gecleard");
+        for (String speler:spelers) {
+            System.out.println("ik probeer nu " + speler);
+            Platform.runLater(() -> {
+                spelerLijst.getChildren().add(new Label(speler));
+            });
+        }
+    }
 }

@@ -10,11 +10,11 @@
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="naamVeld" layoutX="225.0" layoutY="83.0" />
+            <TextField fx:id="naamVeld" layoutX="225.0" layoutY="83.0" text="Zarathustra" />
             <Label layoutX="285.0" layoutY="66.0" text="Naam" />
-            <TextField fx:id="ipVeld" layoutX="76.0" layoutY="200.0" />
+            <TextField fx:id="ipVeld" layoutX="76.0" layoutY="200.0" text="localhost" />
              <Label layoutX="135.0" layoutY="179.0" text="IP-adres" />
-            <TextField fx:id="poortVeld" layoutX="374.0" layoutY="200.0" />
+            <TextField fx:id="poortVeld" layoutX="374.0" layoutY="200.0" text="7789" />
              <Label layoutX="433.0" layoutY="179.0" text="Poort" />
             <Button fx:id="loginKnop" layoutX="274.0" layoutY="295.0" mnemonicParsing="false" onAction="#login" text="Login" />
          </children></AnchorPane>

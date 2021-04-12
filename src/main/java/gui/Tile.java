@@ -8,15 +8,14 @@ import games.board.Mark;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import player.inputBehaviour.InputGUI;
 
-/**
- * @author Almas Baimagambetov (almaslvl@gmail.com)
- */
+
 public class Tile extends Rectangle {
 
     private int xwaarde;
@@ -105,17 +104,19 @@ public class Tile extends Rectangle {
                 setFill(normalColor);
             });
 
-            setOnMouseReleased(e -> {
-                Othello othello = (Othello) this.game;
-                for (Move move : othello.getPossibleMoves()) {
-                    if (move.getY() == xwaarde && move.getX() == ywaarde) {
-                        View.xwaarde = ywaarde;
-                        View.ywaarde = xwaarde;
+            setOnMouseReleased(this::handle);
+        }
+    }
 
-                        View.moveSet = true;
-                    }
-                }
-            });
+    private void handle(MouseEvent e) {
+        Othello othello = (Othello) this.game;
+        for (Move move : othello.getPossibleMoves()) {
+            if (move.getY() == xwaarde && move.getX() == ywaarde) {
+                View.xwaarde = ywaarde;
+                View.ywaarde = xwaarde;
+
+                View.moveSet = true;
+            }
         }
     }
 }

@@ -24,13 +24,14 @@ public class InputGUI implements Input {
         ArrayList<Node> toRemove =  new ArrayList<>();
         List<Move> moves = game.getPossibleMoves();
 
-        if(game.getClass() == Othello.class && game.getPossibleMoves().isEmpty() && game.getStatus() == GameStatus.PLAYING) {
-            View.skipButton.setOnMouseClicked(e -> {
-                 Othello othello = (Othello) game;
-                 othello.changeTurn();
-            });
-            View.skipButton.setVisible(true);
-        }
+        //Dit is om te skippen
+//        if(game.getClass() == Othello.class && game.getPossibleMoves().isEmpty() && game.getStatus() == GameStatus.PLAYING) {
+//            View.skipButton.setOnMouseClicked(e -> {
+//                 Othello othello = (Othello) game;
+//                 othello.changeTurn();
+//            });
+//            View.skipButton.setVisible(true);
+//        }
 
         for(Node node :View.elements.getChildren()) {
             if(node.getClass() == Tile.class) {

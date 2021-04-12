@@ -10,6 +10,9 @@ import gui.View;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +25,14 @@ public class InputGUIOthello extends InputGUI {
         ArrayList<Node> toRemove =  new ArrayList<>();
         List<Move> moves = game.getPossibleMoves();
 
-        if(game.getPossibleMoves().isEmpty() && game.getStatus() == GameStatus.PLAYING) {
-            View.skipButton.setOnMouseClicked(e -> {
-                Othello othello = (Othello) game;
-                othello.changeTurn();
-            });
-            View.skipButton.setVisible(true);
-        }
+        //Dit is om te skippen
+//        if(game.getPossibleMoves().isEmpty() && game.getStatus() == GameStatus.PLAYING) {
+//            View.skipButton.setOnMouseClicked(e -> {
+//                Othello othello = (Othello) game;
+//                othello.changeTurn();
+//            });
+//            View.skipButton.setVisible(true);
+//        }
 
         for(Node node :View.elements.getChildren()) {
             if(node.getClass() == Tile.class) {
@@ -49,23 +53,19 @@ public class InputGUIOthello extends InputGUI {
                     if(tile.getMark() == Mark.ONE || tile.getMark() == Mark.TWO) {
                         toRemove.add(tile.getSpelStuk());
                     }
+                    Circle circle =  new Circle();
+                    circle.setCenterX((tile.getXwaarde() + 0.5) * View.TILE_SIZE);
+                    circle.setCenterY((tile.getYwaarde() + 0.5) * View.TILE_SIZE);
+                    circle.setRadius(0.5*View.TILE_SIZE);
+                    circle.setStrokeType(StrokeType.INSIDE);
+                    circle.setStroke(Color.BLACK);
                     if (mark == Mark.ONE) {
-                        ImageView cross = new ImageView("/images/Cross.png");
-                        cross.setFitWidth(View.TILE_SIZE);
-                        cross.setFitHeight(View.TILE_SIZE);
-                        cross.setX(tile.getXwaarde() * View.TILE_SIZE);
-                        cross.setY(tile.getYwaarde() * View.TILE_SIZE);
-                        toAdd.add(cross);
-                        tile.setSpelStuk(cross);
+                        circle.setFill(Color.WHITE);
                     } else if (mark == Mark.TWO) {
-                        ImageView circle = new ImageView("/images/Circle.png");
-                        circle.setFitWidth(View.TILE_SIZE);
-                        circle.setFitHeight(View.TILE_SIZE);
-                        circle.setX(tile.getXwaarde() * View.TILE_SIZE);
-                        circle.setY(tile.getYwaarde() * View.TILE_SIZE);
-                        toAdd.add(circle);
-                        tile.setSpelStuk(circle);
+                        circle.setFill(Color.BLACK);
                     }
+                    toAdd.add(circle);
+                    tile.setSpelStuk(circle);
 
                     tile.setMark(mark);
                 }
