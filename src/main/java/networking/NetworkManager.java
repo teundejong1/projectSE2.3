@@ -55,8 +55,7 @@ public class NetworkManager {
     }
 
     public void sendCommand(Command command) {
-        responseHandler.setLastCommand(command);
-        executor.submit(() -> connection.write(command));
+        executor.submit(new CommandTask(command));
     }
 
     public void acceptChallenge(int challengeNumber) throws IllegalStateException {
@@ -109,6 +108,22 @@ public class NetworkManager {
         } catch (IOException ioe) {
             throw new ConnectionFailedException(ioe);
         }
+    }
+
+    class CommandTask implements Runnable {
+
+        private Command command;
+
+        public CommandTask(Command command) {
+            this.command = command;
+        }
+
+        @Override
+        public void run() {
+            responseHandler.setLastCommand(command);
+            connection.write(command);
+        }
+        
     }
 
     public static void main(String[] args) throws Exception {

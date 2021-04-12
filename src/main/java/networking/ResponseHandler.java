@@ -42,7 +42,7 @@ public class ResponseHandler {
                             lastCommand = null;
                         } else if (isOkResponse(response)) {
                             if (lastCommand.isReponseTwoLines()) {
-                                response += System.lineSeparator() + poll(200);
+                                response += System.lineSeparator() + poll(1000);
                             }
 
                             if (lastCommand.isValidResponse(response)) {
@@ -65,7 +65,7 @@ public class ResponseHandler {
         }
 
         private String poll() throws InterruptedException {
-            return poll(50);
+            return poll(500);
         }
 
         private boolean isOkResponse(String line) {
