@@ -15,7 +15,7 @@ public class GameManager {
 
     public void setPlayer(Player player, PlayerType playerType) {
         switch(playerType) {
-            case ONE: 
+            case ONE:
                 playerOne = player;
                 break;
             case TWO:
@@ -36,7 +36,6 @@ public class GameManager {
     public static void main(String[] args) {
         PlayerType pt;
 
-        
     }
-    
+
 }
