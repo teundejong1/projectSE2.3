@@ -2,48 +2,70 @@ package networking;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Parser implements Runnable {
+import networking.commands.*;
+import networking.eventhandlers.*;
 
-    private BlockingQueue<String> inputBuffer;
+public class Parser {
 
-    public Parser() {}
-
-    public Parser(BlockingQueue<String> inputBuffer) {
-        this.inputBuffer = inputBuffer;
-    }
-
-    @Override
-    public void run() {
-
-        StringBuilder sb;
-
-        while (true) {
-            try {
-                sb = new StringBuilder(inputBuffer.take());
-                String moreInput;
-
-                while ((moreInput = poll()) != null) {
-                    sb.append(System.getProperty("line.separator") + moreInput);
-                }
-
-                System.out.println(sb.toString());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public static void parseResponse(String response) {
+        Handler handler = getHandler(response);
+        if (handler != null) handler.handle(response);
         
     }
 
-    private String poll() throws InterruptedException {
-        return inputBuffer.poll(50, TimeUnit.MILLISECONDS);
+    public static void parseResponse(String response, Command command) {
+        CommandHandler handler = getCommandHandler(command);
+        if (handler != null) handler.handle(response);
     }
 
-    private ArrayList<String> parseList(String input) {
+    public static void parseError(String response, Command command) {
+        CommandHandler handler = getCommandHandler(command);
+        if (handler != null) handler.handleError(response);
+    }
+
+    private static Handler getHandler(String response) {
+        Handler handler = null;
+        String[] words = response.split(" ");
+        String first = words[2];
+        String second = words[3];
+
+        if (first.equalsIgnoreCase("MATCH")) handler = new MatchHandler();
+        else if (first.equalsIgnoreCase("YOURTURN")) handler = new TurnHandler();
+        else if (first.equalsIgnoreCase("MOVE")) handler = new ReceivedMoveHandler();
+        else if (first.equalsIgnoreCase("CHALLENGE") &&
+                second.equalsIgnoreCase("CANCELLED")) handler = new ChallengeCancelledHandler();
+        else if (first.equalsIgnoreCase("CHALLENGE")) handler = new ReceivedChallengeHandler();
+        else handler = new ResultHandler();
+
+        return handler;
+    }
+
+    private static CommandHandler getCommandHandler(Command command) {
+        CommandHandler handler = null;
+
+        if (command instanceof ChallengeAcceptCommand) handler = new ChallengeAcceptHandler();
+        if (command instanceof ChallengePlayerCommand) handler = new ChallengeHandler();
+        if (command instanceof ForfeitCommand) handler = new Forfeithandler();
+        if (command instanceof GetGamelistCommand) handler = new GameListHandler();
+        if (command instanceof GetPlayerlistCommand) handler = new PlayerListHandler();
+        if (command instanceof LoginCommand) handler = new LoginHandler();
+        if (command instanceof MoveCommand) handler = new MoveHandler();
+        if (command instanceof SubscribeCommand) handler = new SubscribeHandler();
+
+        return handler;
+    }
+    
+    /**
+     * zet String om tot lijst
+     * @param input
+     * @return
+     */
+    public static List<String> parseList(String input) {
         ArrayList<String> list = new ArrayList<>();
 
         final Pattern p = Pattern.compile("\"([^\"]*)\"");
@@ -56,7 +78,12 @@ class Parser implements Runnable {
         return list;
     }
 
-    private HashMap<String, String> parseMap(String input) {
+    /**
+     * zet string om tot HashMap
+     * @param input
+     * @return
+     */
+    public static Map<String, String> parseMap(String input) {
         HashMap<String, String> map = new HashMap<>();
 
         final Pattern p = Pattern.compile("(\\w+):\\s\"([^\"]*)\"");
@@ -67,18 +94,6 @@ class Parser implements Runnable {
         }
 
         return map;
-    }
-
-    public static void main(String[] args) {
-        Parser parser = new Parser();
-
-        String games = "[\"Reversi\", \"Tic-tac-toe\"]";
-        ArrayList<String> list = parser.parseList(games);
-        System.out.println(list);
-
-        String keyvalues = "GET GAMELIST {GAMTYPE: \"<speltype>\", PLAYERTOMOVE: \"<naam speler1>\", OPPONENT: \"<naam tegenstander>\"}";
-        HashMap<String, String> map = parser.parseMap(keyvalues);
-        System.out.println(map);
     }
 
 }

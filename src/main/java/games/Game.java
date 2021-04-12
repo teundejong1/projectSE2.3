@@ -58,5 +58,6 @@ public abstract class Game {
         return currentTurn;
     }
 
-    public abstract void run () throws SetOutOfBoundsException  ;
+    // public abstract void run () throws SetOutOfBoundsException  ;
+
 }

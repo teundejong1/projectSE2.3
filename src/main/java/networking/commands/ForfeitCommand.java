@@ -1,12 +1,11 @@
 package networking.commands;
-
 /**
- * Commandclass to ask for a list of games available to play on the server
+ * Commandclass to send the forfeit command to the server
  * @author Jeroen Lammersma
  */
-public class GetGamelistCommand implements Command {
-    
-    public GetGamelistCommand() {}
+public class ForfeitCommand implements Command {
+
+    public ForfeitCommand() {}
 
     /**
      * Check to confirm server received command correctly
@@ -19,14 +18,12 @@ public class GetGamelistCommand implements Command {
 
     @Override
     public boolean isReponseTwoLines() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isValidResponse(String response) {
-        String[] lines = response.split(System.lineSeparator());
-        if (lines.length < 2) return false;
-        return (lines[0].equalsIgnoreCase("OK") && lines[1].startsWith("SVR GAMELIST"));
+        return response.equalsIgnoreCase("OK");
     }
 
     /**
@@ -34,7 +31,8 @@ public class GetGamelistCommand implements Command {
      * @Override
      */
     public String toString() {
-        return "GET GAMELIST";
+        return "FORFEIT";
     }
+
     
 }
