@@ -73,6 +73,6 @@ public abstract class Game {
     public boolean isRunning() {
         return running.get();
     }
-
-    public abstract void run ()   ;
+	
+    public abstract void run () throws SetOutOfBoundsException  ;
 }

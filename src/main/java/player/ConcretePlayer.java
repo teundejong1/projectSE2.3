@@ -2,6 +2,7 @@ package player;
 
 import games.Game;
 import games.Move;
+import games.board.SetOutOfBoundsException;
 import player.inputBehaviour.Input;
 
 class ConcretePlayer implements Player {
@@ -14,7 +15,7 @@ class ConcretePlayer implements Player {
         this.inputBehaviour = inputBehaviour;
     }
     
-    public Move requestMove(Game game) {
+    public Move requestMove(Game game) throws SetOutOfBoundsException {
         return inputBehaviour.requestMove(game);
     }
 
