@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class GameManager {
 
-
     private NetworkManager networkManager;
     private Controller controller;
     private GameEnum subscribed;
@@ -242,8 +241,7 @@ public class GameManager {
     public void getTurn(){
         game.setCurrentTurn(PlayerType.ONE);
     }
-
-
+    
     /**
      * returns GameEnum
      * @param game name in String of the game
@@ -261,55 +259,5 @@ public class GameManager {
             default: return null;
         }
     }
-
-
-
-
-
-//        public void login() throws IOException {
-//        try {
-//            if (naamVeld.getCharacters().length() > 0 && ipVeld.getCharacters().length() > 0 && poortVeld.getCharacters().length() > 0) {
-//                int portnumber = Integer.parseInt(poortVeld.getCharacters().toString());
-//                NetworkManager manager = new NetworkManager(ipVeld.getCharacters().toString(), portnumber);
-//                manager.login(naamVeld.getCharacters().toString());
-//                menuController.rootSetNetworkManager(manager);
-//
-//                menuController.rootInitLobby();
-//
-//                Stage stage = (Stage) loginKnop.getScene().getWindow();
-//                stage.close();
-//            }
-//        } catch(ConnectionFailedException e) {
-//            Group group = new Group();
-//            Label label = new Label("Er is iets fout gegaan bij het inloggen, \ncontroleer je gegevens en probeer het nog eens.");
-//            group.getChildren().add(label);
-//
-//            Stage loginScherm = new Stage();
-//            loginScherm.setScene(new Scene(group));
-//            loginScherm.setTitle("Login-fout");
-//            loginScherm.show();
-//        } catch(NumberFormatException e) {
-//            Group group = new Group();
-//            Label label = new Label("Er zijn verkeerde karakters ingevoerd, \ncontroleer je gegevens en probeer het nog eens.");
-//            group.getChildren().add(label);
-//
-//            Stage loginScherm = new Stage();
-//            loginScherm.setScene(new Scene(group));
-//            loginScherm.setTitle("Login-fout");
-//            loginScherm.show();
-//        }
-//        catch(Exception e) {
-//            Group group = new Group();
-//            Label label = new Label("Er is iet misgegaan. \n Check je gegevens en probeer het opnieuw.");
-//            group.getChildren().add(label);
-//
-//            Stage loginScherm = new Stage();
-//            loginScherm.setScene(new Scene(group));
-//            loginScherm.setTitle("Login-fout");
-//            loginScherm.show();
-//
-//        }
-//    }
-
 
 }
