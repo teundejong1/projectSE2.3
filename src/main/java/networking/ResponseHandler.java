@@ -38,15 +38,16 @@ public class ResponseHandler {
                     if ((response = poll()) != null) {
                         if (isErrorResponse(response)) {
                             Parser.parseError(response, lastCommand);
+                            System.out.println("Last command: " + lastCommand);
                             lastCommand = null;
                         } else if (isOkResponse(response)) {
                             if (lastCommand.isReponseTwoLines()) {
-                                System.out.println("twolines");
                                 response += System.lineSeparator() + poll(200);
                             }
 
                             if (lastCommand.isValidResponse(response)) {
                                 Parser.parseResponse(response, lastCommand);
+                                System.out.println("Last command: " + lastCommand);
                                 lastCommand = null;
                             }
                         } else if (response.startsWith("SVR GAME")) Parser.parseResponse(response);

@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import games.GameEnum;
 import games.Move;
@@ -30,10 +31,14 @@ public class NetworkManager {
     private ResponseHandler responseHandler;
 
     public NetworkManager() throws ConnectionFailedException {
+        this("localhost", 7789);
+    }
+
+    public NetworkManager(String ip, int port) throws ConnectionFailedException {
         executor = ThreadPool.getInstance();
         inputBuffer = new LinkedBlockingQueue<>();
         currentState = new DisconnectedState();
-        initConnection();
+        initConnection(ip, port);
         responseHandler = new ResponseHandler(this, inputBuffer);
     }
 
@@ -53,17 +58,13 @@ public class NetworkManager {
         return currentState;
     }
 
+    public boolean isConnected() {
+        return !(currentState instanceof DisconnectedState);
+    }
+
     public void sendCommand(Command command) {
         responseHandler.setLastCommand(command);
         executor.submit(() -> connection.write(command));
-    }
-
-    public void sendUTF(String command) {
-        executor.submit(() -> connection.writeUTF(command));
-    }
-
-    public boolean isConnected() {
-        return !(currentState instanceof DisconnectedState);
     }
 
     public void acceptChallenge(int challengeNumber) throws IllegalStateException {
@@ -108,16 +109,6 @@ public class NetworkManager {
         currentState.subscribe(this, game);
     }
 
-    private void initConnection() throws ConnectionFailedException {
-        try {
-            Socket socket = SocketFactory.createDefaultLocalhostSocket();
-            connection = new Connection(socket, inputBuffer);
-            currentState = new LoggedOutState();
-        } catch (IOException ioe) {
-            throw new ConnectionFailedException(ioe);
-        }
-    }
-
     private void initConnection(String ip, int port) throws ConnectionFailedException {
         try {
             Socket socket = SocketFactory.createSocket(ip, port);
@@ -128,11 +119,20 @@ public class NetworkManager {
         }
     }
 
-    public static void main(String[] args) throws ConnectionFailedException {
-        NetworkManager manager = new NetworkManager();
 
-        manager.sendCommand(new LoginCommand("jeroen"));
-        manager.sendCommand(new GetGamelistCommand());
+    public static void main(String[] args) throws Exception {
+        NetworkManager manager = new NetworkManager();
+        // TODO zorgen dat je wacht totdat lastCommand weer null is.
+        // OF maak gebruik van een queue, dat is beter denk ik?
+
+        manager.login("jeroen");
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        manager.getGameList();
     }
 
 }
