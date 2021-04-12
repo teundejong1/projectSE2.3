@@ -2,17 +2,13 @@ package networking;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import games.GameEnum;
 import games.Move;
 import networking.commands.Command;
-import networking.commands.GetGamelistCommand;
-import networking.commands.LoginCommand;
 import networking.connection.Connection;
 import networking.connection.ConnectionFailedException;
 import networking.connection.SocketFactory;
@@ -29,6 +25,7 @@ public class NetworkManager {
     private State currentState;
     private BlockingQueue<String> inputBuffer;
     private ResponseHandler responseHandler;
+    private Object lock = new Object();
 
     public NetworkManager() throws ConnectionFailedException {
         this("localhost", 7789);
@@ -39,7 +36,7 @@ public class NetworkManager {
         inputBuffer = new LinkedBlockingQueue<>();
         currentState = new DisconnectedState();
         initConnection(ip, port);
-        responseHandler = new ResponseHandler(this, inputBuffer);
+        responseHandler = new ResponseHandler(this, inputBuffer, lock);
     }
 
     public void setState(State state) {
@@ -120,6 +117,16 @@ public class NetworkManager {
 
         @Override
         public void run() {
+            synchronized(lock) {
+                while (responseHandler.isCommandSet()) {
+                    try {
+                        System.out.println("wait");
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
             responseHandler.setLastCommand(command);
             connection.write(command);
         }
@@ -132,12 +139,6 @@ public class NetworkManager {
         // OF maak gebruik van een queue, dat is beter denk ik?
 
         manager.login("jeroen");
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         manager.getGameList();
     }
 
