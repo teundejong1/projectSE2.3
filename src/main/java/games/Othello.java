@@ -234,6 +234,9 @@ public class Othello extends Game implements Runnable {
             }
             move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
+            if(!isRunning()) {
+                break;
+            }
             try {
                 doMove(move, mark);
                 flipMarks(move);
@@ -249,7 +252,7 @@ public class Othello extends Game implements Runnable {
                 e.printStackTrace(); // TODO
             }
         }
-        while (status == GameStatus.PLAYING && running.get());
+        while (status == GameStatus.PLAYING && isRunning());
     }
 
     @Override

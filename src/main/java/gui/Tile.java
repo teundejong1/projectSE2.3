@@ -84,16 +84,18 @@ public class Tile extends Rectangle {
         setStroke(Color.BLACK);
 
         if(game.getClass() == TicTacToe.class) {
+            setOnMouseEntered(e -> {
+                setFill(darkenColor);
+            });
+            setOnMouseExited(e -> {
+                setFill(normalColor);
+            });
             setOnMouseReleased(e -> {
                 //placeholder actie
                 View.xwaarde = ywaarde;
                 View.ywaarde = xwaarde;
 
                 View.moveSet = true;
-
-
-                //dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
-                setDisable(true);
             });
         } else if(game.getClass() == Othello.class) {
             setOnMouseEntered(e -> {
@@ -111,10 +113,6 @@ public class Tile extends Rectangle {
                         View.ywaarde = xwaarde;
 
                         View.moveSet = true;
-
-
-                        //dit onderdeel staat er zodat de interactie maar 1 keer mogelijk is
-                        setDisable(true);
                     }
                 }
             });

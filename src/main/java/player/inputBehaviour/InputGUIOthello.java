@@ -43,6 +43,9 @@ public class InputGUIOthello extends InputGUI {
                 }
                 Mark mark = game.getBoard().getCell(tile.getYwaarde(), tile.getXwaarde());
                 if (mark != tile.getMark()) {
+                    if(!tile.isDisabled()) {
+                        tile.setDisable(true);
+                    }
                     if(tile.getMark() == Mark.ONE || tile.getMark() == Mark.TWO) {
                         toRemove.add(tile.getSpelStuk());
                     }
@@ -80,7 +83,7 @@ public class InputGUIOthello extends InputGUI {
         }
         System.out.println(game.getBoard());
 
-        while (!View.moveSet) {
+        while (!View.moveSet && game.isRunning()) {
             try {
                 Thread.sleep(1);
             } catch(InterruptedException exception) {

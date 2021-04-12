@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,6 +37,7 @@ import player.PlayerType;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -114,6 +116,17 @@ public class Controller {
         setMenu();
     }
 
+    public void initLoggedInStatus() throws IOException{
+        FXMLLoader fxmlLoader =  new FXMLLoader(getClass().getResource("/fxml/Inlogstatus.fxml"));
+        Parent status = fxmlLoader.load();
+
+        //TODO Networkmanager moet de challenges kunnen updaten, hiervoor moet de networkmanager bij de inlogstatuscontroller kunnen komen
+        InlogstatusController inlogstatusController = fxmlLoader.getController();
+        inlogstatusController.setController(this);
+
+        mainWindow.setRight(status);
+    }
+
     public void initLobby() throws IOException {
         FXMLLoader fxmlLoader =  new FXMLLoader(getClass().getResource("/fxml/Lobby.fxml"));
         Parent lobby = fxmlLoader.load();
@@ -122,6 +135,10 @@ public class Controller {
         lobbyController.setController(this);
 
         mainWindow.setLeft(lobby);
+
+        VBox vbox = (VBox) mainWindow.getLeft();
+        VBox spelerLijst = new VBox();
+        vbox.getChildren().add(spelerLijst);
     }
 
     public void lobbyRefresh() {
@@ -143,10 +160,19 @@ public class Controller {
         players.add("greta");
         players.add("henk");
         players.add("ellie");
-        for (String speler:players) {
-            VBox lobby = (VBox) mainWindow.getLeft();
-            lobby.getChildren().clear();
-            lobby.getChildren().add(new Label(speler));
+
+        VBox lobby = (VBox) mainWindow.getLeft();
+
+        VBox spelerLijst;
+
+        for(Node node: lobby.getChildren()) {
+            if (node.getClass() == VBox.class) {
+                spelerLijst = (VBox) node;
+                spelerLijst.getChildren().clear();
+                for (String speler:players) {
+                    spelerLijst.getChildren().add(new Label(speler));
+                }
+            }
         }
     }
 }

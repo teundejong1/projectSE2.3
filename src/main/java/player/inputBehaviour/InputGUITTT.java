@@ -25,6 +25,9 @@ public class InputGUITTT extends InputGUI {
                 Tile tile = (Tile)node;
                 Mark mark = game.getBoard().getCell(tile.getYwaarde(), tile.getXwaarde());
                 if (mark != tile.getMark()) {
+                    if(!tile.isDisabled()) {
+                        tile.setDisable(true);
+                    }
                     if (mark == Mark.ONE) {
                         ImageView cross = new ImageView("/images/Cross.png");
                         cross.setFitWidth(View.TILE_SIZE);
@@ -54,7 +57,7 @@ public class InputGUITTT extends InputGUI {
         }
         System.out.println(game.getBoard());
 
-        while (!View.moveSet) {
+        while (!View.moveSet && game.isRunning()) {
             try {
                 Thread.sleep(1);
             } catch(InterruptedException exception) {

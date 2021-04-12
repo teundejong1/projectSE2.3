@@ -35,8 +35,8 @@
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Online" />
-                              <Button fx:id="onlineTttManual" mnemonicParsing="false" onMouseClicked="#login" text="als Speler" />
-                              <Button fx:id="onlineTttAi" mnemonicParsing="false" onMouseClicked="#login" text="als AI" />
+                              <Button fx:id="onlineTttManual" mnemonicParsing="false" onMouseClicked="#tttStart" text="als Speler" />
+                              <Button fx:id="onlineTttAi" mnemonicParsing="false" onMouseClicked="#tttStart" text="als AI" />
                            </children>
                         </VBox>
                      </children>
@@ -52,6 +52,7 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" top="5.0" />
                </padding>
             </VBox>
+            <Button fx:id="loginKnop" onAction="#login" text="Login" />
             <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -72,8 +73,8 @@
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label text="Online" />
-                              <Button fx:id="onlineOthelloManual" mnemonicParsing="false" onMouseClicked="#login" text="als Speler" />
-                              <Button fx:id="onlineOthelloAi" mnemonicParsing="false" onMouseClicked="#login" text="als AI" />
+                              <Button fx:id="onlineOthelloManual" mnemonicParsing="false" onMouseClicked="#startOthello" text="als Speler" />
+                              <Button fx:id="onlineOthelloAi" mnemonicParsing="false" onMouseClicked="#startOthello" text="als AI" />
                            </children>
                         </VBox>
                      </children>

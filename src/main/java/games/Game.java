@@ -70,5 +70,9 @@ public abstract class Game {
         running.set(newValue);
     }
 
+    public boolean isRunning() {
+        return running.get();
+    }
+
     public abstract void run ()   ;
 }
