@@ -18,7 +18,9 @@ import java.util.Random;
 
 
 public class OthelloAiMiniMax implements AI {
-
+    long start;
+    long end;
+    long secToWait = 6;
     Random random;
 
     public OthelloAiMiniMax() {
@@ -146,10 +148,15 @@ public class OthelloAiMiniMax implements AI {
 
     public int miniMaxValue(Board board, Game game, int depth, Mark original, Mark currentTurn) throws SetOutOfBoundsException {
 
+
+        if (System.currentTimeMillis() > end){
+            System.out.println("TIJD IS OM");
+            return heuristic(board, original);
+        }
         System.out.println("Kom je hier minimaxvalue start?");
         System.out.println("DIEPTE: " + depth);
 //        List<Move> list = game.getPossibleMoves();
-        if (depth >= 2000) { //|| game.getStatus() == GameStatus.WON
+        if (depth >= 500 || game.getStatus() == GameStatus.WON) { //
             System.out.println("Test op depth, DEPTH REACHED, YOU DID IT");
             return heuristic(board, original);
         }
@@ -213,20 +220,23 @@ public class OthelloAiMiniMax implements AI {
 
     @Override
     public Move getMove(Game game) throws SetOutOfBoundsException {
+        start = System.currentTimeMillis();
+        end = start + (secToWait*1000);
+
         //heuristic(game);
         Move bestMove = null;
 //        List<Move> possibleMoves = game.getPossibleMoves();
 
 //        System.out.println(possibleMoves);
-        long start = System.currentTimeMillis();
-        long end = start + (3*1000);
+//        long start = System.currentTimeMillis();
+//        long end = start + (3*1000);
 
-        while(System.currentTimeMillis() < end ) {
+//        while(System.currentTimeMillis() < end ) {
             bestMove = MiniMaxDecision(game, getCurrent(game));
             return bestMove;
-        }
-        System.out.println("HIER MAG JE NIET KOMEN");
-        return bestMove;
+//        }
+//        System.out.println("HIER MAG JE NIET KOMEN");
+//        return bestMove;
     }
 
     public List<Move> getPossibleTempMoves(Board board, Othello game) {
