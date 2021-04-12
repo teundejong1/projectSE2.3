@@ -8,7 +8,7 @@ import networking.commands.GetPlayerlistCommand;
 import networking.commands.LogoutCommand;
 import networking.commands.MoveCommand;
 
-class PlayingState extends State {
+public class PlayingState extends State {
 
     @Override
     public void forfeit(NetworkManager manager) throws IllegalStateException {

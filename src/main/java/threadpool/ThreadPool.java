@@ -7,8 +7,6 @@ public class ThreadPool {
 
     private volatile static ThreadPoolExecutor threadPool;
 
-    public ThreadPool() {}
-
     public static ThreadPoolExecutor getInstance() {
         if (threadPool == null) {
             synchronized (ThreadPool.class) {

@@ -70,6 +70,7 @@ public class ResponseHandler {
         private void ready() {
             synchronized(lock) {
                 lastCommand = null;
+                manager.setReady();
                 lock.notify();
             }
         }
