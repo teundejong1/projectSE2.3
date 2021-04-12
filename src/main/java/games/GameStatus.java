@@ -4,5 +4,6 @@ public enum GameStatus {
     READY,
     PLAYING,
     WON,
-    DRAW
+    DRAW,
+    LOSS
 }

@@ -62,6 +62,9 @@ public abstract class Game {
         this.status = status;
     }
 
+    public void setCurrentTurn(PlayerType currentPlayer){
+        currentTurn = currentPlayer;
+    }
     // public abstract void run () throws SetOutOfBoundsException  ;
 
 }
