@@ -35,6 +35,7 @@ public class NetworkManager {
     private ResponseHandler responseHandler;
     private Object lock = new Object();
     private boolean ready;
+    private String username;
 
     /**
      * Singleton for the Networkmanager
@@ -82,6 +83,14 @@ public class NetworkManager {
         initConnection(ip, port);
         ready = true;
         responseHandler = new ResponseHandler(this, inputBuffer, lock);
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     /**

@@ -21,7 +21,10 @@ public class MatchHandler implements Handler {
         networkManager.setState(new PlayingState());
         map = Parser.parseMap(response);
 
-        Player localAI = PlayerFactory.createAIPlayer("ai", getGame());
+        String username = networkManager.getUsername();
+        String localUsername = (username == null) ? "ai" : username;
+
+        Player localAI = PlayerFactory.createAIPlayer(localUsername, getGame());
         Player remotePlayer = PlayerFactory.createRemotePlayer(getOpponent());
 
         Player playerOne;
@@ -36,6 +39,9 @@ public class MatchHandler implements Handler {
         }
 
         gameManager.createGame(PlayerType.ONE, getGame(), playerOne, playerTwo);
+        try {
+            gameManager.start();
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     private GameEnum getGame() {
