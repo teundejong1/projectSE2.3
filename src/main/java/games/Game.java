@@ -48,11 +48,15 @@ public abstract class Game {
 
     public Board getBoard() {
         return board;
-    };
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
 
     public GameStatus getStatus() {
         return status;
-    };
+    }
 
     public PlayerType getCurrentTurn() {
         return currentTurn;
