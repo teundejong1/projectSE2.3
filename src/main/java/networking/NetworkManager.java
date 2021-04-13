@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.locks.ReentrantLock;
 
 import games.GameEnum;
 import games.Move;
@@ -34,9 +33,7 @@ public class NetworkManager {
     private BlockingQueue<String> inputBuffer;
     private ResponseHandler responseHandler;
     private Object lock = new Object();
-    private ReentrantLock rlock = new ReentrantLock();
-    private Object lock2 = new Object();
-    private boolean isReady = true;
+    private boolean ready;
 
     /**
      * Singleton for the Networkmanager
@@ -82,7 +79,8 @@ public class NetworkManager {
         inputBuffer = new LinkedBlockingQueue<>();
         currentState = new DisconnectedState();
         initConnection(ip, port);
-        responseHandler = new ResponseHandler(this, inputBuffer, lock2);
+        ready = true;
+        responseHandler = new ResponseHandler(this, inputBuffer, lock);
     }
 
     /**
@@ -104,7 +102,7 @@ public class NetworkManager {
      * sets ready to true. So the next command can be send
      */
     public void setReady() {
-        isReady = true;
+        ready = true;
     }
 
     /**
@@ -129,48 +127,40 @@ public class NetworkManager {
      */
     public void acceptChallenge(int challengeNumber) throws IllegalStateException {
         syncWait();
-        System.out.println("accepting challenge");
         currentState.acceptChallenge(this, challengeNumber);
     }
 
     public void challengePlayer(String opponent, GameEnum game) throws IllegalStateException {
         syncWait();
-        System.out.println("challenging player");
         currentState.challengePlayer(this, opponent, game);
     }
 
     public void forfeit() throws IllegalStateException {
         syncWait();
-        System.out.println("forfeiting");
         currentState.forfeit(this);
     }
 
     public void getGameList() throws IllegalStateException {
         syncWait();
-        System.out.println("getting gamelist");
         currentState.getGameList(this);
     }
 
     public void getPlayerList() throws IllegalStateException {
         syncWait();
-        System.out.println("getting Playerlist");
         currentState.getPlayerList(this);
     }
 
     public void help() throws IllegalStateException {
         syncWait();
-        System.out.println("getting Help");
         currentState.help(this);
     }
 
     public void login(String name) throws IllegalStateException {
         syncWait();
-        System.out.println("logging in");
         currentState.login(this, name);
     }
 
     public void logout() throws IllegalStateException {
-        syncWait();
         currentState.logout(this);
         connection.close();
         setState(new DisconnectedState());
@@ -178,13 +168,11 @@ public class NetworkManager {
 
     public void sendMove(Move move, int boardSize) throws IllegalStateException {
         syncWait();
-        System.out.println("sending move");
         currentState.sendMove(this, move, boardSize);
     }
 
     public void subscribe(GameEnum game) throws IllegalStateException {
         syncWait();
-        System.out.println("subscribing");
         currentState.subscribe(this, game);
     }
 
@@ -202,20 +190,22 @@ public class NetworkManager {
      * Method for waiting for feedback before sending a new command
      * required for every command send
      */
-    private void syncWait(){
-        synchronized(lock2) {
-            while (!isReady) {
+    private void syncWait() {
+        synchronized(lock) {
+            while (!ready) {
                 try {
-                    System.out.println("wait");
-                    lock2.wait();
+                    lock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            isReady = false;
+            ready = false;
         }
     }
 
+    /**
+     * Inner class CommandTask
+     */
     class CommandTask implements Runnable {
 
         private Command command;
@@ -226,16 +216,6 @@ public class NetworkManager {
 
         @Override
         public void run() {
-            // synchronized(lock) {
-            //     while (responseHandler.isCommandSet()) {
-            //         try {
-            //             System.out.println("wait");
-            //             lock.wait();
-            //         } catch (InterruptedException e) {
-            //             e.printStackTrace();
-            //         }
-            //     }
-            // }
             responseHandler.setLastCommand(command);
             connection.write(command);
         }
@@ -244,11 +224,10 @@ public class NetworkManager {
 
     public static void main(String[] args) throws Exception {
         NetworkManager manager = NetworkManager.getInstance("localhost", 7789);
-        // TODO zorgen dat je wacht totdat lastCommand weer null is.
-        // OF maak gebruik van een queue, dat is beter denk ik?
-
         manager.login("jeroen");
         manager.getGameList();
+        // TimeUnit.SECONDS.sleep(1);
+        // manager.logout();
     }
 
 }
