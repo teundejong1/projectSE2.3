@@ -32,6 +32,7 @@ public class FxmlTest extends Application implements Runnable{
         loader = new FXMLLoader(getClass().getResource("/fxml/oneWindow.fxml"));
         root = loader.load();
         controller =  loader.getController();
+        View.controller = controller;
 
         controller.setMenu();
 

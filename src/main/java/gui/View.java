@@ -1,15 +1,20 @@
 package gui;
 
+import games.GameEnum;
+import games.Move;
 import games.Othello;
 import games.TicTacToe;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import player.PlayEnum;
 
 import java.util.List;
 
@@ -27,6 +32,10 @@ public class View {
 //    public static Button skipButton;
 
     public static VBox spelerLijst;
+    public static Controller controller;
+    public static String spelernaam;
+    public static boolean remoteMoveSet;
+    public static Move remoteMove;
 
     public View() {
 
@@ -80,5 +89,24 @@ public class View {
                 spelerLijst.getChildren().add(new Label(speler));
             });
         }
+    }
+
+    public static void startOnlineMatch(GameEnum gameType) {
+        if(gameType == GameEnum.OTHELLO) {
+            controller.setOthello(PlayEnum.ONLINEAI);
+        } else {
+            controller.setTTT(PlayEnum.ONLINEAI);
+        }
+    }
+
+    public static void illegalStateException() {
+        Group group = new Group();
+        Label label = new Label("Dit is nu niet toegestaan.");
+        group.getChildren().add(label);
+
+        Stage loginScherm = new Stage();
+        loginScherm.setScene(new Scene(group));
+        loginScherm.setTitle("Fout");
+        loginScherm.show();
     }
 }

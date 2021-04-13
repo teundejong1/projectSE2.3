@@ -31,6 +31,10 @@ public class MenuController {
         root = controller;
     }
 
+    public Controller getRoot() {
+        return root;
+    }
+
     public void tttStart(MouseEvent mouseEvent) {
         if(mouseEvent.getSource() == localTttPve) {
             root.setTTT(PlayEnum.PVE);
@@ -110,13 +114,8 @@ public class MenuController {
         loginScherm.show();
     }
 
-    public void rootSetNetworkManager(NetworkManager networkManager) {
+    public void setNetworkManager(NetworkManager networkManager) {
         this.networkManager = networkManager;
-        root.setNetworkManager(networkManager);
-    }
-
-    public void rootInitLobby() throws IOException {
-        root.initLobby();
     }
 
 //    public void newGame(MouseEvent mouseEvent){

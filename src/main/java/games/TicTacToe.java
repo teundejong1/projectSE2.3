@@ -7,6 +7,7 @@ import games.board.Mark;
 import games.board.SetOutOfBoundsException;
 import games.board.TicTacToeBoard;
 import gui.View;
+import networking.NetworkManager;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
@@ -17,6 +18,10 @@ public class TicTacToe extends Game implements Runnable {
 
     public TicTacToe(PlayerType StartingPlayer, PlayEnum playType) {
         super(StartingPlayer, playType);
+    }
+
+    public TicTacToe(PlayerType StartingPlayer, PlayEnum playType, NetworkManager networkManager) {
+        super(StartingPlayer, playType, networkManager);
     }
 
     @Override

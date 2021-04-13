@@ -2,5 +2,6 @@ package player;
 
 public enum PlayEnum {
     PVP,
-    PVE
+    PVE,
+    ONLINEAI
 }

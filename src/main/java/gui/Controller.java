@@ -45,6 +45,7 @@ public class Controller {
     NetworkManager networkManager;
     Game game;
     Thread gameThread;
+    String spelernaam;
 
     @FXML
     public AnchorPane gameAnchor;
@@ -88,7 +89,14 @@ public class Controller {
     public void setOthello(PlayEnum playType) {
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
-        Othello othello = new Othello(PlayerType.ONE, playType);
+        Othello othello;
+        if(playType == PlayEnum.ONLINEAI) {
+            othello = new Othello(PlayerType.ONE, playType, networkManager);
+        }
+        else {
+            othello = new Othello(PlayerType.ONE, playType);
+        }
+
         game = othello;
         gameAnchor.getChildren().add(View.setOthello(othello));
         gameThread = new Thread(othello);
@@ -98,7 +106,13 @@ public class Controller {
     public void setTTT(PlayEnum playType) {
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
-        TicTacToe ticTacToe =  new TicTacToe(PlayerType.ONE, playType);
+        TicTacToe ticTacToe;
+        if(playType == PlayEnum.ONLINEAI) {
+            ticTacToe = new TicTacToe(PlayerType.ONE, playType, networkManager);
+        }
+        else {
+            ticTacToe = new TicTacToe(PlayerType.ONE, playType);
+        }
         game = ticTacToe;
         gameAnchor.getChildren().add(View.setTTT(ticTacToe));
         gameThread =  new Thread(ticTacToe);
@@ -146,14 +160,16 @@ public class Controller {
         try {
             networkManager.getPlayerList();
         } catch (IllegalStateException e) {
-            Group group = new Group();
-            Label label = new Label("Dit is nu niet toegestaan.");
-            group.getChildren().add(label);
-
-            Stage loginScherm = new Stage();
-            loginScherm.setScene(new Scene(group));
-            loginScherm.setTitle("Fout");
-            loginScherm.show();
+            View.illegalStateException();
         }
+    }
+
+    public void setSpelerNaam(String spelernaam) {
+        this.spelernaam = spelernaam;
+        View.spelernaam = spelernaam;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

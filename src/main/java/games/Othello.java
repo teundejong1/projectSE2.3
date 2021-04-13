@@ -4,6 +4,9 @@ import games.board.Board;
 import games.board.Mark;
 import games.board.OthelloBoard;
 import games.board.SetOutOfBoundsException;
+import gui.View;
+import networking.NetworkManager;
+import networking.states.IllegalStateException;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerFactory;
@@ -17,6 +20,11 @@ public class Othello extends Game implements Runnable {
 
     public Othello(PlayerType startingPlayer, PlayEnum playType) {
         super(startingPlayer, playType);
+    }
+
+    public Othello(PlayerType startingPlayer, PlayEnum playType, NetworkManager networkManager) {
+        super(startingPlayer, playType, networkManager);
+
     }
 
 
@@ -235,13 +243,30 @@ public class Othello extends Game implements Runnable {
                     status = GameStatus.WON;
                 }
             }
-            move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
+
+            if(playType == PlayEnum.ONLINEAI) {
+                if(currentTurn == PlayerType.ONE) {
+                    move = one.requestMove(this);
+                } else {
+                    boolean moveSet = false;
+                    View.remoteMoveSet = moveSet;
+                    while(!View.remoteMoveSet) {
+
+                    }
+                    move = View.remoteMove;
+                }
+            } else {
+                move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
+            }
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
             if(!isRunning()) {
                 break;
             }
             try {
                 doMove(move, mark);
+                if(playType == PlayEnum.ONLINEAI) {
+                    networkManager.sendMove(move, View.OTHELLO_SIZE);
+                }
                 flipMarks(move);
                 //if (checkForWin()) status = GameStatus.WON;
                 if (board.isFull()) {
@@ -252,6 +277,8 @@ public class Othello extends Game implements Runnable {
 
             } catch (IllegalMoveException e) {
                 e.printStackTrace(); // TODO
+            } catch (IllegalStateException e) {
+                View.illegalStateException();
             }
         }
         while (status == GameStatus.PLAYING && isRunning());
@@ -260,12 +287,17 @@ public class Othello extends Game implements Runnable {
     @Override
     public void run() {
         running.set(true);
-        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);;
+        Player p1;
         Player p2;
-        if(playType == PlayEnum.PVE) {
+        if(playType == PlayEnum.PVP) {
+            p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
+            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.OTHELLO);
+        } else if(playType == PlayEnum.PVE) {
+            p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
             p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
         } else {
-            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.OTHELLO);
+            p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
+            p2 = PlayerFactory.createRemotePlayer("poephoofd");
         }
 
         try {

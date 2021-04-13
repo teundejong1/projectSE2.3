@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import games.board.Board;
 import games.board.Mark;
 import games.board.SetOutOfBoundsException;
+import networking.NetworkManager;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
@@ -18,6 +19,7 @@ public abstract class Game {
     protected PlayerType playerOne;
     protected PlayerType playerTwo;
     protected PlayerType currentTurn;
+    protected NetworkManager networkManager;
 
     protected PlayEnum playType;
 
@@ -30,6 +32,11 @@ public abstract class Game {
         status = GameStatus.READY;
         this.playType = playType;
         running = new AtomicBoolean();
+    }
+
+    public Game(PlayerType startingPlayer, PlayEnum playType, NetworkManager networkManager) {
+        this(startingPlayer, playType);
+        this.networkManager = networkManager;
     }
 
     public PlayerType whosTurn() {
