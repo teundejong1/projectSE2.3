@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import games.board.Mark;
-import games.board.SetOutOfBoundsException;
 import games.board.TicTacToeBoard;
 import gui.View;
 import player.Player;
 import player.PlayerType;
-import player.PlayerFactory;
 
-public class TicTacToe extends Game implements Runnable {
+public class TicTacToe extends Game {
 
     private View view;
 
@@ -128,13 +126,5 @@ public class TicTacToe extends Game implements Runnable {
     public void setView(View view) {
         this.view = view;
     }
-
-    @Override
-    public void run() {
-        Player p1 = PlayerFactory.createGUIPlayer("SORRY");
-        Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN");
-        start(p1, p2);
-    }
-
     
 }

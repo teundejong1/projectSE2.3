@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Othello extends Game implements Runnable {
+public class Othello extends Game {
 
     public Othello(PlayerType startingPlayer) {
         super(startingPlayer);
     }
-
 
     @Override
     protected void validateMove(Move move, Mark marker) throws IllegalMoveException {
@@ -148,7 +147,7 @@ public class Othello extends Game implements Runnable {
         }
     }
 
-    public void flipMarks(Move move) throws SetOutOfBoundsException {
+    public void flipMarks(Move move) throws IllegalGameStateException {
         int x = move.getX();
         int y = move.getY();
         System.out.println("GIREUWBHGREWIOUGFHO");
@@ -162,7 +161,7 @@ public class Othello extends Game implements Runnable {
         checkLines(x, y, -1, 0); // Upper
     }
 
-    public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws SetOutOfBoundsException {
+    public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws IllegalGameStateException {
 
         if ((currentX + toCheckX < 0) || (currentX + toCheckX >= board.getSize())) {
             return false;
@@ -177,7 +176,12 @@ public class Othello extends Game implements Runnable {
             return true;
         } else {
             if (checkLines(currentX + toCheckX, currentY + toCheckY, toCheckX, toCheckY)) {
-                board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
+                try {
+                    board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
+                }
+                catch (SetOutOfBoundsException sobe) {
+                    throw new IllegalGameStateException("Exception during checklines", sobe);
+                }
                 System.out.println("FLIPTATIONS"); //testshit moet uit
                 return true;
             } else {
@@ -205,64 +209,54 @@ public class Othello extends Game implements Runnable {
 
 
     @Override
-    public void start(Player one, Player two) {
+    public void start(Player one, Player two) throws IllegalGameStateException {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
-                status = GameStatus.PLAYING;
-                board = new OthelloBoard(8);
-                Move move;
-                Mark mark;
-                //init board, willen we probbaly niet hier doen
-                // TODO
-                try {
-                    board.setMove(3, 4, Mark.ONE);
-                    board.setMove(4, 3, Mark.ONE);
-                    board.setMove(3, 3, Mark.TWO);
-                    board.setMove(4, 4, Mark.TWO);
-                } catch (SetOutOfBoundsException sobe) {
-                    //
-                }
+        status = GameStatus.PLAYING;
+        board = new OthelloBoard(8);
+        Move move;
+        Mark mark;
+        //init board, willen we probbaly niet hier doen
+        // TODO
+        try {
+            board.setMove(3, 4, Mark.ONE);
+            board.setMove(4, 3, Mark.ONE);
+            board.setMove(3, 3, Mark.TWO);
+            board.setMove(4, 4, Mark.TWO);
+        } catch (SetOutOfBoundsException sobe) {
+            throw new IllegalGameStateException("Game init failed", sobe);
+        }
 
-                do {
-                    System.out.println(getPossibleMoves());
-                    System.out.println("TUSSENSTAND");
-                    System.out.println(Arrays.toString(score()));
-                    if (getPossibleMoves().isEmpty()) {
-                        System.out.println("HEBT GEEN MOVES ATM");
+        do {
+            System.out.println(getPossibleMoves());
+            System.out.println("TUSSENSTAND");
+            System.out.println(Arrays.toString(score()));
+            if (getPossibleMoves().isEmpty()) {
+                System.out.println("HEBT GEEN MOVES ATM");
                 changeTurn();
-                        System.out.println(getPossibleMoves());
+                System.out.println(getPossibleMoves());
+                
                 if (getPossibleMoves().isEmpty()) {
-                            System.out.println("No more moves left for both players");
-                            System.out.println(Arrays.toString(score()));
-                        }
+                    System.out.println("No more moves left for both players");
+                    System.out.println(Arrays.toString(score()));
+                }
             }
+        
             move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
+            
             try {
                 doMove(move, mark);
-                try {
-                    flipMarks(move);
-                } catch (SetOutOfBoundsException sobe) {
-                    // ??????
-                }
+                flipMarks(move);
                 //if (checkForWin()) status = GameStatus.WON;
+                
                 if (board.isFull()){
                     status = GameStatus.WON;
                     System.out.println(Arrays.toString(score()));
-                }
-                else changeTurn();
-
-
+                } else changeTurn();
             } catch (IllegalMoveException e) {
                 e.printStackTrace(); // TODO
             }
-        }
-        while (status == GameStatus.PLAYING);
+        } while (status == GameStatus.PLAYING);
     }
 
-    @Override
-    public void run() {
-        Player p1 = PlayerFactory.createCLIPlayer("Frankenstein");
-        Player p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-        start(p1, p2);
-    }
 }
