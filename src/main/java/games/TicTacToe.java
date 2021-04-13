@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import games.board.Mark;
+import games.board.SetOutOfBoundsException;
 import games.board.TicTacToeBoard;
 import gui.View;
 import networking.NetworkManager;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
+import player.PlayerFactory;
 
-public class TicTacToe extends Game {
+public class TicTacToe extends Game implements Runnable {
 
 
     public TicTacToe(PlayerType StartingPlayer, PlayEnum playType) {
@@ -132,8 +134,22 @@ public class TicTacToe extends Game {
 
     }
 
-    public void setView(View view) {
-        this.view = view;
+
+    @Override
+    public void run() {
+        running.set(true);
+        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.TTT);;
+        Player p2;
+        if(playType == PlayEnum.PVE) {
+            p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.TTT);
+        } else {
+            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.TTT);
+        }
+        
+        try {
+            start(p1, p2);
+        } catch (SetOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
-    
 }

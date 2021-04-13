@@ -35,7 +35,7 @@ public class GetPlayerlistCommand implements Command {
      * @Override
      */
     public String toString() {
-        return "GET playerlist";
+        return "GET PLAYERLIST";
     }
 
 }
