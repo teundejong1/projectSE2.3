@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import games.GameEnum;
 import games.Move;
@@ -226,8 +227,8 @@ public class NetworkManager {
         NetworkManager manager = NetworkManager.getInstance("localhost", 7789);
         manager.login("jeroen");
         manager.getGameList();
-        // TimeUnit.SECONDS.sleep(1);
-        // manager.logout();
+        TimeUnit.SECONDS.sleep(1);
+        manager.logout();
     }
 
 }
