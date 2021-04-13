@@ -87,6 +87,7 @@ public class Controller {
     }
 
     public void setOthello(PlayEnum playType) {
+        System.out.println("sets Othello");
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
         Othello othello;

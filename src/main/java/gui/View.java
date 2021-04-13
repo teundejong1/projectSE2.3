@@ -107,6 +107,7 @@ public class View {
 //    }
 
     public static void startOnlineMatch(GameEnum gameType) {
+        System.out.println("starts online game");
         if(gameType == GameEnum.OTHELLO) {
             controller.setOthello(PlayEnum.ONLINEAI);
         } else {

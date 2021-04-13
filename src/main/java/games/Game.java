@@ -52,6 +52,7 @@ public abstract class Game {
     public abstract void start(Player one, Player two) throws SetOutOfBoundsException;
 
     public void doMove(Move move, Mark marker) throws IllegalMoveException {
+        System.out.println(move);
         validateMove(move, marker);
         
         try {

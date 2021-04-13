@@ -268,6 +268,7 @@ public class Othello extends Game implements Runnable {
                 break;
             }
             try {
+                System.out.println("in OThello");
                 doMove(move, mark);
 
                 if(playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {

@@ -46,12 +46,14 @@ public class ResponseHandler {
             while(manager.isConnected()) {
                 try {
                     if ((response = poll()) != null) {
+                        System.out.println(response);
                         if (isErrorResponse(response)) {
                             Parser.parseError(response, lastCommand);
                             ready();
                         } else if (isOkResponse(response)) {
                             if (lastCommand.isReponseTwoLines()) {
                                 response += System.lineSeparator() + poll(1000);
+                                System.out.println(response);
                             }
 
                             if (lastCommand.isValidResponse(response)) {

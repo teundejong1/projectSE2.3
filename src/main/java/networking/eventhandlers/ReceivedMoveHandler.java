@@ -15,6 +15,7 @@ public class ReceivedMoveHandler implements Handler {
             Move move = createMove(Integer.parseInt(map.get("MOVE")), View.OTHELLO_SIZE);
             View.remoteMove = move;
             View.remoteMoveSet = true;
+            System.out.println("receivedMoveHandler");
         }
     }
 

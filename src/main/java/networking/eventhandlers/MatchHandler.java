@@ -15,10 +15,9 @@ public class MatchHandler implements Handler {
     
     public void handle(String response) {
         manager.setState(new PlayingState());
-        Map<String, String> map = Parser.parseMap(response);
         MatchHash match = new MatchHash(response);
-        // doe iets met de map
         // {GAMTYPE: "<speltype>", PLAYERTOMOVE: "<naam speler1>", OPPONENT: "<naam tegenstander>"}
+        // krijgen command binnen. wordt nog niks mee gedaan
         View.startOnlineMatch(match.getGame());
     }
 
