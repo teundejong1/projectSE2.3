@@ -9,7 +9,7 @@ import networking.commands.GetPlayerlistCommand;
 import networking.commands.LogoutCommand;
 import networking.commands.SubscribeCommand;
 
-class LoggedInState extends State {
+public class LoggedInState extends State {
     
     @Override
     public void acceptChallenge(NetworkManager manager, int challengeNumber)

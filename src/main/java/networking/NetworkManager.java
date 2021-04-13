@@ -2,17 +2,14 @@ package networking;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import games.GameEnum;
 import games.Move;
 import networking.commands.Command;
-import networking.commands.GetGamelistCommand;
-import networking.commands.LoginCommand;
 import networking.connection.Connection;
 import networking.connection.ConnectionFailedException;
 import networking.connection.SocketFactory;
@@ -24,22 +21,47 @@ import threadpool.ThreadPool;
 
 public class NetworkManager {
 
+    private volatile static NetworkManager manager;
+
     private ThreadPoolExecutor executor;
     private Connection connection;
     private State currentState;
     private BlockingQueue<String> inputBuffer;
     private ResponseHandler responseHandler;
+    private Object lock = new Object();
+    private ReentrantLock rlock = new ReentrantLock();
+    private Object lock2 = new Object();
+    private boolean isReady = true;
 
-    public NetworkManager() throws ConnectionFailedException {
-        this("localhost", 7789);
+    public static NetworkManager getInstance(String ip, int port) {
+        if (manager == null) {
+            synchronized (ThreadPool.class) {
+                if (manager == null) {
+                    try {
+                        manager = new NetworkManager(ip, port);
+                    } catch (ConnectionFailedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        return manager;
     }
 
-    public NetworkManager(String ip, int port) throws ConnectionFailedException {
+    public static void deleteInstance() {
+        synchronized (ThreadPool.class) {
+            manager = null;
+        }
+    }
+
+    private NetworkManager(String ip, int port) throws ConnectionFailedException {
         executor = ThreadPool.getInstance();
         inputBuffer = new LinkedBlockingQueue<>();
         currentState = new DisconnectedState();
         initConnection(ip, port);
-        responseHandler = new ResponseHandler(this, inputBuffer);
+        responseHandler = new ResponseHandler(this, inputBuffer, lock2);
     }
 
     public void setState(State state) {
@@ -50,13 +72,16 @@ public class NetworkManager {
         return currentState;
     }
 
+    public void setReady() {
+        isReady = true;
+    }
+
     public boolean isConnected() {
         return !(currentState instanceof DisconnectedState);
     }
 
     public void sendCommand(Command command) {
-        responseHandler.setLastCommand(command);
-        executor.submit(() -> connection.write(command));
+        executor.submit(new CommandTask(command));
     }
 
     public void acceptChallenge(int challengeNumber) throws IllegalStateException {
@@ -72,6 +97,18 @@ public class NetworkManager {
     }
 
     public void getGameList() throws IllegalStateException {
+        synchronized(lock2) {
+            while (!isReady) {
+                try {
+                    System.out.println("wait");
+                    lock2.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            isReady = false;
+        }
+        System.out.println("getgamelist");
         currentState.getGameList(this);
     }
 
@@ -84,6 +121,18 @@ public class NetworkManager {
     }
 
     public void login(String name) throws IllegalStateException {
+        synchronized(lock2) {
+            while (!isReady) {
+                try {
+                    System.out.println("wait");
+                    lock2.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            isReady = false;
+        }
+        System.out.println("logging in");
         currentState.login(this, name);
     }
 
@@ -111,19 +160,38 @@ public class NetworkManager {
         }
     }
 
+    class CommandTask implements Runnable {
+
+        private Command command;
+
+        public CommandTask(Command command) {
+            this.command = command;
+        }
+
+        @Override
+        public void run() {
+            // synchronized(lock) {
+            //     while (responseHandler.isCommandSet()) {
+            //         try {
+            //             System.out.println("wait");
+            //             lock.wait();
+            //         } catch (InterruptedException e) {
+            //             e.printStackTrace();
+            //         }
+            //     }
+            // }
+            responseHandler.setLastCommand(command);
+            connection.write(command);
+        }
+        
+    }
 
     public static void main(String[] args) throws Exception {
-        NetworkManager manager = new NetworkManager();
+        NetworkManager manager = NetworkManager.getInstance("localhost", 7789);
         // TODO zorgen dat je wacht totdat lastCommand weer null is.
         // OF maak gebruik van een queue, dat is beter denk ik?
 
         manager.login("jeroen");
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         manager.getGameList();
     }
 

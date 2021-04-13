@@ -12,12 +12,14 @@ public class ResponseHandler {
     private NetworkManager manager;
     private BlockingQueue<String> inputBuffer;
     private Command lastCommand;
+    private Object lock;
 
     public ResponseHandler(NetworkManager manager,
-            BlockingQueue<String> inputBuffer) {
+            BlockingQueue<String> inputBuffer, Object lock) {
         
         this.manager = manager;
         this.inputBuffer = inputBuffer;
+        this.lock = lock;
 
         ThreadPoolExecutor executor = ThreadPool.getInstance();
         executor.submit(new ResponseListener());
@@ -25,6 +27,14 @@ public class ResponseHandler {
 
     public void setLastCommand(Command command) {
         lastCommand = command;
+    }
+
+    public Command getLastComand() {
+        return lastCommand;
+    }
+
+    public boolean isCommandSet() {
+        return lastCommand != null;
     }
 
     class ResponseListener implements Runnable {
@@ -38,20 +48,17 @@ public class ResponseHandler {
                     if ((response = poll()) != null) {
                         if (isErrorResponse(response)) {
                             Parser.parseError(response, lastCommand);
-                            System.out.println("Last command: " + lastCommand);
-                            lastCommand = null;
+                            ready();
                         } else if (isOkResponse(response)) {
                             if (lastCommand.isReponseTwoLines()) {
-                                response += System.lineSeparator() + poll(200);
+                                response += System.lineSeparator() + poll(1000);
                             }
 
                             if (lastCommand.isValidResponse(response)) {
                                 Parser.parseResponse(response, lastCommand);
-                                System.out.println("Last command: " + lastCommand);
-                                lastCommand = null;
+                                ready();
                             }
                         } else if (response.startsWith("SVR GAME")) Parser.parseResponse(response);
-                        
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -60,12 +67,20 @@ public class ResponseHandler {
             
         }
 
+        private void ready() {
+            synchronized(lock) {
+                lastCommand = null;
+                manager.setReady();
+                lock.notify();
+            }
+        }
+
         private String poll(int miliseconds) throws InterruptedException {
             return inputBuffer.poll(miliseconds, TimeUnit.MILLISECONDS);
         }
 
         private String poll() throws InterruptedException {
-            return poll(50);
+            return poll(500);
         }
 
         private boolean isOkResponse(String line) {
