@@ -135,4 +135,6 @@ public class TicTacToe extends Game implements Runnable {
         Player p2 = PlayerFactory.createGUIPlayer("VOOR DE NAMEN");
         start(p1, p2);
     }
+
+    
 }

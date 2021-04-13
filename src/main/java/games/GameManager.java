@@ -24,14 +24,37 @@ public class GameManager {
         }
     }
 
-    public void start() {
+    public void start() throws NotReadyException {
+        if (!isGameReady()) throw new NotReadyException("Game is null");
+        if (!isPlayerOneReady()) throw new NotReadyException("PlayerOne is null");
+        if (!isPlayerTwoReady()) throw new NotReadyException("PlayerTwo is null");
 
+        game.start(playerOne, playerTwo);
     }
 
-    public boolean isReady() {
+    private boolean isReady() {
         return (game != null) && (playerOne != null) && (playerTwo != null);
     }
 
+    private boolean isGameReady() {
+        return game != null;
+    }
+
+    private boolean isPlayerOneReady() {
+        return playerOne != null;
+    }
+
+    private boolean isPlayerTwoReady() {
+        return playerTwo != null;
+    }
+
+    public void createGame(PlayerType startingPlayer, GameEnum game,
+            Player playerOne, Player playerTwo) {
+        
+        this.game = GameFactory.createGame(startingPlayer, game);
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+    }
 
     public static void main(String[] args) {
         PlayerType pt;

@@ -205,18 +205,22 @@ public class Othello extends Game implements Runnable {
 
 
     @Override
-    public void start(Player one, Player two) throws SetOutOfBoundsException {
+    public void start(Player one, Player two) {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
                 status = GameStatus.PLAYING;
                 board = new OthelloBoard(8);
                 Move move;
                 Mark mark;
-                //init board, willen we probbaly niet hier
+                //init board, willen we probbaly niet hier doen
                 // TODO
-                board.setMove(3, 4, Mark.ONE);
-                board.setMove(4, 3, Mark.ONE);
-                board.setMove(3, 3, Mark.TWO);
-                board.setMove(4, 4, Mark.TWO);
+                try {
+                    board.setMove(3, 4, Mark.ONE);
+                    board.setMove(4, 3, Mark.ONE);
+                    board.setMove(3, 3, Mark.TWO);
+                    board.setMove(4, 4, Mark.TWO);
+                } catch (SetOutOfBoundsException sobe) {
+                    //
+                }
 
                 do {
                     System.out.println(getPossibleMoves());
@@ -235,7 +239,11 @@ public class Othello extends Game implements Runnable {
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
             try {
                 doMove(move, mark);
-                flipMarks(move);
+                try {
+                    flipMarks(move);
+                } catch (SetOutOfBoundsException sobe) {
+                    // ??????
+                }
                 //if (checkForWin()) status = GameStatus.WON;
                 if (board.isFull()){
                     status = GameStatus.WON;
@@ -255,10 +263,6 @@ public class Othello extends Game implements Runnable {
     public void run() {
         Player p1 = PlayerFactory.createCLIPlayer("Frankenstein");
         Player p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-        try {
-            start(p1, p2);
-        } catch (SetOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+        start(p1, p2);
     }
 }
