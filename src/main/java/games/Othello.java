@@ -216,25 +216,30 @@ public class Othello extends Game implements Runnable {
 
 
     @Override
-    public void start(Player one, Player two) throws SetOutOfBoundsException {
+    public void start(Player one, Player two) {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
-        status = GameStatus.PLAYING;
-        board = new OthelloBoard(8);
-        Move move;
-        Mark mark;
-        //init board, willen we probbaly niet hier
-        // TODO
-        board.setMove(3, 4, Mark.ONE);
-        board.setMove(4, 3, Mark.ONE);
-        board.setMove(3, 3, Mark.TWO);
-        board.setMove(4, 4, Mark.TWO);
 
-        do {
-            System.out.println(getPossibleMoves());
-            System.out.println("TUSSENSTAND");
-            System.out.println(Arrays.toString(score()));
-            if (getPossibleMoves().isEmpty()) {
-                System.out.println("HEBT GEEN MOVES ATM");
+                status = GameStatus.PLAYING;
+                board = new OthelloBoard(8);
+                Move move;
+                Mark mark;
+                //init board, willen we probbaly niet hier doen
+                // TODO
+                try {
+                    board.setMove(3, 4, Mark.ONE);
+                    board.setMove(4, 3, Mark.ONE);
+                    board.setMove(3, 3, Mark.TWO);
+                    board.setMove(4, 4, Mark.TWO);
+                } catch (SetOutOfBoundsException sobe) {
+                    //
+                }
+
+                do {
+                    System.out.println(getPossibleMoves());
+                    System.out.println("TUSSENSTAND");
+                    System.out.println(Arrays.toString(score()));
+                    if (getPossibleMoves().isEmpty()) {
+                        System.out.println("HEBT GEEN MOVES ATM");
                 changeTurn();
                 System.out.println(getPossibleMoves());
                 if (getPossibleMoves().isEmpty()) {
@@ -268,6 +273,7 @@ public class Othello extends Game implements Runnable {
                     networkManager.sendMove(move, View.OTHELLO_SIZE);
                 }
                 flipMarks(move);
+
                 //if (checkForWin()) status = GameStatus.WON;
                 if (board.isFull()) {
                     status = GameStatus.WON;
@@ -305,6 +311,7 @@ public class Othello extends Game implements Runnable {
         } catch (SetOutOfBoundsException e) {
             e.printStackTrace();
         }
+
     }
 }
 

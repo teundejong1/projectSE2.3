@@ -14,7 +14,7 @@ public class PlayerListHandler implements CommandHandler {
     }
 
     public void handleError(String response) {
-        
+        System.out.println(response);
     }
 
 }
