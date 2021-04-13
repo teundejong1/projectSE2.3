@@ -245,8 +245,9 @@ public class Othello extends Game implements Runnable {
                 }
             }
 
-            if(playType == PlayEnum.ONLINEAI) {
+            if(playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {
                 if(currentTurn == PlayerType.ONE) {
+                    System.out.println("speler één is aan de beurt");
                     move = one.requestMove(this);
                 } else {
                     System.out.println("dit zou de remote speler moeten zijn");
@@ -302,8 +303,8 @@ public class Othello extends Game implements Runnable {
         } else if(playType == PlayEnum.PVE) {
             p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
             p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-        } else {
-            p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
+        } else if(playType == PlayEnum.ONLINEPLAYER) {
+            p1 = PlayerFactory.createGUIPlayer(View.spelernaam, GameEnum.OTHELLO);
             p2 = PlayerFactory.createRemotePlayer("poephoofd");
         } else {
             p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
