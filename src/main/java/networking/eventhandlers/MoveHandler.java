@@ -13,9 +13,8 @@ import games.Othello;
 public class MoveHandler implements CommandHandler {
     
     public void handle(String response) {
-        Map<String, String> map = Parser.parseMap(response);
-        // parse naar Move object (moet nog helper functie komen om absoluut naar Move te converten)
         Map map = Parser.parseMap(response);
+        // parse naar Move object (moet nog helper functie komen om absoluut naar Move te converten)
         String player = (String) map.get("PLAYER");
         if(!player.equalsIgnoreCase(View.spelernaam)) {
             Move move = (Move) map.get("MOVE");

@@ -165,7 +165,11 @@ public class Controller {
         Label label = new Label("klik hier om naar " + spelernaam + "/n een uitdaging te sturen.");
         label.setOnMouseClicked(e -> {
             //TODO hier moet de uitdaging gestuurd worden SPELTYPE IS PLACEHOLDER
-            networkManager.challengePlayer(spelernaam, GameEnum.OTHELLO);
+            try {
+                networkManager.challengePlayer(spelernaam, GameEnum.OTHELLO);
+            } catch(IllegalStateException exception) {
+                View.illegalStateException();
+            }
             System.out.println("uitdaging of zo");
         });
     }
