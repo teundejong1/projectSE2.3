@@ -8,7 +8,7 @@ public class TurnHandler implements Handler {
 
     public void handle(String response) {
         Map<String, String> map = Parser.parseMap(response);
-        // doe iets met de map
+        System.out.println(map.get("YOURTURN"));
     }
     
 }

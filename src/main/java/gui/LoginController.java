@@ -31,7 +31,7 @@ public class LoginController {
         try {
             if (naamVeld.getCharacters().length() > 0 && ipVeld.getCharacters().length() > 0 && poortVeld.getCharacters().length() > 0) {
                 int portnumber = Integer.parseInt(poortVeld.getCharacters().toString());
-                NetworkManager manager = new NetworkManager(ipVeld.getCharacters().toString(), portnumber);
+                NetworkManager manager = NetworkManager.getInstance(ipVeld.getCharacters().toString(), portnumber);
                 String spelerNaam = naamVeld.getCharacters().toString();
                 manager.login(spelerNaam);
                 menuController.setNetworkManager(manager);
