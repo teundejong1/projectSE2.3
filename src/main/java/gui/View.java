@@ -172,7 +172,7 @@ public class View {
         ArrayList<Node> toAdd =  new ArrayList<>();
         ArrayList<Node> toRemove =  new ArrayList<>();
         List<Move> moves = game.getPossibleMoves();
-
+        System.out.println(moves);
 
         for(Node node : elements.getChildren()) {
             if(node.getClass() == Tile.class) {
