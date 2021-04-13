@@ -1,9 +1,6 @@
 package gui;
 
-import games.Game;
-import games.GameStatus;
-import games.Othello;
-import games.TicTacToe;
+import games.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -162,6 +159,15 @@ public class Controller {
         } catch (IllegalStateException e) {
             View.illegalStateException();
         }
+    }
+
+    public void challengeConfirm(String spelernaam) {
+        Label label = new Label("klik hier om naar " + spelernaam + "/n een uitdaging te sturen.");
+        label.setOnMouseClicked(e -> {
+            //TODO hier moet de uitdaging gestuurd worden SPELTYPE IS PLACEHOLDER
+            networkManager.challengePlayer(spelernaam, GameEnum.OTHELLO);
+            System.out.println("uitdaging of zo");
+        });
     }
 
     public void setSpelerNaam(String spelernaam) {

@@ -9,7 +9,6 @@ public class PlayerListHandler implements CommandHandler {
     
     public void handle(String response) {
         List<String> players = Parser.parseList(response);
-        System.out.println("ben aan't hand'len");
         View.refreshLobby(players);
     }
 
