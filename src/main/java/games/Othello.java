@@ -216,7 +216,7 @@ public class Othello extends Game implements Runnable {
 
 
     @Override
-    public void start(Player one, Player two) throws SetOutOfBoundsException {
+    public void start(Player one, Player two) throws SetOutOfBoundsException{
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
         status = GameStatus.PLAYING;
         board = new OthelloBoard(8);
@@ -228,6 +228,7 @@ public class Othello extends Game implements Runnable {
         board.setMove(4, 3, Mark.ONE);
         board.setMove(3, 3, Mark.TWO);
         board.setMove(4, 4, Mark.TWO);
+        View.othelloRefresh(this);
 
         do {
             System.out.println(getPossibleMoves());
@@ -248,10 +249,13 @@ public class Othello extends Game implements Runnable {
                 if(currentTurn == PlayerType.ONE) {
                     move = one.requestMove(this);
                 } else {
-                    boolean moveSet = false;
-                    View.remoteMoveSet = moveSet;
-                    while(!View.remoteMoveSet) {
-
+                    System.out.println("dit zou de remote speler moeten zijn");
+                    try {
+                        while (!View.remoteMoveSet) {
+                            Thread.sleep(1);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                     move = View.remoteMove;
                 }
@@ -264,10 +268,12 @@ public class Othello extends Game implements Runnable {
             }
             try {
                 doMove(move, mark);
-                if(playType == PlayEnum.ONLINEAI) {
+
+                if(playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {
                     networkManager.sendMove(move, View.OTHELLO_SIZE);
                 }
                 flipMarks(move);
+                View.othelloRefresh(this);
                 //if (checkForWin()) status = GameStatus.WON;
                 if (board.isFull()) {
                     status = GameStatus.WON;
@@ -280,6 +286,7 @@ public class Othello extends Game implements Runnable {
             } catch (IllegalStateException e) {
                 View.illegalStateException();
             }
+
         }
         while (status == GameStatus.PLAYING && isRunning());
     }
@@ -295,6 +302,9 @@ public class Othello extends Game implements Runnable {
         } else if(playType == PlayEnum.PVE) {
             p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
             p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
+        } else {
+            p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
+            p2 = PlayerFactory.createRemotePlayer("poephoofd");
         } else {
             p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
             p2 = PlayerFactory.createRemotePlayer("poephoofd");

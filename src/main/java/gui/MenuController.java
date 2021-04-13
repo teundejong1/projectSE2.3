@@ -75,6 +75,7 @@ public class MenuController {
         } else if(mouseEvent.getSource() == onlineOthelloManual) {
             try {
                 networkManager.getPlayerList();
+                root.setOthello(PlayEnum.ONLINEPLAYER);
             } catch (IllegalStateException e) {
                 Group group = new Group();
                 Label label = new Label("Dit is nu niet toegestaan. Je kan alleen uitdagen als je ingelogd bent en geen spel speelt.");
@@ -94,7 +95,30 @@ public class MenuController {
                 loginScherm.setTitle("Fout");
                 loginScherm.show();
             }
-        } else {
+        } else if (mouseEvent.getSource() == onlineOthelloAi){
+            try {
+                networkManager.getPlayerList();
+                root.setOthello(PlayEnum.ONLINEAI);
+            } catch (IllegalStateException e) {
+                Group group = new Group();
+                Label label = new Label("Dit is nu niet toegestaan. Je kan alleen uitdagen als je ingelogd bent en geen spel speelt.");
+                group.getChildren().add(label);
+
+                Stage loginScherm = new Stage();
+                loginScherm.setScene(new Scene(group));
+                loginScherm.setTitle("Fout");
+                loginScherm.show();
+            } catch(NullPointerException ex) {
+                Group group = new Group();
+                Label label = new Label("Dit is nu niet toegestaan. Je bent nu niet ingelogd.");
+                group.getChildren().add(label);
+
+                Stage loginScherm = new Stage();
+                loginScherm.setScene(new Scene(group));
+                loginScherm.setTitle("Fout");
+                loginScherm.show();
+            }
+
 
         }
     }

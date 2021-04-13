@@ -93,6 +93,10 @@ public class Controller {
         if(playType == PlayEnum.ONLINEAI) {
             othello = new Othello(PlayerType.ONE, playType, networkManager);
         }
+        else if(playType == PlayEnum.ONLINEPLAYER){
+            othello = new Othello(PlayerType.ONE, playType, networkManager);
+        }
+
         else {
             othello = new Othello(PlayerType.ONE, playType);
         }

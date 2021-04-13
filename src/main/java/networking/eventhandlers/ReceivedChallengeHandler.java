@@ -11,7 +11,9 @@ public class ReceivedChallengeHandler implements Handler {
     public void handle(String response) {
         Map map = Parser.parseMap(response);
         GameEnum gameType = (GameEnum) map.get("GAMETYPE");
-        View.startOnlineMatch(gameType);
+        int challengeNumber = Integer.parseInt((String) map.get("CHALLENGENUMBER"));
+        View.challengeReceived((String) map.get("CHALLENGER"), challengeNumber);
+//        View.startOnlineMatch(gameType);
 
     }
     

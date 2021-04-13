@@ -67,7 +67,7 @@ public class OthelloAiMiniMax implements AI {
         } else if (game.getCurrentTurn() == PlayerType.TWO) {
             return Mark.ONE;
         } else {
-            System.out.println("Gaat ergens iets fout AMIGO");
+//            System.out.println("Gaat ergens iets fout AMIGO");
             return Mark.EMPTY;
         }
     }
@@ -78,17 +78,17 @@ public class OthelloAiMiniMax implements AI {
         } else if (game.getCurrentTurn() == PlayerType.TWO) {
             return Mark.TWO;
         } else {
-            System.out.println("Gaat ergens iets fout BROER");
+//            System.out.println("Gaat ergens iets fout BROER");
             return Mark.EMPTY;
         }
     }
 
     public int heuristic(Board board, Mark whoseturn) {
         int[] score = scoreBoard(board, whoseturn);
-        System.out.println(Arrays.toString(score));
+//        System.out.println(Arrays.toString(score));
         int aiScore = score[1];
         int opponentScore = score[0];
-        System.out.println(aiScore - opponentScore);
+//        System.out.println(aiScore - opponentScore);
         return (aiScore - opponentScore);
     }
 
@@ -123,7 +123,7 @@ public class OthelloAiMiniMax implements AI {
             opponent = Mark.TWO;
         }
         if (game.getPossibleMoves().isEmpty()) {
-            System.out.println("GEEN MOVES");
+//            System.out.println("GEEN MOVES");
 //            int x = -1;
 //            int y = -1;
         } else {
@@ -136,13 +136,13 @@ public class OthelloAiMiniMax implements AI {
                 int val = miniMaxValue(temp, game, 1, whoseTurn, opponent);
                 if (val > bestMoveVal) {
                     bestMoveVal = val;
-                    System.out.println("Kom je hier minimaxdecision?");
+//                    System.out.println("Kom je hier minimaxdecision?");
                     bestMove.setX(move.getX());
                     bestMove.setY(move.getY());
                 }
             }
         }
-        System.out.println("regel voor return bestMove");
+//        System.out.println("regel voor return bestMove");
         return bestMove;
     }
 
@@ -150,14 +150,14 @@ public class OthelloAiMiniMax implements AI {
 
 
         if (System.currentTimeMillis() > end){
-            System.out.println("TIJD IS OM");
+//            System.out.println("TIJD IS OM");
             return heuristic(board, original);
         }
-        System.out.println("Kom je hier minimaxvalue start?");
-        System.out.println("DIEPTE: " + depth);
+//        System.out.println("Kom je hier minimaxvalue start?");
+//        System.out.println("DIEPTE: " + depth);
 //        List<Move> list = game.getPossibleMoves();
         if (depth >= 500 || game.getStatus() == GameStatus.WON) { //
-            System.out.println("Test op depth, DEPTH REACHED, YOU DID IT");
+//            System.out.println("Test op depth, DEPTH REACHED, YOU DID IT");
             return heuristic(board, original);
         }
 
@@ -168,7 +168,7 @@ public class OthelloAiMiniMax implements AI {
 //        Mark self = getCurrent(game);
         List<Move> moveList = getPossibleTempMoves(board, (Othello) game);
         if (moveList.isEmpty()) {
-            System.out.println("oeps, tempmoves leeg");
+//            System.out.println("oeps, tempmoves leeg");
             depth = depth + 1;
             return miniMaxValue(board, game, depth, original, opponent);
         } else {
@@ -188,15 +188,15 @@ public class OthelloAiMiniMax implements AI {
 //                    System.out.println(move.getY());
                     //tempBoard.setMove(g);
                     tempBoard.setMove(move.getX(), move.getY(), currentTurn);
-                    System.out.println("Regel vóór depth +1");
+//                    System.out.println("Regel vóór depth +1");
                     depth = depth+1;
-                    System.out.println(depth);
-                    System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+//                    System.out.println(depth);
+//                    System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
                     int val = miniMaxValue(tempBoard, game, depth, original, opponent);
-                    System.out.println("Hoe vaak kom je hier, for loop minimaxvalue");
+//                    System.out.println("Hoe vaak kom je hier, for loop minimaxvalue");
 
                     if (original == currentTurn) {
-                        System.out.println("original == currentturn");
+//                        System.out.println("original == currentturn");
                         if (val > bestMoveVal) {
                             bestMoveVal = val;
                         }
@@ -207,7 +207,7 @@ public class OthelloAiMiniMax implements AI {
                         }
                     }
                 }
-            System.out.println("Kom je hier return bestmoveval?");
+//            System.out.println("Kom je hier return bestmoveval?");
             return bestMoveVal;
                 }
 //        System.out.println("Hier mag je niet komen");
@@ -240,7 +240,7 @@ public class OthelloAiMiniMax implements AI {
     }
 
     public List<Move> getPossibleTempMoves(Board board, Othello game) {
-        System.out.println("Test get possibleTempMoves");
+//        System.out.println("Test get possibleTempMoves");
         ArrayList<Move> listPossibleMoves = new ArrayList<>();
         for (int x = 0; x < board.getSize(); x++) {
             for (int y = 0; y < board.getSize(); y++) {
@@ -260,9 +260,9 @@ public class OthelloAiMiniMax implements AI {
                 }
             }
         }
-        System.out.println("LISTPOSSIBLEMOVES");
-        System.out.println(listPossibleMoves);
-        System.out.println("LISTPOSSIBLEMOVES");
+//        System.out.println("LISTPOSSIBLEMOVES");
+//        System.out.println(listPossibleMoves);
+//        System.out.println("LISTPOSSIBLEMOVES");
         return listPossibleMoves;
     }
 }

@@ -36,6 +36,7 @@ public class View {
     public static String spelernaam;
     public static boolean remoteMoveSet;
     public static Move remoteMove;
+    public static boolean ourTurn;
 
     public View() {
 
@@ -90,6 +91,10 @@ public class View {
             });
         }
     }
+
+//    public static void setOurTurn(boolean bool) {
+//        ourTurn = bool;
+//    }
 
     public static void startOnlineMatch(GameEnum gameType) {
         if(gameType == GameEnum.OTHELLO) {
