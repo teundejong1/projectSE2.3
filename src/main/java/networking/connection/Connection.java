@@ -24,7 +24,7 @@ public class Connection implements AutoCloseable {
     private PrintWriter out;
     private BufferedReader in;
 
-    private final BlockingQueue<String> inputBuffer;
+    private BlockingQueue<String> inputBuffer;
 
     /**
      * Constructor
@@ -134,7 +134,9 @@ public class Connection implements AutoCloseable {
         public void run() {
             while(socket.isConnected() && !socket.isClosed()) {
                 try {
-                    inputBuffer.add(in.readLine());
+                    if (in.ready()) {
+                        inputBuffer.add(in.readLine());
+                    }
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 }

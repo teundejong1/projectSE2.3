@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Othello extends Game implements Runnable {
+public class Othello extends Game {
 
     public Othello(PlayerType startingPlayer, PlayEnum playType) {
         super(startingPlayer, playType);
@@ -26,7 +26,6 @@ public class Othello extends Game implements Runnable {
         super(startingPlayer, playType, networkManager);
 
     }
-
 
     @Override
     protected void validateMove(Move move, Mark marker) throws IllegalMoveException {
@@ -158,7 +157,7 @@ public class Othello extends Game implements Runnable {
         }
     }
 
-    public void flipMarks(Move move) throws SetOutOfBoundsException {
+    public void flipMarks(Move move) throws IllegalGameStateException {
         int x = move.getX();
         int y = move.getY();
         //System.out.println("GIREUWBHGREWIOUGFHO");
@@ -172,7 +171,7 @@ public class Othello extends Game implements Runnable {
         checkLines(x, y, -1, 0); // Upper
     }
 
-    public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws SetOutOfBoundsException {
+    public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws IllegalGameStateException {
 
         if ((currentX + toCheckX < 0) || (currentX + toCheckX >= board.getSize())) {
             return false;
@@ -187,8 +186,15 @@ public class Othello extends Game implements Runnable {
             return true;
         } else {
             if (checkLines(currentX + toCheckX, currentY + toCheckY, toCheckX, toCheckY)) {
-                board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
-                //System.out.println("FLIPTATIONS"); //testshit moet uit
+
+                try {
+                    board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
+                }
+                catch (SetOutOfBoundsException sobe) {
+                    throw new IllegalGameStateException("Exception during checklines", sobe);
+                }
+                System.out.println("FLIPTATIONS"); //testshit moet uit
+
                 return true;
             } else {
                 //System.out.println("MINDER FLIPTATIONS"); //same
@@ -216,19 +222,23 @@ public class Othello extends Game implements Runnable {
 
 
     @Override
-    public void start(Player one, Player two) throws SetOutOfBoundsException{
+    public void start(Player one, Player two) throws IllegalGameStateException {
+
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
         status = GameStatus.PLAYING;
         board = new OthelloBoard(8);
         Move move;
         Mark mark;
-        //init board, willen we probbaly niet hier
+        //init board, willen we probbaly niet hier doen
         // TODO
-        board.setMove(3, 4, Mark.ONE);
-        board.setMove(4, 3, Mark.ONE);
-        board.setMove(3, 3, Mark.TWO);
-        board.setMove(4, 4, Mark.TWO);
-        View.othelloRefresh(this);
+        try {
+            board.setMove(3, 4, Mark.ONE);
+            board.setMove(4, 3, Mark.ONE);
+            board.setMove(3, 3, Mark.TWO);
+            board.setMove(4, 4, Mark.TWO);
+        } catch (SetOutOfBoundsException sobe) {
+            throw new IllegalGameStateException("Game init failed", sobe);
+        }
 
         do {
             System.out.println(getPossibleMoves());
@@ -238,35 +248,16 @@ public class Othello extends Game implements Runnable {
                 System.out.println("HEBT GEEN MOVES ATM");
                 changeTurn();
                 System.out.println(getPossibleMoves());
+                
                 if (getPossibleMoves().isEmpty()) {
                     System.out.println("No more moves left for both players");
                     System.out.println(Arrays.toString(score()));
-                    status = GameStatus.WON;
                 }
             }
-
-            if(playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {
-                if(currentTurn == PlayerType.ONE) {
-                    System.out.println("speler één is aan de beurt");
-                    move = one.requestMove(this);
-                } else {
-                    System.out.println("dit zou de remote speler moeten zijn");
-                    try {
-                        while (!View.remoteMoveSet) {
-                            Thread.sleep(1);
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    move = View.remoteMove;
-                }
-            } else {
-                move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
-            }
+        
+            move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
-            if(!isRunning()) {
-                break;
-            }
+            
             try {
                 System.out.println("in OThello");
                 doMove(move, mark);
@@ -277,11 +268,11 @@ public class Othello extends Game implements Runnable {
                 flipMarks(move);
                 View.othelloRefresh(this);
                 //if (checkForWin()) status = GameStatus.WON;
-                if (board.isFull()) {
+                
+                if (board.isFull()){
                     status = GameStatus.WON;
                     System.out.println(Arrays.toString(score()));
                 } else changeTurn();
-
 
             } catch (IllegalMoveException e) {
                 e.printStackTrace(); // TODO
@@ -289,34 +280,7 @@ public class Othello extends Game implements Runnable {
                 View.illegalStateException();
             }
 
-        }
-        while (status == GameStatus.PLAYING && isRunning());
-    }
-
-    @Override
-    public void run() {
-        running.set(true);
-        Player p1;
-        Player p2;
-        if(playType == PlayEnum.PVP) {
-            p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
-            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.OTHELLO);
-        } else if(playType == PlayEnum.PVE) {
-            p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
-            p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-        } else if(playType == PlayEnum.ONLINEPLAYER) {
-            p1 = PlayerFactory.createGUIPlayer(View.spelernaam, GameEnum.OTHELLO);
-            p2 = PlayerFactory.createRemotePlayer("poephoofd");
-        } else {
-            p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
-            p2 = PlayerFactory.createRemotePlayer("poephoofd");
-        }
-
-        try {
-            start(p1, p2);
-        } catch (SetOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+        } while (status == GameStatus.PLAYING);
     }
 }
 

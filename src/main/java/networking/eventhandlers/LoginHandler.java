@@ -10,7 +10,6 @@ public class LoginHandler implements CommandHandler {
     public void handle(String response) {
         manager.setState(new LoggedInState());
         System.out.println("Logged in");
-        System.out.println(manager.getState());
         // stuur iets naar de gui
     }
 

@@ -49,7 +49,7 @@ public abstract class Game {
 
     public abstract boolean checkForWin();
 
-    public abstract void start(Player one, Player two) throws SetOutOfBoundsException;
+    public abstract void start(Player one, Player two) throws IllegalGameStateException;
 
     public void doMove(Move move, Mark marker) throws IllegalMoveException {
         System.out.println(move);
