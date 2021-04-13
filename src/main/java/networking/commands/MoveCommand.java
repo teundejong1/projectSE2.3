@@ -1,5 +1,10 @@
 package networking.commands;
 
+import games.Move;
+/**
+ * Commandclass to send a move to the server
+ * @author Jeroen Lammersma
+ */
 public class MoveCommand implements Command {
 
     private int cell;
@@ -25,8 +30,39 @@ public class MoveCommand implements Command {
     public MoveCommand(int x, int y, int boardSize) {
         cell = convertToCell(x, y, boardSize);
     }
+    
+    /**
+     * 
+     * @param move Move object which contains the x and y
+     * @param boardSize int of the size of the board
+     */
+    public MoveCommand(Move move, int boardSize) {
+        cell = convertToCell(move.getX(), move.getY(), boardSize);
+    }
+
+    /**
+     * Check to confirm server received command correctly
+     * @Override
+     */
+    public void validateResponse() {
+        // TODO Auto-generated method stub
+        
+    }
 
     @Override
+    public boolean isReponseTwoLines() {
+        return false;
+    }
+
+    @Override
+    public boolean isValidResponse(String response) {
+        return response.equalsIgnoreCase("OK");
+    }
+
+    /**
+     * writes the command to be send into string form
+     * @Override
+     */
     public String toString() {
         return String.format("MOVE %d", cell);
     }
@@ -41,5 +77,5 @@ public class MoveCommand implements Command {
     private int convertToCell(int x, int y, int boardSize) {
         return (x * boardSize + y);
     }
-    
+
 }
