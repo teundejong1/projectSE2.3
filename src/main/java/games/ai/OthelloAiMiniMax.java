@@ -128,7 +128,8 @@ public class OthelloAiMiniMax implements AI {
      * @throws SetOutOfBoundsException for when a move is not legit (should never throw)
      */
     public Move MiniMaxDecision(Game game, Mark whoseTurn) throws SetOutOfBoundsException {
-        List<Move> moves = game.getPossibleMoves();
+        ArrayList<Move> moves = new ArrayList<>(game.getPossibleMoves());
+//        List<Move> moves = game.getPossibleMoves();
         Move bestMove = new Move(-1, -1);
         Mark opponent = Mark.ONE;
         if (whoseTurn == Mark.ONE) {
@@ -167,7 +168,7 @@ public class OthelloAiMiniMax implements AI {
      * @throws SetOutOfBoundsException if a move is not legit (should never throw)
      */
     public int miniMaxValue(Board board, Game game, int depth, Mark original, Mark currentTurn) throws SetOutOfBoundsException {
-        System.out.println(depth+ "         DDDDDDIIIIIIIIIEEEEEEEEEEEEPPPPPPPPPPP");
+//        System.out.println(depth+ "         DDDDDDIIIIIIIIIEEEEEEEEEEEEPPPPPPPPPPP");
         if (depth >= 12 || game.getStatus() == GameStatus.WON) { //
             return heuristic(board, original);
         }
@@ -177,7 +178,8 @@ public class OthelloAiMiniMax implements AI {
             opponent = Mark.TWO;
         }
         System.out.println("CURRENT TURN = " + currentTurn);
-        List<Move> moveList = getPossibleTempMoves(currentTurn, board);
+        ArrayList<Move> moveList = new ArrayList<>(getPossibleTempMoves(currentTurn, board));
+//        List<Move> moveList = getPossibleTempMoves(currentTurn, board);
         System.out.println(moveList);
         System.out.println("LISTSIZE");
         System.out.println(moveList.size());
@@ -196,7 +198,7 @@ public class OthelloAiMiniMax implements AI {
                 System.out.println(move.getX() + "   " + move.getY() + "   " + currentTurn);
                 flipMarks(tempBoard, move, currentTurn);
                 System.out.println(tempBoard.toString());
-                depth = depth +1;
+                depth += 1;
                 int val = miniMaxValue(tempBoard, game, depth, original, opponent);
                 System.out.println(val);
                 if (original == currentTurn) {
@@ -233,7 +235,7 @@ public class OthelloAiMiniMax implements AI {
      * Method used to generate the possible moves on a temporary board
      * @param currentTurn current turn
      * @param board the board on which to calculate the moves
-     * @return
+     * @return List containing the possible moves
      */
     public List<Move> getPossibleTempMoves(Mark currentTurn, Board board) {
         ArrayList<Move> listPossibleMoves = new ArrayList<>();

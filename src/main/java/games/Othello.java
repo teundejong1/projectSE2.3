@@ -15,18 +15,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Teun de Jong
+ * Class Othello, extends the Game class
+ */
+
 public class Othello extends Game implements Runnable {
 
+    /**
+     * Constructor for Othello for offline play
+     * @param startingPlayer the starting player
+     * @param playType the PlayEnum (OTHELLO)
+     */
     public Othello(PlayerType startingPlayer, PlayEnum playType) {
         super(startingPlayer, playType);
     }
 
+    /**
+     * Constructor for Othello for online play
+     * @param startingPlayer the starting player
+     * @param playType the PlayEnum (OTHELLO)
+     * @param networkManager the networkmanager
+     */
     public Othello(PlayerType startingPlayer, PlayEnum playType, NetworkManager networkManager) {
         super(startingPlayer, playType, networkManager);
-
     }
 
-
+    /**
+     * Method used to validate a players moves
+     * @param move The move to validate
+     * @param marker to which the move belongs
+     * @throws IllegalMoveException when a move is illegal
+     */
     @Override
     protected void validateMove(Move move, Mark marker) throws IllegalMoveException {
         int x = move.getX();
@@ -35,45 +55,51 @@ public class Othello extends Game implements Runnable {
             throw new IllegalMoveException("Its not player ones turn");
         if (currentTurn == PlayerType.TWO && !(marker == Mark.TWO))
             throw new IllegalMoveException("Its not player twos turn");
-
         if (!board.isInBounds(x, y)) throw new IllegalMoveException("Out of bounds");
-
         if (!(board.getCell(x, y) == Mark.EMPTY)) throw new IllegalMoveException("Already occupied");
-        System.out.println(move.getX());
-        System.out.println(move.getY());
-        //System.out.println(getPossibleMoves());
+
+
         if (!isLegitMove(move)) throw new IllegalMoveException("Move mag niet uitgevoerd worden");
-//        if (!(getPossibleMoves().contains(move))) {
-//            System.out.println("zit niet in de lijst1?!?!?!");
-//        }
     }
 
+    /**
+     * Method used to check if a move is a legit move. Checks the list of possible moves to see if the move played
+     * is in the list
+     * @param move the move played
+     * @return True if the move is in the list, otherwise False.
+     */
     public boolean isLegitMove(Move move) {
-        int x = move.getX();
-        int y = move.getY();
         for (Move moveInList : getPossibleMoves()) {
             if (moveInList.getX() == move.getX() && moveInList.getY() == move.getY()) {
-                //System.out.println("TESTINGS, MOET NOG AANPASSEN");
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Method used to change the players turn
+     * If the current turn is player one, then the next turn is player two and the other way 'round.
+     */
     public void changeTurn() {
         if (currentTurn == PlayerType.ONE) currentTurn = PlayerType.TWO;
         else currentTurn = PlayerType.ONE;
-        System.out.println("DEZE GUY IS NU AAN DE BEURT");
         System.out.println(currentTurn);
     }
 
+    /**
+     * No need for this method in Othello
+     * @return False
+     */
     @Override
     public boolean checkForWin() {
-        // TODO Auto-generated method stub
         return false;
     }
 
-
+    /**
+     * Method to generate all possible moves for the player
+     * @return an ArrayList containing the possible moves for the player
+     */
     public List<Move> getPossibleMoves() {
         ArrayList<Move> listPossibleMoves = new ArrayList<>();
         for (int x = 0; x < board.getSize(); x++) {
@@ -97,6 +123,14 @@ public class Othello extends Game implements Runnable {
         return listPossibleMoves;
     }
 
+    /**
+     * Method to check if a move is a valid move
+     * @param currentX the X of the move
+     * @param currentY the Y of the move
+     * @param toCheckX the X coordinate to check
+     * @param toCheckY the Y coordinate to check
+     * @return boolean True if the move is valid, otherwise False
+     */
     public boolean CheckforValidMove(int currentX, int currentY, int toCheckX, int toCheckY) {
         Mark opponent = getOpponent();
 
@@ -118,6 +152,14 @@ public class Othello extends Game implements Runnable {
         return checkLineMatch(currentX + 2 * toCheckX, currentY + 2 * toCheckY, toCheckX, toCheckY);
     }
 
+    /**
+     * Method to check if the lines in which the move is played have a match regarding the Mark
+     * @param x coordinate of the move
+     * @param y coordinate of the move
+     * @param toCheckX coordinate to check
+     * @param toCheckY coordinate to check
+     * @return boolean True if there is a match, otherwise False
+     */
     public boolean checkLineMatch(int x, int y, int toCheckX, int toCheckY) {
         Mark player = getCurrent();
         if (board.getCell(x, y) == player) {
@@ -135,32 +177,42 @@ public class Othello extends Game implements Runnable {
         return checkLineMatch(x + toCheckX, y + toCheckY, toCheckX, toCheckY);
     }
 
+    /**
+     * Method to get the opposing player
+     * @return Mark of the opposing player
+     */
     public Mark getOpponent() {
         if (currentTurn == PlayerType.ONE) {
             return Mark.TWO;
         } else if (currentTurn == PlayerType.TWO) {
             return Mark.ONE;
         } else {
-            System.out.println("Gaat ergens iets fout AMIGO");
             return Mark.EMPTY;
         }
     }
 
+    /**
+     * Method to get the mark of the current player
+     * @return Mark of the current player
+     */
     public Mark getCurrent() {
         if (currentTurn == PlayerType.ONE) {
             return Mark.ONE;
         } else if (currentTurn == PlayerType.TWO) {
             return Mark.TWO;
         } else {
-            System.out.println("Gaat ergens iets fout BROER");
             return Mark.EMPTY;
         }
     }
 
+    /**
+     * Method used to flip the marks after a move has been set on the board
+     * @param move The move played
+     * @throws SetOutOfBoundsException if a move is out of bounds
+     */
     public void flipMarks(Move move) throws SetOutOfBoundsException {
         int x = move.getX();
         int y = move.getY();
-        //System.out.println("GIREUWBHGREWIOUGFHO");
         checkLines(x, y, 0, -1); // Left
         checkLines(x, y, 1, -1); //Bottomleft
         checkLines(x, y, 1, 0); //Bottom
@@ -171,8 +223,16 @@ public class Othello extends Game implements Runnable {
         checkLines(x, y, -1, 0); // Upper
     }
 
+    /**
+     * Method to check the lines for a match of the player Mark.
+     * @param currentX the X coordinate of the current X
+     * @param currentY the Y coordinate of the current Y
+     * @param toCheckX the X coordinate to check
+     * @param toCheckY the Y coordinate to check
+     * @return boolean True if there is a match, otherwise False
+     * @throws SetOutOfBoundsException if a move is out of bounds
+     */
     public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws SetOutOfBoundsException {
-
         if ((currentX + toCheckX < 0) || (currentX + toCheckX >= board.getSize())) {
             return false;
         }
@@ -187,16 +247,17 @@ public class Othello extends Game implements Runnable {
         } else {
             if (checkLines(currentX + toCheckX, currentY + toCheckY, toCheckX, toCheckY)) {
                 board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
-                //System.out.println("FLIPTATIONS"); //testshit moet uit
                 return true;
             } else {
-                //System.out.println("MINDER FLIPTATIONS"); //same
                 return false;
             }
         }
     }
 
-
+    /**
+     * Method to retrieve the current score of a game
+     * @return the current score
+     */
     public int[] score() {
         int[] score;
         score = new int[2];
@@ -213,7 +274,12 @@ public class Othello extends Game implements Runnable {
         return score;
     }
 
-
+    /**
+     * Method used to start a game, also initializes the board.
+     * @param one Player one
+     * @param two Player two
+     * @throws SetOutOfBoundsException if a move is out of bounds
+     */
     @Override
     public void start(Player one, Player two) throws SetOutOfBoundsException {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
@@ -291,6 +357,9 @@ public class Othello extends Game implements Runnable {
         while (status == GameStatus.PLAYING && isRunning());
     }
 
+    /**
+     * Method used to run the game in a thread.
+     */
     @Override
     public void run() {
         running.set(true);

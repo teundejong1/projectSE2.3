@@ -13,6 +13,10 @@ import player.Player;
 import player.PlayerType;
 import player.PlayerFactory;
 
+/**
+ * @author Teun de Jong, Eva Jakobs
+ *
+ */
 public class TicTacToe extends Game implements Runnable {
 
 
