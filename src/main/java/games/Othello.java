@@ -281,7 +281,7 @@ public class Othello extends Game {
 
     @Override
     public void doMove(Move move, Mark marker) throws IllegalMoveException {
-        // validateMove(move, marker);
+        validateMove(move, marker);
         System.out.println("CurrentTurn before move: " + currentTurn);
         try {
             board.setMove(move.getX(), move.getY(), marker);

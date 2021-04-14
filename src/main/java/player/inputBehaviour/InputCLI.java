@@ -15,8 +15,6 @@ public class InputCLI implements Input {
 
     @Override
     public Move requestMove(Game game) {
-        System.out.println(game.getBoard());
-
         System.out.print("Do a move: ");
 
 

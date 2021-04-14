@@ -1,6 +1,7 @@
 package gui;
 
 import games.*;
+import games.board.Mark;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -99,8 +100,8 @@ public class Controller {
             othello = (Othello) gm.getGame();
         }
         else if(playType == PlayEnum.PVE){
-            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.OTHELLO, PlayerType.ONE);
-            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.TWO);
+            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.OTHELLO, PlayerType.ONE, Mark.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.TWO, Mark.TWO);
             Game game = gm.createGame(PlayerType.ONE, GameEnum.OTHELLO,  p1, p2, PlayEnum.PVE);
             othello = (Othello) game;
             gameAnchor.getChildren().add(View.setOthello(othello));
@@ -112,8 +113,8 @@ public class Controller {
             }
         }
         else if (playType == PlayEnum.PVP){
-            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.ONE);
-            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO);
+            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.ONE, Mark.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO, Mark.TWO);
             Game game = gm.createGame(PlayerType.ONE, GameEnum.OTHELLO, p1, p2, PlayEnum.PVP );
             othello = (Othello) game;
             gameAnchor.getChildren().add(View.setOthello(othello));
@@ -147,8 +148,8 @@ public class Controller {
             ticTacToe = new TicTacToe(PlayerType.ONE, playType, networkManager);
         }
         else if(playType == PlayEnum.PVE){
-            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT, PlayerType.ONE);
-            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.TWO);
+            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT, PlayerType.ONE, Mark.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.TWO, Mark.TWO);
             Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT,  p1, p2, PlayEnum.PVE);
             try {
                 gm.start();
@@ -158,8 +159,8 @@ public class Controller {
             }
         }
         else if (playType == PlayEnum.PVP){
-            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.ONE);
-            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.TTT, PlayerType.TWO);
+            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.ONE, Mark.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.TTT, PlayerType.TWO, Mark.TWO);
             Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT, p1, p2, PlayEnum.PVP );
         }
         else {

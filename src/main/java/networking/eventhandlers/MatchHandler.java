@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import games.Game;
 import games.GameEnum;
 import games.GameManager;
+import games.board.Mark;
 import gui.Controller;
 import gui.View;
 import networking.NetworkManager;
@@ -34,11 +35,18 @@ public class MatchHandler implements Handler {
         String username = networkManager.getUsername();
         String localUsername = (username == null) ? "ai" : username;
 
-        Player localAI = PlayerFactory.createAIPlayer(localUsername, getGame(), PlayerType.ONE);
-        Player remotePlayer = PlayerFactory.createRemotePlayer(getOpponent(), PlayerType.TWO);
+        Mark playerOne = Mark.ONE;
+        Mark playerTwo = Mark.TWO;
 
         PlayerType startingPlayer = PlayerType.ONE;
-        if (isRemoteStartingPlayer()) startingPlayer = PlayerType.TWO;
+        if (isRemoteStartingPlayer()) { 
+            startingPlayer = PlayerType.TWO;
+            playerOne = Mark.TWO;
+            playerTwo = Mark.ONE;
+        }
+
+        Player localAI = PlayerFactory.createAIPlayer(localUsername, getGame(), PlayerType.ONE, playerOne);
+        Player remotePlayer = PlayerFactory.createRemotePlayer(getOpponent(), PlayerType.TWO, playerTwo);
 
         game = gameManager.createGame(startingPlayer, getGame(), localAI, remotePlayer, PlayEnum.ONLINEAI);
         Controller controller = View.controller;

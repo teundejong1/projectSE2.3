@@ -189,6 +189,7 @@ public class View {
                     }
                 }
                 Mark mark = game.getBoard().getCell(tile.getYwaarde(), tile.getXwaarde());
+                
                 if (mark != tile.getMark()) {
                     if(!tile.isDisabled()) {
                         tile.setDisable(true);
