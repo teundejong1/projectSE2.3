@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import games.GameEnum;
 import games.Move;
@@ -34,6 +35,7 @@ public class NetworkManager {
     private ResponseHandler responseHandler;
     private Object lock = new Object();
     private boolean ready;
+    private String username;
 
     /**
      * Singleton for the Networkmanager
@@ -81,6 +83,14 @@ public class NetworkManager {
         initConnection(ip, port);
         ready = true;
         responseHandler = new ResponseHandler(this, inputBuffer, lock);
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     /**
@@ -224,10 +234,11 @@ public class NetworkManager {
 
     public static void main(String[] args) throws Exception {
         NetworkManager manager = NetworkManager.getInstance("localhost", 7789);
-        manager.login("jeroen");
+        manager.login("jeroenn");
         manager.getGameList();
-        // TimeUnit.SECONDS.sleep(1);
-        // manager.logout();
+        manager.getPlayerList();
+        TimeUnit.SECONDS.sleep(1);
+        manager.logout();
     }
 
 }

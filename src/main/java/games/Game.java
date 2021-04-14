@@ -88,7 +88,7 @@ public abstract class Game {
      * @param two Player two
      * @throws SetOutOfBoundsException if a move is out of bounds
      */
-    public abstract void start(Player one, Player two) throws SetOutOfBoundsException;
+    public abstract void start(Player one, Player two) throws IllegalGameStateException;
 
     /**
      * Method used to do a move on the board
@@ -151,9 +151,4 @@ public abstract class Game {
         return running.get();
     }
 
-    /**
-     * Abstract method to start the game in a thread
-     * @throws SetOutOfBoundsException if a move set is out of bounds
-     */
-    public abstract void run () throws SetOutOfBoundsException  ;
 }

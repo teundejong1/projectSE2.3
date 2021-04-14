@@ -2,23 +2,44 @@ package networking.eventhandlers;
 
 import java.util.Map;
 
+import games.GameManager;
 import games.Move;
 import gui.View;
 import networking.Parser;
 
 public class ReceivedMoveHandler implements Handler {
 
+    private GameManager gameManager;
+    private Map<String, String> map;
+
     public void handle(String response) {
-        Map<String, String> map = Parser.parseMap(response);
-        String player = map.get("PLAYER");
+        gameManager = GameManager.getInstance();
+        map = Parser.parseMap(response);
+        
+        Move move = getMove();
+        String player = getPlayer();
+
         if(!player.equalsIgnoreCase(View.spelernaam)) {
-            Move move = createMove(Integer.parseInt(map.get("MOVE")), View.OTHELLO_SIZE);
             View.remoteMove = move;
             View.remoteMoveSet = true;
-            System.out.println("receivedMoveHandler");
         }
+        
     }
 
+    private String getPlayer() {
+        return map.get("PLAYER");
+    }
+
+    private String getDetails() {
+        return map.get("PLAYER");
+    }
+
+    private Move getMove() {
+        int absoluteCell = Integer.parseInt(map.get("MOVE"));
+        int boardSize = gameManager.getGame().getBoard().getSize();
+
+        return createMove(absoluteCell, boardSize);
+    }
 
     private Move createMove(int absoluteCell, int boardSize) {
         int x = absoluteCell / boardSize;
