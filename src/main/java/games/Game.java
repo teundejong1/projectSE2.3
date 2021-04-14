@@ -113,7 +113,11 @@ public abstract class Game {
      */
     public Board getBoard() {
         return board;
-    };
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
 
     /**
      * Method used to return the gamestatus
@@ -121,7 +125,7 @@ public abstract class Game {
      */
     public GameStatus getStatus() {
         return status;
-    };
+    }
 
     /**
      * Method used to get the current player
