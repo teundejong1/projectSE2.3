@@ -9,7 +9,6 @@ public interface Command {
      * Confirmation that the command has been received by the server
      * required for every command
      */
-    void validateResponse();
     boolean isValidResponse(String response);
     boolean isReponseTwoLines();
 

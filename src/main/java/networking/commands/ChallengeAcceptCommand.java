@@ -14,15 +14,6 @@ public class ChallengeAcceptCommand implements Command {
     public ChallengeAcceptCommand(int challengeNumber) {
         this.challengeNumber = challengeNumber;
     }
-    
-    /**
-     * Check to confirm server received command correctly
-     * @Override
-     */
-    public void validateResponse() {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
     public boolean isReponseTwoLines() {

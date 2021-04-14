@@ -7,15 +7,6 @@ public class LogoutCommand implements Command {
 
     public LogoutCommand() {}
 
-    /**
-     * Check to confirm server received command correctly
-     * @Override
-     */
-    public void validateResponse() {
-        // TODO Auto-generated method stub
-        
-    }
-
     @Override
     public boolean isReponseTwoLines() {
         return false;

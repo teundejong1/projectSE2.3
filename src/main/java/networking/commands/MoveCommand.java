@@ -40,15 +40,6 @@ public class MoveCommand implements Command {
         cell = convertToCell(move.getX(), move.getY(), boardSize);
     }
 
-    /**
-     * Check to confirm server received command correctly
-     * @Override
-     */
-    public void validateResponse() {
-        // TODO Auto-generated method stub
-        
-    }
-
     @Override
     public boolean isReponseTwoLines() {
         return false;

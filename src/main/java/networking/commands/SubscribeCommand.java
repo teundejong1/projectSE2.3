@@ -13,15 +13,6 @@ public class SubscribeCommand implements Command {
         this.game = game;
     }
 
-    /**
-     * Check to confirm server received command correctly
-     * @Override
-     */
-    public void validateResponse() {
-        // TODO Auto-generated method stub
-        
-    }
-
     @Override
     public boolean isReponseTwoLines() {
         return false;
