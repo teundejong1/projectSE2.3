@@ -8,6 +8,10 @@ import networking.commands.GetPlayerlistCommand;
 import networking.commands.LogoutCommand;
 import networking.commands.MoveCommand;
 
+/**
+ * 
+ * @author Jeroen Lammersma
+ */
 public class PlayingState extends State {
 
     @Override

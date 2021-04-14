@@ -2,6 +2,7 @@ package networking.connection;
 
 import java.io.IOException;
 import java.net.Socket;
+
 /**
  * Factory for creating Sockets
  * @author Jeroen Lammersma
@@ -9,7 +10,6 @@ import java.net.Socket;
 public class SocketFactory {
 
     private static final int DEFAULT_PORT = 7789;
-//    private static final String DEFAULT_IP = "145.33.225.170";
     
     /**
      * @param ip address server

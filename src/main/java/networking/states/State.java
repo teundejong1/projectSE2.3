@@ -4,6 +4,10 @@ import games.GameEnum;
 import games.Move;
 import networking.NetworkManager;
 
+/**
+ * 
+ * @author Jeroen Lammersma
+ */
 public abstract class State {
 
     public void acceptChallenge(NetworkManager manager, int challengeNumber) throws IllegalStateException {

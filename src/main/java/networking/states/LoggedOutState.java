@@ -3,6 +3,10 @@ package networking.states;
 import networking.NetworkManager;
 import networking.commands.LoginCommand;
 
+/**
+ * 
+ * @author Jeroen Lammersma
+ */
 public class LoggedOutState extends State {
     
     @Override

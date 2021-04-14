@@ -95,6 +95,7 @@ public class Connection implements AutoCloseable {
      * @return wether connected server is the server we want to connect to
      * @throws IOException
      */
+    @Deprecated
     private boolean isValidServer() throws IOException {
         return (in.readLine().equals(CHECK_ONE) && in.readLine().equals(CHECK_TWO));
     }

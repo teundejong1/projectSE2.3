@@ -50,7 +50,6 @@ public class NetworkManager {
                     try {
                         manager = new NetworkManager(ip, port);
                     } catch (ConnectionFailedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }

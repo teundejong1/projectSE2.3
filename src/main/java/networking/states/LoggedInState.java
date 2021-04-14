@@ -9,6 +9,10 @@ import networking.commands.GetPlayerlistCommand;
 import networking.commands.LogoutCommand;
 import networking.commands.SubscribeCommand;
 
+/**
+ * 
+ * @author Jeroen Lammersma
+ */
 public class LoggedInState extends State {
     
     @Override

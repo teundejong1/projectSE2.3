@@ -10,6 +10,10 @@ import java.util.regex.Pattern;
 import networking.commands.*;
 import networking.eventhandlers.*;
 
+/**
+ * 
+ * @author Jeroen Lammersma, Esther Zigterman Rustenburg
+ */
 public class Parser {
 
     public static void parseResponse(String response) {

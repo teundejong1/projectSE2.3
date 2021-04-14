@@ -7,6 +7,10 @@ import java.util.concurrent.TimeUnit;
 import networking.commands.Command;
 import threadpool.ThreadPool;
 
+/**
+ * 
+ * @author Jeroen Lammersma, Esther Zigterman Rustenburg
+ */
 public class ResponseHandler {
 
     private NetworkManager manager;
