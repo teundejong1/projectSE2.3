@@ -16,8 +16,18 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Tom Beugels
+ * Class that requests input from the GUI
+ * extended by InputGUIOthello and InputGUITTT
+ */
 public class InputGUI implements Input {
 
+    /**
+     * Method that requests input from the GUI
+     * @param game the current game
+     * @return a move from the GUI
+     */
     @Override
     public Move requestMove(Game game) {
         ArrayList<Node> toAdd =  new ArrayList<>();

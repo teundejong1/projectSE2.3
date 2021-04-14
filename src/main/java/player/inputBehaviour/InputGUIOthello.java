@@ -17,8 +17,18 @@ import javafx.scene.shape.StrokeType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Tom Beugels
+ * Class that requests input from the GUI
+ */
+
 public class InputGUIOthello extends InputGUI {
 
+    /**
+     * Method to request a move from the game for the GUI
+     * @param game the current game
+     * @return Move
+     */
     @Override
     public Move requestMove(Game game) {
 
