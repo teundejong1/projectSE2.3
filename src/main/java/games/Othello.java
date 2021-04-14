@@ -361,8 +361,12 @@ public class Othello extends Game {
 
                 doMove(move, mark);
 
+
                 if (playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {
-                    networkManager.sendMove(move, View.OTHELLO_SIZE);
+                    // get gamemanager to send a move
+                    //TODO make nicer
+                    GameManager gameManager = GameManager.getInstance();
+                    gameManager.sendMove(move, View.OTHELLO_SIZE);
                 }
                 flipMarks(move);
                 //if (checkForWin()) status = GameStatus.WON;
@@ -373,8 +377,8 @@ public class Othello extends Game {
                 View.othelloRefresh(this);
             } catch (IllegalMoveException e) {
                 e.printStackTrace(); // TODO
-            } catch (IllegalStateException e) {
-                View.illegalStateException();
+//            } catch (IllegalStateException e) {
+//                View.illegalStateException();
             }
 
         }
