@@ -34,6 +34,7 @@ public class PlayingState extends State {
     @Override
     public void sendMove(NetworkManager manager, Move move, int boardSize)
             throws IllegalStateException {
+        System.out.println("I AM SENDING THIS MOVE: "+ move.toString());
         manager.sendCommand(new MoveCommand(move, boardSize));
     }
     

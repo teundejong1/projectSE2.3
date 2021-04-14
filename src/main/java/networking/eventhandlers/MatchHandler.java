@@ -66,6 +66,7 @@ public class MatchHandler implements Handler {
                 local ai mark = O
          */
         game = gameManager.createGame(startingPlayer, getGame(), localAI, remotePlayer, PlayEnum.ONLINEAI);
+
         Controller controller = View.controller;
         //Setting the view
         ThreadPoolExecutor executor = ThreadPool.getInstance();

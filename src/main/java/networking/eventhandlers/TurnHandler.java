@@ -17,7 +17,7 @@ public class TurnHandler implements Handler {
     NetworkManager nm = NetworkManager.getInstance("", 0);
 
     public void handle(String response) {
-        System.out.println("turn");
+        System.out.println("turn: " + response);
         Map<String, String> map = Parser.parseMap(response);
 
         Player AIPlayer = gm.getPlayerOne();

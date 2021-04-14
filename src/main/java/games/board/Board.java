@@ -21,7 +21,7 @@ public abstract class Board {
     }
 
     /**
-     * abstrac method to get the player Mark
+     * abstract method to get the player Mark
      * @param mark playerMark
      * @return Mark
      */
