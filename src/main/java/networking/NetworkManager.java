@@ -243,13 +243,4 @@ public class NetworkManager {
         
     }
 
-    public static void main(String[] args) throws Exception {
-        NetworkManager manager = NetworkManager.getInstance("localhost", 7789);
-        manager.login("jeroenn");
-        manager.getGameList();
-        manager.getPlayerList();
-        TimeUnit.SECONDS.sleep(1);
-        manager.logout();
-    }
-
 }
