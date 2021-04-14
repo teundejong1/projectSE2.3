@@ -91,7 +91,7 @@ public class Controller {
 
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
-        Othello othello;
+        Othello othello = null;
         if(playType == PlayEnum.ONLINEAI) {
             othello = new Othello(PlayerType.ONE, playType, networkManager);
         }
@@ -118,7 +118,7 @@ public class Controller {
             System.out.println("HIER MAG JE NIET KOMEN");
         }
 
-        gameAnchor.getChildren().add(View.setOthello((Othello) game));
+        gameAnchor.getChildren().add(View.setOthello(othello));
 //        gameThread = new Thread(othello);
 //        gameThread.start();
     }
@@ -129,7 +129,7 @@ public class Controller {
 
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
-        TicTacToe ticTacToe;
+        TicTacToe ticTacToe = null;
         if(playType == PlayEnum.ONLINEAI) {
             ticTacToe = new TicTacToe(PlayerType.ONE, playType, networkManager);
         }
@@ -156,7 +156,7 @@ public class Controller {
             System.out.println("HIER MAG JE NIET KOMEN");
         }
 
-        gameAnchor.getChildren().add(View.setTTT((TicTacToe) game));
+        gameAnchor.getChildren().add(View.setTTT(ticTacToe));
 
     }
 

@@ -40,6 +40,7 @@ public class MatchHandler implements Handler {
         }
 
         gameManager.createGame(PlayerType.ONE, getGame(), playerOne, playerTwo, PlayEnum.ONLINEAI);
+        System.out.println("DIKKE TESTINGS MAN WIHIIOOOOO");
         try {
             gameManager.start();
         } catch (Exception e) { e.printStackTrace(); }
