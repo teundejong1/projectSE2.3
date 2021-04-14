@@ -1,6 +1,7 @@
 package networking.eventhandlers;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import games.GameManager;
 import games.IllegalMoveException;
@@ -18,6 +19,13 @@ public class TurnHandler implements Handler {
 
     public void handle(String response) {
         System.out.println("turn: " + response);
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Map<String, String> map = Parser.parseMap(response);
 
         Player AIPlayer = gm.getPlayerOne();
