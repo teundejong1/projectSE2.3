@@ -13,7 +13,6 @@ import networking.eventhandlers.*;
 public class Parser {
 
     public static void parseResponse(String response) {
-        System.out.println("parsing");
         Handler handler = getHandler(response);
         if (handler != null) handler.handle(response);
         

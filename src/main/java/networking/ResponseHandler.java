@@ -46,9 +46,7 @@ public class ResponseHandler {
             while(manager.isConnected()) {
                 try {
                     if ((response = poll()) != null) {
-                        System.out.println("polled response");
                         if (isErrorResponse(response)) {
-                            System.out.println("is error response: " + response);
                             Parser.parseError(response, lastCommand);
                             ready();
                         } else if (isOkResponse(response)) {
@@ -58,7 +56,6 @@ public class ResponseHandler {
                             }
 
                             if (lastCommand.isValidResponse(response)) {
-                                System.out.println("is valid response: " + response);
                                 Parser.parseResponse(response, lastCommand);
                                 ready();
                             }

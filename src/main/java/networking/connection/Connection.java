@@ -134,11 +134,9 @@ public class Connection implements AutoCloseable {
         public void run() {
             while(socket.isConnected() && !socket.isClosed()) {
                 try {
-                    String line = in.readLine();
-                    inputBuffer.add(line);
-//                    System.out.println(line);
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
+                    inputBuffer.add(in.readLine());
+                } catch (IOException ioe) { 
+                    // ignore
                 }
             };
         }
