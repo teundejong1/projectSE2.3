@@ -1,9 +1,6 @@
 package gui;
 
-import games.GameEnum;
-import games.Move;
-import games.Othello;
-import games.TicTacToe;
+import games.*;
 import games.board.Mark;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -22,12 +19,16 @@ import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import networking.NetworkManager;
 import player.PlayEnum;
-import games.Game;
 import networking.states.IllegalStateException;
+import player.PlayerType;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides connections between the GUI and the rest of the application
+ * @author Tom Beugels, Esther Zigterman Rustenburg
+ */
 public class View {
 
     public final static int TTT_SIZE = 3;
@@ -48,10 +49,19 @@ public class View {
     public static Move remoteMove;
     public static boolean ourTurn;
 
-    public View() {
+    private final static GameManager gameManager = GameManager.getInstance();
 
+    /**
+     * Constructor
+     */
+    public View() {
     }
 
+    /**
+     *
+     * @param ticTacToe
+     * @return
+     */
     public static Parent setTTT(TicTacToe ticTacToe)  {
         Pane root = new Pane();
         root.setPrefSize(TTT_SIZE * TILE_SIZE, TTT_SIZE * TILE_SIZE);
@@ -168,6 +178,9 @@ public class View {
                 elements.getChildren().add(node);
             });
         }
+        int[] score = gameManager.getScore();
+        controller.setScore(PlayerType.ONE, score[0]);
+        controller.setScore(PlayerType.TWO, score[1]);
 //        System.out.println(game.getBoard());
     }
 
@@ -225,7 +238,7 @@ public class View {
             });
         }
 //        System.out.println(game.getBoard());
-        System.out.println("Size " + elements.getChildren().size());
+//        System.out.println("Size " + elements.getChildren().size());
     }
 
     public static void challengeReceived(String uitdager, int challengeNummer) {

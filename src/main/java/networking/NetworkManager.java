@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import games.GameEnum;
+import games.GameManager;
 import games.Move;
 import networking.commands.Command;
 import networking.connection.Connection;
@@ -86,10 +87,19 @@ public class NetworkManager {
         responseHandler = new ResponseHandler(this, inputBuffer, lock);
     }
 
+    /**
+     * sets the username once logged in and updates connection status
+     * @param username used to log in and shown to others on the server
+     */
     public void setUsername(String username) {
         this.username = username;
+        // updates connectionstatus to the GUI via GameManager
+        GameManager.getInstance().showConnection(username);
     }
 
+    /**
+     * @return username of user
+     */
     public String getUsername() {
         return username;
     }

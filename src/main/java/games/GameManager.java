@@ -90,6 +90,24 @@ public class GameManager {
         game.setStatus(GameStatus.WON);
     }
 
+    public void showConnection(String name){
+        View.controller.showConnection(name);
+    }
+
+    /**
+     *
+     * @return int array with the scores of Othello
+     */
+    public int[] getScore(){
+
+       if(game.getClass() == Othello.class){
+
+           Othello ot = (Othello) game;
+           return ot.score();
+       }
+       return null;
+    }
+
     private boolean isGameReady() {
         return game != null;
     }
@@ -101,5 +119,5 @@ public class GameManager {
     private boolean isPlayerTwoReady() {
         return playerTwo != null;
     }
-    
+
 }
