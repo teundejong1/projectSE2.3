@@ -14,22 +14,27 @@ public class ReceivedMoveHandler implements Handler {
     private Map<String, String> map;
 
     public void handle(String response) {
-        System.out.println(response);
+        System.out.println("Received Move: " + response);
         gameManager = GameManager.getInstance();
         map = Parser.parseMap(response);
-        
+        System.out.println("BOARD NA RECEIVED MOVE: \n" + gameManager.getGame().getBoard());
         Move move = getMove();
         String player = getPlayer();
-        
-        if (player.equals(gameManager.getPlayerTwo().getName())) {
+
+//        if (player.equals(gameManager.getPlayerTwo().getName())) {
             try {
-                gameManager.doMove(move, PlayerType.TWO);
+//                System.out.println(gameManager.getGame().getBoard());
+                gameManager.doMove(move, gameManager.getGame().getCurrentTurn());
+                System.out.println("BOARD NA DO MOVE: \n" + gameManager.getGame().getBoard());
                 System.out.println("do a move " + move);
+//                System.out.println(gameManager.getGame().getBoard());
+
             } catch (IllegalMoveException e) {
                 e.printStackTrace();
             }
-        }        
-        
+            //TODO DIKKE CHECK VOOR DUBBEL TURNS
+
+//        else System.out.println("player is not equal to gamemanagergetplayertwo");
     }
 
     private String getPlayer() {

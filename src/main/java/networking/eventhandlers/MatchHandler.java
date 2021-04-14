@@ -34,12 +34,37 @@ public class MatchHandler implements Handler {
         String username = networkManager.getUsername();
         String localUsername = (username == null) ? "ai" : username;
 
-        Player localAI = PlayerFactory.createAIPlayer(localUsername, getGame(), PlayerType.ONE);
-        Player remotePlayer = PlayerFactory.createRemotePlayer(getOpponent(), PlayerType.TWO);
+//        Player localAI = PlayerFactory.createAIPlayer(localUsername, getGame(), PlayerType.ONE);
+//        Player remotePlayer = PlayerFactory.createRemotePlayer(getOpponent(), PlayerType.TWO);
 
         PlayerType startingPlayer = PlayerType.ONE;
-        if (isRemoteStartingPlayer()) startingPlayer = PlayerType.TWO;
+//        if (isRemoteStartingPlayer()){
+//            startingPlayer = PlayerType.TWO;
+//        }
+        Player localAI;
+        Player remotePlayer;
+        if (!isRemoteStartingPlayer()){
+            localAI = PlayerFactory.createAIPlayer(localUsername, getGame(), PlayerType.ONE);
+            remotePlayer = PlayerFactory.createRemotePlayer(getOpponent(), PlayerType.TWO);
+        }
+        else {
+            localAI = PlayerFactory.createAIPlayer(localUsername, getGame(), PlayerType.TWO);
+            remotePlayer = PlayerFactory.createRemotePlayer(getOpponent(), PlayerType.ONE);
+        }
+        /*
+         if (playertomove = localai) {
+               player1 = localai
+               localai mark = X
+               player 2 = remote player
+               remote player mark = 'O'
+               }
 
+          if (playerto move = remote player) {
+                player1 = remote player
+                remote player mark = X
+                player 2 = local ai
+                local ai mark = O
+         */
         game = gameManager.createGame(startingPlayer, getGame(), localAI, remotePlayer, PlayEnum.ONLINEAI);
         Controller controller = View.controller;
         //Setting the view

@@ -45,5 +45,4 @@ public abstract class State {
     public void subscribe(NetworkManager manager, GameEnum game) throws IllegalStateException {
         throw new IllegalStateException(String.format("Command illegal in current state: %s", this));
     }
-    
 }

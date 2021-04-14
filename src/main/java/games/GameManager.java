@@ -41,7 +41,8 @@ public class GameManager {
         }
 
         game.doMove(move, mark);
-        System.out.println(game.getBoard());
+
+//        System.out.println(game.getBoard()); //  1 print
     }
 
     public Player getPlayerOne() {

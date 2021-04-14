@@ -99,8 +99,8 @@ public class Controller {
             othello = (Othello) gm.getGame();
         }
         else if(playType == PlayEnum.PVE){
-            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.OTHELLO, PlayerType.ONE);
-            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.TWO);
+            Player p1 = PlayerFactory.createAIPlayer("Player1", GameEnum.OTHELLO, PlayerType.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO);
             Game game = gm.createGame(PlayerType.ONE, GameEnum.OTHELLO,  p1, p2, PlayEnum.PVE);
             othello = (Othello) game;
             gameAnchor.getChildren().add(View.setOthello(othello));

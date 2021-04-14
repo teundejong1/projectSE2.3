@@ -115,13 +115,8 @@ public class Tile extends Rectangle {
         GameManager gm = GameManager.getInstance();
         for (Move move : othello.getPossibleMoves()) {
             if (move.getY() == xwaarde && move.getX() == ywaarde) {
-                try {
-                    System.out.println(othello.getCurrentTurn());
-                    gm.doMove(move, othello.getCurrentTurn());
-                } catch (IllegalMoveException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                System.out.println(othello.getCurrentTurn());
+//                    gm.doMove(move, othello.getCurrentTurn());
 
                 View.moveSet = true;
             }

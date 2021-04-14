@@ -168,7 +168,7 @@ public class View {
                 elements.getChildren().add(node);
             });
         }
-        System.out.println(game.getBoard());
+//        System.out.println(game.getBoard());
     }
 
     public static void othelloRefresh(Game game) {
@@ -224,7 +224,7 @@ public class View {
                 elements.getChildren().remove(node);
             });
         }
-        System.out.println(game.getBoard());
+//        System.out.println(game.getBoard());
         System.out.println("Size " + elements.getChildren().size());
     }
 

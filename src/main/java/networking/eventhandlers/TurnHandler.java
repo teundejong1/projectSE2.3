@@ -23,10 +23,10 @@ public class TurnHandler implements Handler {
         Player AIPlayer = gm.getPlayerOne();
         try {
             Move move = AIPlayer.requestMove(gm.getGame());
-            gm.doMove(move, AIPlayer.getType());
+//            gm.doMove(move, AIPlayer.getType());
             nm.sendMove(move, gm.getGame().getBoard().getSize());
 
-        } catch (IllegalMoveException | SetOutOfBoundsException e) {
+        } catch (SetOutOfBoundsException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
             e.printStackTrace();
