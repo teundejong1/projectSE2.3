@@ -22,16 +22,20 @@ public class ReceivedMoveHandler implements Handler {
         String player = getPlayer();
 
 //        if (player.equals(gameManager.getPlayerTwo().getName())) {
-            try {
-//                System.out.println(gameManager.getGame().getBoard());
-                gameManager.doMove(move, gameManager.getGame().getCurrentTurn());
-                System.out.println("BOARD NA DO MOVE: \n" + gameManager.getGame().getBoard());
-                System.out.println("do a move " + move);
-//                System.out.println(gameManager.getGame().getBoard());
 
-            } catch (IllegalMoveException e) {
-                e.printStackTrace();
-            }
+//                System.out.println(gameManager.getGame().getBoard());
+        try {
+            System.out.println("Komen we voor de gameManager.doMove?");
+            gameManager.doMove(move, gameManager.getGame().getCurrentTurn());
+            System.out.println("Komen we er na?");
+            System.out.println("BOARD NA DO MOVE: \n" + gameManager.getGame().getBoard());
+            System.out.println("do a move " + move);
+        } catch (IllegalMoveException e) {
+            e.printStackTrace();
+        }
+
+//      System.out.println(gameManager.getGame().getBoard());
+
             //TODO DIKKE CHECK VOOR DUBBEL TURNS
 
 //        else System.out.println("player is not equal to gamemanagergetplayertwo");

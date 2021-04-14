@@ -188,7 +188,9 @@ public class NetworkManager {
     }
 
     public void sendMove(Move move, int boardSize) throws IllegalStateException {
-        syncWait();
+        System.out.println("SYNCWAIT BEFORE");
+        //syncWait();
+        System.out.println("SYNCWAIT AFTER");
         currentState.sendMove(this, move, boardSize);
     }
 

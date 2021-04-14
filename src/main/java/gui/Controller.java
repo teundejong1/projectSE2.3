@@ -197,7 +197,6 @@ public class Controller {
 
     }
 
-        //Uitdaging
     public void forfeit(ActionEvent actionEvent) throws IOException {
         /*
         TODO
@@ -299,14 +298,18 @@ public class Controller {
         status.setText("Currently Connected as " + name );
     }
 
-    public void setScore(PlayerType speler, int score) {
-        if(speler == PlayerType.ONE) {
-            Platform.runLater(() -> {player1.setText("Score player 1: " + score);});
-        }
-        if(speler == PlayerType.TWO) {
-            Platform.runLater(() -> {player2.setText("Score player 2: " + score);});
-        }
-    }
+//    public void setScore(PlayerType speler, int score) {
+//        if(speler == PlayerType.ONE) {
+//            Platform.runLater(() -> {
+//                player1.setText("Score player 1: " + score);
+//            });
+//        }
+//        if(speler == PlayerType.TWO) {
+//            Platform.runLater(() -> {
+//                player2.setText("Score player 2: " + score);
+//            });
+//        }
+//    }
 
     public void win(String spelernaam) {
         try {

@@ -59,7 +59,7 @@ public class GameManager {
             View.tttRefresh(game);
         }
 
-//        System.out.println(game.getBoard()); //  1 print
+        System.out.println("EIND VAN DOMOVE"); //  1 print
     }
 
     public Player getPlayerOne() {

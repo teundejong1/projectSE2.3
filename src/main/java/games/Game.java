@@ -95,6 +95,7 @@ public abstract class Game {
         validateMove(move, marker);
         
         try {
+            System.out.println("VOOR DE board.setmove");
             board.setMove(move.getX(), move.getY(), marker);
         } catch (SetOutOfBoundsException ime) {
             throw new IllegalMoveException(ime);

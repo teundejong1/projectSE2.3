@@ -4,6 +4,7 @@ import games.board.Mark;
 import games.board.OthelloBoard;
 import games.board.SetOutOfBoundsException;
 import gui.View;
+import javafx.application.Platform;
 import networking.NetworkManager;
 import networking.states.IllegalStateException;
 import player.PlayEnum;

@@ -49,7 +49,6 @@ public class InputGUI implements Input {
                 for (Move move:moves) {
                     if(move.getY() == tile.getXwaarde() && move.getX() == tile.getYwaarde()) {
                         tile.highlight();
-                        break;
                     } else {
                         tile.colorDefault();
                     }
