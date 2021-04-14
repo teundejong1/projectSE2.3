@@ -145,4 +145,13 @@ public abstract class Game {
         return running.get();
     }
 
+    /**
+     * Method used to change the players turn
+     * If the current turn is player one, then the next turn is player two and the other way 'round.
+     */
+    public void changeTurn() {
+        if (currentTurn == PlayerType.ONE) currentTurn = PlayerType.TWO;
+        else currentTurn = PlayerType.ONE;
+    }
+
 }

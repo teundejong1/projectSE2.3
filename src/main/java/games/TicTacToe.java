@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import games.board.Mark;
-import games.board.SetOutOfBoundsException;
 import games.board.TicTacToeBoard;
-import gui.View;
 import networking.NetworkManager;
 import player.PlayEnum;
-import player.Player;
 import player.PlayerType;
-import player.PlayerFactory;
 
 /**
  * @author Teun de Jong, Eva Jakobs
@@ -60,6 +56,19 @@ public class TicTacToe extends Game {
     }
 
     @Override
+    public void doMove(Move move, Mark marker) throws IllegalMoveException {
+        super.doMove(move, marker);
+
+        if (checkForWin()) {
+            status = GameStatus.WON;
+            running.set(false);
+        } else if (board.isFull()) {
+            status = GameStatus.DRAW;
+            running.set(false);
+        } else changeTurn();
+    }
+
+    @Override
     public boolean checkForWin() {
         return (checkHorizonForWin() || checkVerticalForWin() || checkDiagonalForWin());
     }
@@ -94,12 +103,6 @@ public class TicTacToe extends Game {
         return ((checkRowCol(board.getCell(0, 0), board.getCell(1, 1), board.getCell(2, 2))) ||
                 (checkRowCol(board.getCell(0, 2), board.getCell(1, 1), board.getCell(2, 0))));
     }
-
-    public void changeTurn() {
-        if (currentTurn == PlayerType.ONE) currentTurn = PlayerType.TWO;
-        else currentTurn = PlayerType.ONE;
-    }
-
 
     @Override
     public void init() throws IllegalGameStateException {
