@@ -76,6 +76,8 @@ public class GameManager {
         this.game = GameFactory.createGame(startingPlayer, game, playType);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
+        System.out.println("game moet aangemaakt");
+        View.controller.initGame(this.game);
 
         return this.game;
     }
@@ -110,6 +112,10 @@ public class GameManager {
            return ot.score();
        }
        return null;
+    }
+
+    public void hasWon(String spelernaam) {
+        View.controller.win(spelernaam);
     }
 
     private boolean isGameReady() {

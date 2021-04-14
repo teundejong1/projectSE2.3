@@ -289,7 +289,7 @@ public class Othello extends Game {
         if (opponentHasPossibleMoves()) {
             changeTurn();
         } else if (getPossibleMoves().isEmpty()) {
-            if (checkForWin()) status = GameStatus.WON;
+            if (checkForWin()) hasWon();
             else status = GameStatus.DRAW;
 
             running.set(false);
@@ -298,6 +298,20 @@ public class Othello extends Game {
 
         View.othelloRefresh(this);
 
+    }
+
+    public void hasWon() {
+        GameManager gameManager = GameManager.getInstance();
+        int[] score = score();
+        if(score[0] > score[1]) {
+            status = GameStatus.WON;
+            gameManager.hasWon(gameManager.getPlayerOne().getName());
+        } else if(score[1] > score[0]) {
+            status = GameStatus.WON;
+            gameManager.hasWon(gameManager.getPlayerTwo().getName());
+        } else {
+            status = GameStatus.DRAW;
+        }
     }
 
     private boolean opponentHasPossibleMoves() {

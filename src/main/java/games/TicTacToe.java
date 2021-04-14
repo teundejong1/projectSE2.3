@@ -85,6 +85,12 @@ public class TicTacToe extends Game {
 
         if (checkForWin()) {
             status = GameStatus.WON;
+            GameManager gameManager = GameManager.getInstance();
+            if(currentTurn == PlayerType.ONE) {
+                gameManager.hasWon(gameManager.getPlayerOne().getName());
+            } else {
+                gameManager.hasWon(gameManager.getPlayerTwo().getName());
+            }
             running.set(false);
         } else if (board.isFull()) {
             status = GameStatus.DRAW;

@@ -96,7 +96,6 @@ public class Controller {
         ThreadPoolExecutor tpe = ThreadPool.getInstance();
 
         forfeit.setVisible(true);
-        gameAnchor.getChildren().clear();
         Othello othello = null;
         if(playType == PlayEnum.ONLINEAI) {
             othello = (Othello) gameManager.getGame();
@@ -109,7 +108,6 @@ public class Controller {
             Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO);
             Game game = gameManager.createGame(PlayerType.ONE, GameEnum.OTHELLO,  p1, p2, PlayEnum.PVE);
             othello = (Othello) game;
-            gameAnchor.getChildren().add(View.setOthello(othello));
             try {
                 gameManager.start();
             }
@@ -122,7 +120,6 @@ public class Controller {
             Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO);
             Game game = gameManager.createGame(PlayerType.ONE, GameEnum.OTHELLO, p1, p2, PlayEnum.PVP );
             othello = (Othello) game;
-            gameAnchor.getChildren().add(View.setOthello(othello));
             try {
                 gameManager.start();
             }
@@ -145,7 +142,7 @@ public class Controller {
         ThreadPoolExecutor tpe = ThreadPool.getInstance();
 
         forfeit.setVisible(true);
-        gameAnchor.getChildren().clear();
+
         TicTacToe ticTacToe = null;
         if(playType == PlayEnum.ONLINEAI) {
             ticTacToe = new TicTacToe(PlayerType.ONE, playType, networkManager);
@@ -181,11 +178,26 @@ public class Controller {
         else {
             System.out.println("HIER MAG JE NIET KOMEN");
         }
+    }
 
-        gameAnchor.getChildren().add(View.setTTT(ticTacToe));
+    public void initGame(Game game){
+        System.out.println("clear");
+        
+        gameAnchor.getChildren().clear();
+        if(game.getClass() == TicTacToe.class) {
+            gameAnchor.getChildren().add(View.setTTT((TicTacToe) game));
+        } else {
+            System.out.println("nu echt");
+            Othello othello = (Othello) game;
+            Pane pane = (Pane) View.setOthello(othello);
+            System.out.println("de mensen zijn niet gelijk");
+            gameAnchor.getChildren().add(pane);
+            System.out.println("aangemaakt");
+        }
 
     }
 
+        //Uitdaging
     public void forfeit(ActionEvent actionEvent) throws IOException {
         /*
         TODO
@@ -265,7 +277,14 @@ public class Controller {
     }
 
     public void showWinner(String winner){
-        winWeergave.setText("Player " + winner + " has won");
+        Group group =  new Group();
+        Label label = new Label("Player " + winner + " has won");
+        group.getChildren().add(label);
+
+        Platform.runLater(() ->{Stage loginScherm = new Stage();
+            loginScherm.setScene(new Scene(group));
+            loginScherm.setTitle("Gewonnen");
+            loginScherm.show();});
     }
 
     public void removeWinner() {
@@ -282,10 +301,19 @@ public class Controller {
 
     public void setScore(PlayerType speler, int score) {
         if(speler == PlayerType.ONE) {
-            player1.setText("Score player 1: " + score);
+            Platform.runLater(() -> {player1.setText("Score player 1: " + score);});
         }
         if(speler == PlayerType.TWO) {
-            player2.setText("Score player 2: " + score);
+            Platform.runLater(() -> {player2.setText("Score player 2: " + score);});
         }
+    }
+
+    public void win(String spelernaam) {
+        try {
+            setMenu();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        showWinner(spelernaam);
     }
 }

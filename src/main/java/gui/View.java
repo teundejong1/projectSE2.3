@@ -85,14 +85,17 @@ public class View {
         Pane root = new Pane();
         root.setPrefSize(OTHELLO_SIZE * OTHELLO_SIZE, OTHELLO_SIZE * OTHELLO_SIZE);
         elements.getChildren().clear();
+        System.out.println("abortus");
         root.getChildren().addAll(elements);
         for(int y = 0; y < OTHELLO_SIZE; y++) {
+            System.out.println("rij");
             for (int x = 0; x < OTHELLO_SIZE; x++) {
                 // Tile Maken
                 Tile tile =  new Tile(x, y, othello);
                 elements.getChildren().add(tile);
             }
         }
+        System.out.println("kut-teun");
 //        skipButton = new Button();
 //        root.getChildren().add(skipButton);
 //        skipButton.setVisible(false);
@@ -178,9 +181,7 @@ public class View {
                 elements.getChildren().add(node);
             });
         }
-        int[] score = gameManager.getScore();
-        controller.setScore(PlayerType.ONE, score[0]);
-        controller.setScore(PlayerType.TWO, score[1]);
+
 //        System.out.println(game.getBoard());
     }
 
@@ -237,6 +238,9 @@ public class View {
                 elements.getChildren().remove(node);
             });
         }
+        int[] score = gameManager.getScore();
+        controller.setScore(PlayerType.ONE, score[0]);
+        controller.setScore(PlayerType.TWO, score[1]);
 //        System.out.println(game.getBoard());
 //        System.out.println("Size " + elements.getChildren().size());
     }
@@ -251,6 +255,7 @@ public class View {
         group.getChildren().add(label);
         Button button =  new Button();
         button.setText("accepteer");
+
         button.setOnAction((challengeNumber) -> {
             try {
                 networkManager.acceptChallenge(challengeNummer);
@@ -261,10 +266,11 @@ public class View {
         group.getChildren().add(button);
 //        System.out.println("zet er eens een print voor");
 
-        Platform.runLater(() ->{Stage loginScherm = new Stage();
-            loginScherm.setScene(new Scene(group));
-            loginScherm.setTitle("Je hebt een challenge");
-            loginScherm.show();});
+        Platform.runLater(() ->{
+            Stage challengeScherm = new Stage();
+            challengeScherm.setScene(new Scene(group));
+            challengeScherm.setTitle("Je hebt een challenge");
+            challengeScherm.show();});
     }
 
     public void setWinner(String winner){
