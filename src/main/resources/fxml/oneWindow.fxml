@@ -44,7 +44,6 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<?import com.sun.javafx.scene.control.ContextMenuContent.MenuBox?>
 <BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <top>
       <VBox BorderPane.alignment="CENTER">
@@ -63,7 +62,7 @@
                <children>
                   <Label fx:id="player1" text="Player 1" />
                   <Region prefHeight="26.0" prefWidth="7.0" HBox.hgrow="ALWAYS" />
-                  <Label fx:id="gameName" text="Game Name" />
+                  <Label fx:id="winWeergave" style="-fx-font-weight: bold; -fx-font: normal bold 30px" />
                   <Region HBox.hgrow="ALWAYS" />
                   <Label fx:id="player2" text="Player 2" />
                </children>
@@ -78,7 +77,7 @@
       <HBox fx:id="bottomHBox" BorderPane.alignment="CENTER">
          <children>
             <Region HBox.hgrow="ALWAYS" />
-            <Label fx:id="status" text="show connection status? JA DOE MAAR " />
+            <Label fx:id="status" style="-fx-font-weight: bold;" text="Not  connected" />
             <Button fx:id="forfeit" onAction="#forfeit" text="Opgeven" />
             <Region HBox.hgrow="ALWAYS" />
          </children>

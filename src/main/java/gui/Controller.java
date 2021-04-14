@@ -39,6 +39,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class Controller {
+    public Label winWeergave;
+    public Label status;
+    public Label player1;
+    public Label player2;
     NetworkManager networkManager;
     GameManager gameManager;
     Game game;
@@ -60,6 +64,7 @@ public class Controller {
 
     public void setMenu() throws IOException {
         forfeit.setVisible(false);
+        removeWinner();
         menuLoader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
         menu = menuLoader.load();
         menuController = menuLoader.getController();
@@ -84,6 +89,7 @@ public class Controller {
     }
 
     public void setOthello(PlayEnum playType) {
+        removeWinner();
         System.out.println("sets Othello");
 
         gameManager = GameManager.getInstance();
@@ -134,6 +140,7 @@ public class Controller {
     }
 
     public void setTTT(PlayEnum playType) {
+        removeWinner();
         gameManager = GameManager.getInstance();
         ThreadPoolExecutor tpe = ThreadPool.getInstance();
 
@@ -258,12 +265,27 @@ public class Controller {
     }
 
     public void showWinner(String winner){
-        Label label = new Label("Player " + winner + " has won");
-        label.setStyle("-fx-font-weight: bold");
-        label.setStyle("-fx-font: normal bold 30px 'serif' ");
-        Platform.runLater( () -> {
-            mainWindow.setTop(label);
+        winWeergave.setText("Player " + winner + " has won");
+    }
+
+    public void removeWinner() {
+        winWeergave.setText("");
+    }
+
+    /**
+     * updates bottom label i.r.t. connectionstatus
+     * @param name logged in with
+     */
+    public void showConnection(String name){
+        status.setText("Currently Connected as " + name );
+    }
+
+    public void setScore(PlayerType speler, int score) {
+        if(speler == PlayerType.ONE) {
+            player1.setText("Score player 1: " + score);
         }
-        );
+        if(speler == PlayerType.TWO) {
+            player2.setText("Score player 2: " + score);
+        }
     }
 }
