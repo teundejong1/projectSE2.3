@@ -78,22 +78,13 @@ public class Othello extends Game {
     }
 
     /**
-     * Method used to change the players turn
-     * If the current turn is player one, then the next turn is player two and the other way 'round.
-     */
-    public void changeTurn() {
-        if (currentTurn == PlayerType.ONE) currentTurn = PlayerType.TWO;
-        else currentTurn = PlayerType.ONE;
-        System.out.println(currentTurn);
-    }
-
-    /**
      * No need for this method in Othello
      * @return False
      */
     @Override
     public boolean checkForWin() {
-        return false;
+        int[] score = score();
+        return score[0] != score[1];
     }
 
     /**
@@ -279,33 +270,48 @@ public class Othello extends Game {
         return score;
     }
 
+    /**
+     *
+     * @param move Move to do on the board
+     * @param marker The marker of the player to do a move
+     * @throws IllegalMoveException
+     */
     @Override
     public void doMove(Move move, Mark marker) throws IllegalMoveException {
-        // validateMove(move, marker);
-        System.out.println("CurrentTurn before move: " + currentTurn);
-        try {
-            board.setMove(move.getX(), move.getY(), marker);
-        } catch (SetOutOfBoundsException ime) {
-            throw new IllegalMoveException(ime);
-        }
+        super.doMove(move, marker);
 
         try {
             flipMarks(move);
         } catch (IllegalGameStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //if (checkForWin()) status = GameStatus.WON;
-        if (board.isFull()) {
-            status = GameStatus.WON;
-            System.out.println(Arrays.toString(score()));
-        } else changeTurn();
-        View.othelloRefresh(this);
-        System.out.println("CurrentTurn after move: " + currentTurn);
 
+        if (opponentHasPossibleMoves()) {
+            changeTurn();
+        } else if (getPossibleMoves().isEmpty()) {
+            if (checkForWin()) status = GameStatus.WON;
+            else status = GameStatus.DRAW;
+
+            running.set(false);
+            System.out.println("win win win (of draw draw draw)");
+        }
+
+        View.othelloRefresh(this);
 
     }
 
+    private boolean opponentHasPossibleMoves() {
+        // quick and dirty
+        changeTurn();
+        boolean hasMoves = (!(getPossibleMoves().isEmpty()));
+        changeTurn();
+        return hasMoves;
+    }
+
+    /**
+     * Method used to initialize the board
+     * @throws IllegalGameStateException if the game is currently in the wrong state
+     */
     public void init() throws IllegalGameStateException {
         status = GameStatus.PLAYING;
         board = new OthelloBoard(8);

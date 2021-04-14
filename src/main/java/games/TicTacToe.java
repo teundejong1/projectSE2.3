@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import games.board.Mark;
-import games.board.SetOutOfBoundsException;
 import games.board.TicTacToeBoard;
-import gui.View;
 import networking.NetworkManager;
 import player.PlayEnum;
-import player.Player;
 import player.PlayerType;
-import player.PlayerFactory;
 
 /**
  * @author Teun de Jong, Eva Jakobs
@@ -19,15 +15,31 @@ import player.PlayerFactory;
  */
 public class TicTacToe extends Game {
 
-
+    /**
+     * Constructor for TicTacToe for offline play
+     * @param StartingPlayer the starting player
+     * @param playType the playtype (could be vs AI or vs Player)
+     */
     public TicTacToe(PlayerType StartingPlayer, PlayEnum playType) {
         super(StartingPlayer, playType);
     }
 
+    /**
+     * Constructor for TicTacToe for online play
+     * @param StartingPlayer the starting player
+     * @param playType playType the playtype (could be vs AI or vs Player)
+     * @param networkManager the networkmanager
+     */
     public TicTacToe(PlayerType StartingPlayer, PlayEnum playType, NetworkManager networkManager) {
         super(StartingPlayer, playType, networkManager);
     }
 
+    /**
+     * Method to check whether a move is a valid move
+     * @param move The move to validate
+     * @param marker to which the move belongs
+     * @throws IllegalMoveException if a move is not valid
+     */
     @Override
     protected void validateMove(Move move, Mark marker) throws IllegalMoveException {
         int x = move.getX();
@@ -43,6 +55,10 @@ public class TicTacToe extends Game {
         if (!(board.getCell(x, y) == Mark.EMPTY)) throw new IllegalMoveException("Already occupied");
     }
 
+    /**
+     * Method to return a list of the possible moves for a player
+     * @return List containing the possible moves
+     */
     @Override
     public List<Move> getPossibleMoves() {
         List<Move> possibleMoves = new ArrayList<>();
@@ -59,15 +75,43 @@ public class TicTacToe extends Game {
         return possibleMoves;
     }
 
+    /**
+     * Method to check for win
+     * @return True if win, otherwise False
+     */
+    @Override
+    public void doMove(Move move, Mark marker) throws IllegalMoveException {
+        super.doMove(move, marker);
+
+        if (checkForWin()) {
+            status = GameStatus.WON;
+            running.set(false);
+        } else if (board.isFull()) {
+            status = GameStatus.DRAW;
+            running.set(false);
+        } else changeTurn();
+    }
+
     @Override
     public boolean checkForWin() {
         return (checkHorizonForWin() || checkVerticalForWin() || checkDiagonalForWin());
     }
 
+    /**
+     * Method to check rows and columns for the same mark
+     * @param m1 Mark
+     * @param m2 Mark
+     * @param m3 Mark
+     * @return Boolean True if marks are equal
+     */
     private boolean checkRowCol(Mark m1, Mark m2, Mark m3) {
         return ((m1 != Mark.EMPTY) && (m1 == m2) && (m2 == m3));
     }
 
+    /**
+     * Method to check horizontally for a win
+     * @return True if a win, otherwise False
+     */
     private boolean checkHorizonForWin() {
         for (int i = 0; i < board.getSize(); i++) {
             if (checkRowCol(board.getCell(i, 0), board.getCell(i, 1),
@@ -79,6 +123,10 @@ public class TicTacToe extends Game {
         return false;
     }
 
+    /**
+     * Method to check vertically for a win
+     * @return True if a win, otherwise False
+     */
     private boolean checkVerticalForWin() {
         for (int i = 0; i < board.getSize(); i++) {
             if (checkRowCol(board.getCell(0, i), board.getCell(1, i),
@@ -90,17 +138,19 @@ public class TicTacToe extends Game {
         return false;
     }
 
+    /**
+     * Method to check diagonally for a win
+     * @return True if a win, otherwise False
+     */
     private boolean checkDiagonalForWin() {
         return ((checkRowCol(board.getCell(0, 0), board.getCell(1, 1), board.getCell(2, 2))) ||
                 (checkRowCol(board.getCell(0, 2), board.getCell(1, 1), board.getCell(2, 0))));
     }
 
-    public void changeTurn() {
-        if (currentTurn == PlayerType.ONE) currentTurn = PlayerType.TWO;
-        else currentTurn = PlayerType.ONE;
-    }
-
-
+    /**
+     * Method to initalize the TicTacToe Board
+     * @throws IllegalGameStateException if the application is in the wrong state
+     */
     @Override
     public void init() throws IllegalGameStateException {
         status = GameStatus.PLAYING;
