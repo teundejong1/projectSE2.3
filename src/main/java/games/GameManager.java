@@ -9,6 +9,10 @@ import player.Player;
 import player.PlayerType;
 import threadpool.ThreadPool;
 
+/**
+ * 
+ * @author Jeroen Lammersma, Esther Zigterman Rustenburg
+ */
 public class GameManager {
 
     private volatile static GameManager manager;
