@@ -270,6 +270,12 @@ public class Othello extends Game {
         return score;
     }
 
+    /**
+     *
+     * @param move Move to do on the board
+     * @param marker The marker of the player to do a move
+     * @throws IllegalMoveException
+     */
     @Override
     public void doMove(Move move, Mark marker) throws IllegalMoveException {
         super.doMove(move, marker);
@@ -302,6 +308,10 @@ public class Othello extends Game {
         return hasMoves;
     }
 
+    /**
+     * Method used to initialize the board
+     * @throws IllegalGameStateException if the game is currently in the wrong state
+     */
     public void init() throws IllegalGameStateException {
         status = GameStatus.PLAYING;
         board = new OthelloBoard(8);
