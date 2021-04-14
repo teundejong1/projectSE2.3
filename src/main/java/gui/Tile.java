@@ -1,6 +1,8 @@
 package gui;
 
 import games.Game;
+import games.GameManager;
+import games.IllegalMoveException;
 import games.Move;
 import games.Othello;
 import games.TicTacToe;
@@ -110,10 +112,16 @@ public class Tile extends Rectangle {
 
     private void handle(MouseEvent e) {
         Othello othello = (Othello) this.game;
+        GameManager gm = GameManager.getInstance();
         for (Move move : othello.getPossibleMoves()) {
             if (move.getY() == xwaarde && move.getX() == ywaarde) {
-                View.xwaarde = ywaarde;
-                View.ywaarde = xwaarde;
+                try {
+                    System.out.println(othello.getCurrentTurn());
+                    gm.doMove(move, othello.getCurrentTurn());
+                } catch (IllegalMoveException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
 
                 View.moveSet = true;
             }

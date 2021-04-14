@@ -17,8 +17,8 @@ public class InputAI implements Input {
 //                ai = new TicTacToeAI();
                 break;
             case OTHELLO:
-                ai = new OthelloAiMiniMax();
-//                ai = new OthelloAI();
+                // ai = new OthelloAiMiniMax();
+                ai = new OthelloAI();
                 break;
         }
     }

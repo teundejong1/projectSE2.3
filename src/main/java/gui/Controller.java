@@ -99,9 +99,11 @@ public class Controller {
             othello = (Othello) gm.getGame();
         }
         else if(playType == PlayEnum.PVE){
-            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.OTHELLO);
-            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO);
-            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT,  p1, p2, PlayEnum.PVE);
+            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.OTHELLO, PlayerType.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.TWO);
+            Game game = gm.createGame(PlayerType.ONE, GameEnum.OTHELLO,  p1, p2, PlayEnum.PVE);
+            othello = (Othello) game;
+            gameAnchor.getChildren().add(View.setOthello(othello));
             try {
                 gm.start();
             }
@@ -110,15 +112,23 @@ public class Controller {
             }
         }
         else if (playType == PlayEnum.PVP){
-            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO);
-            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO);
-            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT, p1, p2, PlayEnum.PVP );
+            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO);
+            Game game = gm.createGame(PlayerType.ONE, GameEnum.OTHELLO, p1, p2, PlayEnum.PVP );
+            othello = (Othello) game;
+            gameAnchor.getChildren().add(View.setOthello(othello));
+            try {
+                gm.start();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         else {
             System.out.println("HIER MAG JE NIET KOMEN");
         }
 
-        gameAnchor.getChildren().add(View.setOthello(othello));
+        // gameAnchor.getChildren().add(View.setOthello(othello));
 //        gameThread = new Thread(othello);
 //        gameThread.start();
     }
@@ -137,8 +147,8 @@ public class Controller {
             ticTacToe = new TicTacToe(PlayerType.ONE, playType, networkManager);
         }
         else if(playType == PlayEnum.PVE){
-            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
-            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT);
+            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT, PlayerType.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.TWO);
             Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT,  p1, p2, PlayEnum.PVE);
             try {
                 gm.start();
@@ -148,8 +158,8 @@ public class Controller {
             }
         }
         else if (playType == PlayEnum.PVP){
-            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT);
-            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.TTT);
+            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.ONE);
+            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.TTT, PlayerType.TWO);
             Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT, p1, p2, PlayEnum.PVP );
         }
         else {
@@ -167,6 +177,7 @@ public class Controller {
          mischien een popup maken die om bevestiging vraagt?
          */
         game.setRunning(false);
+        System.out.println(gameThread);
         gameThread.interrupt();
         setMenu();
         Platform.runLater( () -> {

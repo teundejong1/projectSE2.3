@@ -102,69 +102,8 @@ public class TicTacToe extends Game {
 
 
     @Override
-    public void start(Player one, Player two) throws IllegalGameStateException {
-        System.out.println("Tic Tac Toe!");
+    public void init() throws IllegalGameStateException {
         status = GameStatus.PLAYING;
         board = new TicTacToeBoard(3);
-
-        Move move;
-        Mark mark;
-
-        do {
-            try {
-                move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
-            } catch (SetOutOfBoundsException sobe) {
-                throw new IllegalGameStateException("Error during TTT requestMove", sobe);
-            }
-            mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
-
-            if(!isRunning()) {
-                break;
-            }
-
-            try {
-                doMove(move, mark);
-                View.tttRefresh(this);
-
-                if (checkForWin()){
-                    System.out.println(currentTurn + " has won!111!!!1@!");
-                    View.controller.showWinner(currentTurn.toString());
-                    System.out.println(getBoard());
-                    View.tttRefresh(this);
-
-                    status = GameStatus.WON;
-                }
-                else if (board.isFull()){
-                    status = GameStatus.DRAW;
-                    View.tttRefresh(this);
-
-                }
-                else changeTurn();
-            } catch (IllegalMoveException e) {
-                e.printStackTrace();
-            }
-
-
-        } while (status == GameStatus.PLAYING && isRunning());
-
     }
-
-
-    // @Override
-    // public void run() {
-    //     running.set(true);
-    //     Player p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.TTT);;
-    //     Player p2;
-    //     if(playType == PlayEnum.PVE) {
-    //         p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.TTT);
-    //     } else {
-    //         p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.TTT);
-    //     }
-        
-    //     try {
-    //         start(p1, p2);
-    //     } catch (SetOutOfBoundsException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
 }

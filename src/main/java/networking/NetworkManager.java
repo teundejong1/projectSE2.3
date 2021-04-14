@@ -60,6 +60,8 @@ public class NetworkManager {
         return manager;
     }
 
+    private NetworkManager() {}
+
     /**
      * Method for deleting the instance of NetworkManager,
      * so a new one can be created

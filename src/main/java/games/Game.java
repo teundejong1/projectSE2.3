@@ -82,13 +82,8 @@ public abstract class Game {
      */
     public abstract boolean checkForWin();
 
-    /**
-     * Abstract method used to start the game
-     * @param one Player one
-     * @param two Player two
-     * @throws SetOutOfBoundsException if a move is out of bounds
-     */
-    public abstract void start(Player one, Player two) throws IllegalGameStateException;
+    
+    public abstract void init() throws IllegalGameStateException;
 
     /**
      * Method used to do a move on the board
@@ -97,7 +92,6 @@ public abstract class Game {
      * @throws IllegalMoveException if the move is illegal
      */
     public void doMove(Move move, Mark marker) throws IllegalMoveException {
-        System.out.println(move);
         validateMove(move, marker);
         
         try {

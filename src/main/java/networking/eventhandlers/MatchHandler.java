@@ -34,21 +34,13 @@ public class MatchHandler implements Handler {
         String username = networkManager.getUsername();
         String localUsername = (username == null) ? "ai" : username;
 
-        Player localAI = PlayerFactory.createAIPlayer(localUsername, getGame());
-        Player remotePlayer = PlayerFactory.createRemotePlayer(getOpponent());
+        Player localAI = PlayerFactory.createAIPlayer(localUsername, getGame(), PlayerType.ONE);
+        Player remotePlayer = PlayerFactory.createRemotePlayer(getOpponent(), PlayerType.TWO);
 
-        Player playerOne;
-        Player playerTwo;
-        
-        if (isRemoteStartingPlayer()) {
-            playerOne = remotePlayer;
-            playerTwo = localAI;
-        } else {
-            playerOne = localAI;
-            playerTwo = remotePlayer;
-        }
+        PlayerType startingPlayer = PlayerType.ONE;
+        if (isRemoteStartingPlayer()) startingPlayer = PlayerType.TWO;
 
-        game = gameManager.createGame(PlayerType.ONE, getGame(), playerOne, playerTwo, PlayEnum.ONLINEAI);
+        game = gameManager.createGame(startingPlayer, getGame(), localAI, remotePlayer, PlayEnum.ONLINEAI);
         Controller controller = View.controller;
         //Setting the view
         ThreadPoolExecutor executor = ThreadPool.getInstance();
@@ -57,10 +49,8 @@ public class MatchHandler implements Handler {
                 controller.setOthello(PlayEnum.ONLINEAI);
             } else {
                 controller.setTTT(PlayEnum.ONLINEAI);
-            }
-                });
+            }});
 
-//        System.out.println("DIKKE TESTINGS MAN WIHIIOOOOO");
         try {
             gameManager.start();
         } catch (Exception e) { e.printStackTrace(); }

@@ -3,9 +3,10 @@ package networking.eventhandlers;
 import java.util.Map;
 
 import games.GameManager;
+import games.IllegalMoveException;
 import games.Move;
-import gui.View;
 import networking.Parser;
+import player.PlayerType;
 
 public class ReceivedMoveHandler implements Handler {
 
@@ -19,11 +20,15 @@ public class ReceivedMoveHandler implements Handler {
         
         Move move = getMove();
         String player = getPlayer();
-
-        if(!player.equalsIgnoreCase(View.spelernaam)) {
-            View.remoteMove = move;
-            View.remoteMoveSet = true;
-        }
+        
+        if (player.equals(gameManager.getPlayerTwo().getName())) {
+            try {
+                gameManager.doMove(move, PlayerType.TWO);
+                System.out.println("do a move " + move);
+            } catch (IllegalMoveException e) {
+                e.printStackTrace();
+            }
+        }        
         
     }
 
@@ -32,7 +37,7 @@ public class ReceivedMoveHandler implements Handler {
     }
 
     private String getDetails() {
-        return map.get("PLAYER");
+        return map.get("DETAILS");
     }
 
     private Move getMove() {

@@ -2,6 +2,7 @@ package games;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import games.board.Mark;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
@@ -27,8 +28,20 @@ public class GameManager {
         return manager;
     }
 
+    private GameManager() {}
+
     public Game getGame() {
         return game;
+    }
+
+    public void doMove(Move move, PlayerType type) throws IllegalMoveException {
+        Mark mark = Mark.ONE;
+        if (type == PlayerType.TWO) {
+            mark = Mark.TWO;
+        }
+
+        game.doMove(move, mark);
+        System.out.println(game.getBoard());
     }
 
     public Player getPlayerOne() {
@@ -54,16 +67,12 @@ public class GameManager {
         if (!isPlayerOneReady()) throw new NotReadyException("PlayerOne is null");
         if (!isPlayerTwoReady()) throw new NotReadyException("PlayerTwo is null");
 
-        ThreadPoolExecutor executor = ThreadPool.getInstance();
+        game.init();
 
-        executor.submit(() -> {
-            try {
-                game.start(playerOne, playerTwo);
-            } catch (IllegalGameStateException e) {
-                // Stop the game
-                e.printStackTrace();
-            }
-        });
+    }
+
+    public void forfeit() {
+        // hoe dit gebeurt hoeft gui niet te weten
     }
 
     private boolean isGameReady() {

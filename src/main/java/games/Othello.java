@@ -279,21 +279,37 @@ public class Othello extends Game {
         return score;
     }
 
-    /**
-     * Method used to start a game, also initializes the board.
-     * @param one Player one
-     * @param two Player two
-     * @throws IllegalGameStateException if a move is out of bounds
-     */
     @Override
-    public void start(Player one, Player two) throws IllegalGameStateException {
-        System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
+    public void doMove(Move move, Mark marker) throws IllegalMoveException {
+        // validateMove(move, marker);
+        System.out.println("CurrentTurn before move: " + currentTurn);
+        try {
+            board.setMove(move.getX(), move.getY(), marker);
+        } catch (SetOutOfBoundsException ime) {
+            throw new IllegalMoveException(ime);
+        }
+
+        try {
+            flipMarks(move);
+        } catch (IllegalGameStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //if (checkForWin()) status = GameStatus.WON;
+        if (board.isFull()) {
+            status = GameStatus.WON;
+            System.out.println(Arrays.toString(score()));
+        } else changeTurn();
+        View.othelloRefresh(this);
+        System.out.println("CurrentTurn after move: " + currentTurn);
+
+
+    }
+
+    public void init() throws IllegalGameStateException {
         status = GameStatus.PLAYING;
         board = new OthelloBoard(8);
-        Move move;
-        Mark mark;
-        //init board, willen we probbaly niet hier
-        // TODO
+
         try {
             board.setMove(3, 4, Mark.ONE);
             board.setMove(4, 3, Mark.ONE);
@@ -302,113 +318,6 @@ public class Othello extends Game {
         } catch (SetOutOfBoundsException sobe) {
             throw new IllegalGameStateException("Game init failed", sobe);
         }
-        
-        View.othelloRefresh(this);
-
-        do {
-            System.out.println(getPossibleMoves());
-            System.out.println("TUSSENSTAND");
-            System.out.println(Arrays.toString(score()));
-            if (getPossibleMoves().isEmpty()) {
-                System.out.println("HEBT GEEN MOVES ATM");
-                changeTurn();
-                System.out.println(getPossibleMoves());
-                if (getPossibleMoves().isEmpty()) {
-                    System.out.println("No more moves left for both players");
-                    System.out.println(Arrays.toString(score()));
-                    status = GameStatus.WON;
-                }
-            }
-            
-            if (playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {
-                if (currentTurn == PlayerType.ONE) {
-                    System.out.println("speler één is aan de beurt");
-                    try {
-                        move = one.requestMove(this);
-                        NetworkManager nManager = NetworkManager.getInstance("", 0);
-                        nManager.sendMove(move, board.getSize());
-                    } catch (SetOutOfBoundsException | IllegalStateException sobe) {
-                        throw new IllegalGameStateException("Exception during one.requestMove", sobe);
-                    }
-                    
-                } else {
-                    System.out.println("dit zou de remote speler moeten zijn");
-                    try {
-                        while (!View.remoteMoveSet) {
-                            Thread.sleep(1);
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    move = View.remoteMove;
-                    View.remoteMoveSet = true;
-                    System.out.println("CHECK CHECK");
-
-                }
-            } else {
-                try {
-                    move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
-                } catch (SetOutOfBoundsException sobe) {
-                    throw new IllegalGameStateException("Exception during local request move", sobe);
-                }
-            }
-            mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
-            if (!isRunning()) {
-                break;
-            }
-            try {
-                System.out.println("in OThello");
-
-                doMove(move, mark);
-
-                if (playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {
-                    networkManager.sendMove(move, View.OTHELLO_SIZE);
-                }
-                flipMarks(move);
-                //if (checkForWin()) status = GameStatus.WON;
-                if (board.isFull()) {
-                    status = GameStatus.WON;
-                    System.out.println(Arrays.toString(score()));
-                } else changeTurn();
-                View.othelloRefresh(this);
-            } catch (IllegalMoveException e) {
-                e.printStackTrace(); // TODO
-            } catch (IllegalStateException e) {
-                View.illegalStateException();
-            }
-
-        }
-        while (status == GameStatus.PLAYING && isRunning());
     }
 
-    // /**
-    //  * Method used to run the game in a thread.
-    //  */
-    // @Override
-    // public void run() {
-    //     running.set(true);
-    //     Player p1;
-    //     Player p2;
-    //     if (playType == PlayEnum.PVP) {
-    //         p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
-    //         p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.OTHELLO);
-    //     } else if (playType == PlayEnum.PVE) {
-    //         p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
-    //         p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-    //     } else if (playType == PlayEnum.ONLINEPLAYER) {
-    //         p1 = PlayerFactory.createGUIPlayer(View.spelernaam, GameEnum.OTHELLO);
-    //         p2 = PlayerFactory.createRemotePlayer("poephoofd");
-    //     } else {
-    //         p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
-    //         p2 = PlayerFactory.createRemotePlayer("poephoofd");
-    //     }
-
-    //     try {
-    //         start(p1, p2);
-    //     } catch (SetOutOfBoundsException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
 }
-
-

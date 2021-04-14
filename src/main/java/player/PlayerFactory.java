@@ -6,11 +6,11 @@ import player.inputBehaviour.*;
 public class PlayerFactory {
     
     
-    public static Player createAIPlayer(String name, GameEnum game) {
-        return new ConcretePlayer(name, new InputAI(game));
+    public static Player createAIPlayer(String name, GameEnum game, PlayerType type) {
+        return new ConcretePlayer(name, new InputAI(game), type);
     }
 
-    public static Player createGUIPlayer(String name, GameEnum gameEnum) {
+    public static Player createGUIPlayer(String name, GameEnum gameEnum, PlayerType type) {
         InputGUI inputGUI = new InputGUI();
         switch (gameEnum) {
             case TTT:
@@ -21,15 +21,15 @@ public class PlayerFactory {
                 break;
         }
 
-        return new ConcretePlayer(name, inputGUI);
+        return new ConcretePlayer(name, inputGUI, type);
     }
     
-    public static Player createCLIPlayer(String name) {
-        return new ConcretePlayer(name, new InputCLI());
+    public static Player createCLIPlayer(String name, PlayerType type) {
+        return new ConcretePlayer(name, new InputCLI(), type);
     }
 
-    public static Player createRemotePlayer(String name) {
-        return new ConcretePlayer(name, new InputRemote());
+    public static Player createRemotePlayer(String name, PlayerType type) {
+        return new ConcretePlayer(name, new InputRemote(), type);
     }
     
 }

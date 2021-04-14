@@ -225,6 +225,7 @@ public class View {
             });
         }
         System.out.println(game.getBoard());
+        System.out.println("Size " + elements.getChildren().size());
     }
 
     public static void challengeReceived(String uitdager, int challengeNummer) {

@@ -78,7 +78,7 @@
       <HBox fx:id="bottomHBox" BorderPane.alignment="CENTER">
          <children>
             <Region HBox.hgrow="ALWAYS" />
-            <Label fx:id="status" text="show connection status? " />
+            <Label fx:id="status" text="show connection status? JA DOE MAAR " />
             <Button fx:id="forfeit" onAction="#forfeit" text="Opgeven" />
             <Region HBox.hgrow="ALWAYS" />
          </children>
