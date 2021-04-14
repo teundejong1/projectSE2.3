@@ -20,7 +20,7 @@ import java.util.List;
  * Class Othello, extends the Game class
  */
 
-public class Othello extends Game implements Runnable {
+public class Othello extends Game {
 
     /**
      * Constructor for Othello for offline play
@@ -208,9 +208,9 @@ public class Othello extends Game implements Runnable {
     /**
      * Method used to flip the marks after a move has been set on the board
      * @param move The move played
-     * @throws SetOutOfBoundsException if a move is out of bounds
+     * @throws IllegalGameStateException if a move is out of bounds
      */
-    public void flipMarks(Move move) throws SetOutOfBoundsException {
+    public void flipMarks(Move move) throws IllegalGameStateException {
         int x = move.getX();
         int y = move.getY();
         checkLines(x, y, 0, -1); // Left
@@ -230,9 +230,9 @@ public class Othello extends Game implements Runnable {
      * @param toCheckX the X coordinate to check
      * @param toCheckY the Y coordinate to check
      * @return boolean True if there is a match, otherwise False
-     * @throws SetOutOfBoundsException if a move is out of bounds
+     * @throws IllegalGameStateException if a move is out of bounds
      */
-    public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws SetOutOfBoundsException {
+    public boolean checkLines(int currentX, int currentY, int toCheckX, int toCheckY) throws IllegalGameStateException {
         if ((currentX + toCheckX < 0) || (currentX + toCheckX >= board.getSize())) {
             return false;
         }
@@ -246,7 +246,12 @@ public class Othello extends Game implements Runnable {
             return true;
         } else {
             if (checkLines(currentX + toCheckX, currentY + toCheckY, toCheckX, toCheckY)) {
-                board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
+                try {
+                    board.setMove(currentX + toCheckX, currentY + toCheckY, getCurrent());
+                }
+                catch (SetOutOfBoundsException sobe) {
+                    throw new IllegalGameStateException("Exception during checklines", sobe);
+                }
                 return true;
             } else {
                 return false;
@@ -278,10 +283,10 @@ public class Othello extends Game implements Runnable {
      * Method used to start a game, also initializes the board.
      * @param one Player one
      * @param two Player two
-     * @throws SetOutOfBoundsException if a move is out of bounds
+     * @throws IllegalGameStateException if a move is out of bounds
      */
     @Override
-    public void start(Player one, Player two) throws SetOutOfBoundsException {
+    public void start(Player one, Player two) throws IllegalGameStateException {
         System.out.println("Othello"); // zwart = x, wit = O ZWART BEGINT ALTIJD https://www.ultraboardgames.com/othello/game-rules.php
         status = GameStatus.PLAYING;
         board = new OthelloBoard(8);
@@ -289,10 +294,15 @@ public class Othello extends Game implements Runnable {
         Mark mark;
         //init board, willen we probbaly niet hier
         // TODO
-        board.setMove(3, 4, Mark.ONE);
-        board.setMove(4, 3, Mark.ONE);
-        board.setMove(3, 3, Mark.TWO);
-        board.setMove(4, 4, Mark.TWO);
+        try {
+            board.setMove(3, 4, Mark.ONE);
+            board.setMove(4, 3, Mark.ONE);
+            board.setMove(3, 3, Mark.TWO);
+            board.setMove(4, 4, Mark.TWO);
+        } catch (SetOutOfBoundsException sobe) {
+            throw new IllegalGameStateException("Game init failed", sobe);
+        }
+        
         View.othelloRefresh(this);
 
         do {
@@ -309,11 +319,16 @@ public class Othello extends Game implements Runnable {
                     status = GameStatus.WON;
                 }
             }
-
+            
             if (playType == PlayEnum.ONLINEAI || playType == PlayEnum.ONLINEPLAYER) {
                 if (currentTurn == PlayerType.ONE) {
                     System.out.println("speler één is aan de beurt");
-                    move = one.requestMove(this);
+                    try {
+                        move = one.requestMove(this);
+                    } catch (SetOutOfBoundsException sobe) {
+                        throw new IllegalGameStateException("Exception duruing one.requestMove", sobe);
+                    }
+                    
                 } else {
                     System.out.println("dit zou de remote speler moeten zijn");
                     try {
@@ -326,7 +341,11 @@ public class Othello extends Game implements Runnable {
                     move = View.remoteMove;
                 }
             } else {
-                move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
+                try {
+                    move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
+                } catch (SetOutOfBoundsException sobe) {
+                    throw new IllegalGameStateException("Exception during local request move", sobe);
+                }
             }
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
             if (!isRunning()) {
@@ -357,34 +376,34 @@ public class Othello extends Game implements Runnable {
         while (status == GameStatus.PLAYING && isRunning());
     }
 
-    /**
-     * Method used to run the game in a thread.
-     */
-    @Override
-    public void run() {
-        running.set(true);
-        Player p1;
-        Player p2;
-        if (playType == PlayEnum.PVP) {
-            p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
-            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.OTHELLO);
-        } else if (playType == PlayEnum.PVE) {
-            p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
-            p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
-        } else if (playType == PlayEnum.ONLINEPLAYER) {
-            p1 = PlayerFactory.createGUIPlayer(View.spelernaam, GameEnum.OTHELLO);
-            p2 = PlayerFactory.createRemotePlayer("poephoofd");
-        } else {
-            p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
-            p2 = PlayerFactory.createRemotePlayer("poephoofd");
-        }
+    // /**
+    //  * Method used to run the game in a thread.
+    //  */
+    // @Override
+    // public void run() {
+    //     running.set(true);
+    //     Player p1;
+    //     Player p2;
+    //     if (playType == PlayEnum.PVP) {
+    //         p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
+    //         p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.OTHELLO);
+    //     } else if (playType == PlayEnum.PVE) {
+    //         p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.OTHELLO);
+    //         p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.OTHELLO);
+    //     } else if (playType == PlayEnum.ONLINEPLAYER) {
+    //         p1 = PlayerFactory.createGUIPlayer(View.spelernaam, GameEnum.OTHELLO);
+    //         p2 = PlayerFactory.createRemotePlayer("poephoofd");
+    //     } else {
+    //         p1 = PlayerFactory.createAIPlayer(View.spelernaam, GameEnum.OTHELLO);
+    //         p2 = PlayerFactory.createRemotePlayer("poephoofd");
+    //     }
 
-        try {
-            start(p1, p2);
-        } catch (SetOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-    }
+    //     try {
+    //         start(p1, p2);
+    //     } catch (SetOutOfBoundsException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 }
 
 

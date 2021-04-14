@@ -17,7 +17,7 @@ import player.PlayerFactory;
  * @author Teun de Jong, Eva Jakobs
  *
  */
-public class TicTacToe extends Game implements Runnable {
+public class TicTacToe extends Game {
 
 
     public TicTacToe(PlayerType StartingPlayer, PlayEnum playType) {
@@ -102,7 +102,7 @@ public class TicTacToe extends Game implements Runnable {
 
 
     @Override
-    public void start(Player one, Player two) throws SetOutOfBoundsException {
+    public void start(Player one, Player two) throws IllegalGameStateException {
         System.out.println("Tic Tac Toe!");
         status = GameStatus.PLAYING;
         board = new TicTacToeBoard(3);
@@ -111,7 +111,11 @@ public class TicTacToe extends Game implements Runnable {
         Mark mark;
 
         do {
-            move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
+            try {
+                move = (currentTurn == PlayerType.ONE) ? one.requestMove(this) : two.requestMove(this);
+            } catch (SetOutOfBoundsException sobe) {
+                throw new IllegalGameStateException("Error during TTT requestMove", sobe);
+            }
             mark = (currentTurn == PlayerType.ONE ? Mark.ONE : Mark.TWO);
 
             if(!isRunning()) {
@@ -146,21 +150,21 @@ public class TicTacToe extends Game implements Runnable {
     }
 
 
-    @Override
-    public void run() {
-        running.set(true);
-        Player p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.TTT);;
-        Player p2;
-        if(playType == PlayEnum.PVE) {
-            p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.TTT);
-        } else {
-            p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.TTT);
-        }
+    // @Override
+    // public void run() {
+    //     running.set(true);
+    //     Player p1 = PlayerFactory.createGUIPlayer("Frankenstein", GameEnum.TTT);;
+    //     Player p2;
+    //     if(playType == PlayEnum.PVE) {
+    //         p2 = PlayerFactory.createAIPlayer("Monster", GameEnum.TTT);
+    //     } else {
+    //         p2 = PlayerFactory.createGUIPlayer("Monster", GameEnum.TTT);
+    //     }
         
-        try {
-            start(p1, p2);
-        } catch (SetOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-    }
+    //     try {
+    //         start(p1, p2);
+    //     } catch (SetOutOfBoundsException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 }

@@ -1,7 +1,6 @@
 package player;
 
 import games.GameEnum;
-import gui.View;
 import player.inputBehaviour.*;
 
 public class PlayerFactory {
@@ -18,7 +17,7 @@ public class PlayerFactory {
                 inputGUI = new InputGUITTT();
                 break;
             case OTHELLO:
-                inputGUI =  new InputGUIOthello();
+                inputGUI = new InputGUIOthello();
                 break;
         }
 

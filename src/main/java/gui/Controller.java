@@ -1,9 +1,6 @@
 package gui;
 
-import games.Game;
-import games.GameStatus;
-import games.Othello;
-import games.TicTacToe;
+import games.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,10 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -160,6 +154,13 @@ public class Controller {
 
         VBox vbox = (VBox) mainWindow.getLeft();
         VBox spelerLijst = new VBox();
+
+        spelerLijst.setStyle("-fx-padding: 10;" +
+                "-fx-border-style: solid inside;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: blue;");
         vbox.getChildren().add(spelerLijst);
         View.spelerLijst = spelerLijst;
     }
@@ -170,6 +171,23 @@ public class Controller {
         } catch (IllegalStateException e) {
             View.illegalStateException();
         }
+    }
+
+    public void challengeConfirmation(String spelernaam) {
+        VBox vBox = (VBox) mainWindow.getLeft();
+        Button button = new Button();
+        button.setText("Klik om " + spelernaam + "\r\nuit te dagen.");
+        Label label = new Label("Klik om " + spelernaam + " uit te dagen.");
+        //deze actie moet challengen
+        button.setOnAction(e -> {
+            try {
+                networkManager.challengePlayer(spelernaam, GameEnum.OTHELLO);
+            } catch (IllegalStateException ex) {
+                View.illegalStateException();
+            }
+        });
+
+        vBox.getChildren().add(button);
     }
 
     public void setSpelerNaam(String spelernaam) {

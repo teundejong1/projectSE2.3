@@ -88,7 +88,7 @@ public abstract class Game {
      * @param two Player two
      * @throws SetOutOfBoundsException if a move is out of bounds
      */
-    public abstract void start(Player one, Player two) throws SetOutOfBoundsException;
+    public abstract void start(Player one, Player two) throws IllegalGameStateException;
 
     /**
      * Method used to do a move on the board
@@ -113,7 +113,11 @@ public abstract class Game {
      */
     public Board getBoard() {
         return board;
-    };
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
 
     /**
      * Method used to return the gamestatus
@@ -121,7 +125,7 @@ public abstract class Game {
      */
     public GameStatus getStatus() {
         return status;
-    };
+    }
 
     /**
      * Method used to get the current player
@@ -147,9 +151,4 @@ public abstract class Game {
         return running.get();
     }
 
-    /**
-     * Abstract method to start the game in a thread
-     * @throws SetOutOfBoundsException if a move set is out of bounds
-     */
-    public abstract void run () throws SetOutOfBoundsException  ;
 }
