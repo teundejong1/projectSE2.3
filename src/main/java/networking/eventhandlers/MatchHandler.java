@@ -60,7 +60,7 @@ public class MatchHandler implements Handler {
             }
                 });
 
-        System.out.println("DIKKE TESTINGS MAN WIHIIOOOOO");
+//        System.out.println("DIKKE TESTINGS MAN WIHIIOOOOO");
         try {
             gameManager.start();
         } catch (Exception e) { e.printStackTrace(); }

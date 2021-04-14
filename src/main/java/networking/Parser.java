@@ -33,7 +33,7 @@ public class Parser {
         String[] words = response.split(" ");
         String first = words[2];
         String second = words[3];
-        System.out.println(first);
+//        System.out.println(first);
 
         if (first.equalsIgnoreCase("MATCH")) handler = new MatchHandler();
         else if (first.equalsIgnoreCase("YOURTURN")) handler = new TurnHandler();

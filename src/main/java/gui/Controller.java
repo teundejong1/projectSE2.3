@@ -93,10 +93,10 @@ public class Controller {
         gameAnchor.getChildren().clear();
         Othello othello = null;
         if(playType == PlayEnum.ONLINEAI) {
-            othello = new Othello(PlayerType.ONE, playType, networkManager);
+            othello = (Othello) gm.getGame();
         }
         else if(playType == PlayEnum.ONLINEPLAYER){
-            othello = new Othello(PlayerType.ONE, playType, networkManager);
+            othello = (Othello) gm.getGame();
         }
         else if(playType == PlayEnum.PVE){
             Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.OTHELLO);

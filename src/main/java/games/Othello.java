@@ -342,6 +342,7 @@ public class Othello extends Game {
                     }
                     move = View.remoteMove;
                     View.remoteMoveSet = true;
+                    System.out.println("CHECK CHECK");
 
                 }
             } else {

@@ -228,7 +228,9 @@ public class View {
     }
 
     public static void challengeReceived(String uitdager, int challengeNummer) {
+//        System.out.println("Nog een print");
         NetworkManager networkManager = NetworkManager.getInstance("", 0);
+//        System.out.println("DOE HET");
 
         Group group = new Group();
         Label label = new Label("Je hebt een challenge van " + uitdager);
@@ -243,10 +245,11 @@ public class View {
             }
         });
         group.getChildren().add(button);
+//        System.out.println("zet er eens een print voor");
 
         Platform.runLater(() ->{Stage loginScherm = new Stage();
             loginScherm.setScene(new Scene(group));
-            loginScherm.setTitle("Je hebt een challenge, kut");
+            loginScherm.setTitle("Je hebt een challenge");
             loginScherm.show();});
     }
 
