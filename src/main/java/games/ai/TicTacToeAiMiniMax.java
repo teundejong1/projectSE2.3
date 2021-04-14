@@ -10,15 +10,22 @@ import player.PlayerType;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Teun de Jong
+ * Minimax class for TicTacToe
+ */
 public class TicTacToeAiMiniMax implements AI {
-
     Random random;
-
     public TicTacToeAiMiniMax() {
         super();
         this.random = new Random();
     }
 
+    /**
+     * Method used to get a move from the AI
+     * @param game the current game
+     * @return the best possible move
+     */
     @Override
     public Move getMove(Game game)   {
         System.out.println("HIERONDER DE WAARDE VAN BORD");
@@ -33,7 +40,12 @@ public class TicTacToeAiMiniMax implements AI {
         return bestMove;
     }
 
-
+    /**
+     * Method used to evaluate the current state of the game
+     * @param board the current board
+     * @param game the current game
+     * @return int, the higher the better
+     */
     public int evaluate(Board board, Game game) {
         Mark markSelf;
         Mark markOpponent;
@@ -85,6 +97,16 @@ public class TicTacToeAiMiniMax implements AI {
         return 0;
     }
 
+    /**
+     * Minimax method
+     * Find the best and worst possible moves
+     * @param board the current board
+     * @param depth how deep to go in the tree
+     * @param check Boolean if True get minimum, if false get maximum
+     * @param game the current game
+     * @return the best int
+     * @throws SetOutOfBoundsException
+     */
     public int minimax(Board board, int depth, Boolean check, Game game) throws SetOutOfBoundsException {
         Mark markSelf;
         Mark markOpponent;
@@ -136,6 +158,13 @@ public class TicTacToeAiMiniMax implements AI {
         }
     }
 
+    /**
+     * Method used to find the best move, uses the minimax method
+     * @param board the current board
+     * @param game the current game
+     * @return the best move
+     * @throws SetOutOfBoundsException if a move is out of bounds
+     */
     public Move findBestMove(Board board, Game game) throws SetOutOfBoundsException {
         Mark markSelf;
         Move bestMove = new Move(-1, -1);
@@ -147,7 +176,6 @@ public class TicTacToeAiMiniMax implements AI {
         }
 
         int best = -1000;
-
 
         for (int i = 0; i < board.getSize(); i++){
             for (int j = 0; j < board.getSize(); j ++){

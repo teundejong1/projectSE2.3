@@ -8,6 +8,9 @@ import player.Player;
 import player.PlayerFactory;
 import player.PlayerType;
 
+/**
+ * test class for playing the game in the CLI
+ */
 public class Main {
 
     public static void main(String[] args) {

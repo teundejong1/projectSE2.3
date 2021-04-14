@@ -24,11 +24,6 @@ public class PlayerFactory {
 
         return new ConcretePlayer(name, inputGUI);
     }
-
-    public static Player createGUIPlayer(String name) {
-        return new ConcretePlayer(name, new InputGUI());
-
-    }
     
     public static Player createCLIPlayer(String name) {
         return new ConcretePlayer(name, new InputCLI());
