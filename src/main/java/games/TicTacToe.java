@@ -41,7 +41,6 @@ public class TicTacToe extends Game implements Runnable {
         if (!board.isInBounds(x, y)) throw new IllegalMoveException("Out of bounds");
 
         if (!(board.getCell(x, y) == Mark.EMPTY)) throw new IllegalMoveException("Already occupied");
-
     }
 
     @Override
@@ -121,13 +120,21 @@ public class TicTacToe extends Game implements Runnable {
 
             try {
                 doMove(move, mark);
+                View.tttRefresh(this);
+
                 if (checkForWin()){
                     System.out.println(currentTurn + " has won!111!!!1@!");
+                    View.controller.showWinner(currentTurn.toString());
                     System.out.println(getBoard());
+                    View.tttRefresh(this);
 
                     status = GameStatus.WON;
                 }
-                else if (board.isFull()) status = GameStatus.DRAW;
+                else if (board.isFull()){
+                    status = GameStatus.DRAW;
+                    View.tttRefresh(this);
+
+                }
                 else changeTurn();
             } catch (IllegalMoveException e) {
                 e.printStackTrace();
