@@ -27,6 +27,8 @@ public class GameManager {
         return game;
     }
 
+    public void doNothing() {}
+
     public Player getPlayerOne() {
         return playerOne;
     }
