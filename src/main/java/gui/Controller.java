@@ -26,13 +26,16 @@ import networking.commands.GetPlayerlistCommand;
 import networking.states.IllegalStateException;
 import player.PlayEnum;
 import player.Player;
+import player.PlayerFactory;
 import player.PlayerType;
+import threadpool.ThreadPool;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class Controller {
@@ -82,6 +85,10 @@ public class Controller {
 
     public void setOthello(PlayEnum playType) {
         System.out.println("sets Othello");
+
+        GameManager gm = GameManager.getInstance();
+        ThreadPoolExecutor tpe = ThreadPool.getInstance();
+
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
         Othello othello;
@@ -91,31 +98,66 @@ public class Controller {
         else if(playType == PlayEnum.ONLINEPLAYER){
             othello = new Othello(PlayerType.ONE, playType, networkManager);
         }
-
+        else if(playType == PlayEnum.PVE){
+            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.OTHELLO);
+            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO);
+            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT,  p1, p2, PlayEnum.PVE);
+            try {
+                gm.start();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (playType == PlayEnum.PVP){
+            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO);
+            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO);
+            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT, p1, p2, PlayEnum.PVP );
+        }
         else {
-            othello = new Othello(PlayerType.ONE, playType);
+            System.out.println("HIER MAG JE NIET KOMEN");
         }
 
-        game = othello;
-        gameAnchor.getChildren().add(View.setOthello(othello));
-        gameThread = new Thread(othello);
-        gameThread.start();
+        gameAnchor.getChildren().add(View.setOthello((Othello) game));
+//        gameThread = new Thread(othello);
+//        gameThread.start();
     }
 
     public void setTTT(PlayEnum playType) {
+        GameManager gm = GameManager.getInstance();
+        ThreadPoolExecutor tpe = ThreadPool.getInstance();
+
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
         TicTacToe ticTacToe;
         if(playType == PlayEnum.ONLINEAI) {
             ticTacToe = new TicTacToe(PlayerType.ONE, playType, networkManager);
         }
-        else {
-            ticTacToe = new TicTacToe(PlayerType.ONE, playType);
+        else if(playType == PlayEnum.ONLINEPLAYER){
+            ticTacToe = new TicTacToe(PlayerType.ONE, playType, networkManager);
         }
-        game = ticTacToe;
-        gameAnchor.getChildren().add(View.setTTT(ticTacToe));
-        gameThread =  new Thread(ticTacToe);
-        gameThread.start();
+        else if(playType == PlayEnum.PVE){
+            Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT);
+            Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT);
+            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT,  p1, p2, PlayEnum.PVE);
+            try {
+                gm.start();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (playType == PlayEnum.PVP){
+            Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT);
+            Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.TTT);
+            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT, p1, p2, PlayEnum.PVP );
+        }
+        else {
+            System.out.println("HIER MAG JE NIET KOMEN");
+        }
+
+        gameAnchor.getChildren().add(View.setTTT((TicTacToe) game));
+
     }
 
     public void forfeit(ActionEvent actionEvent) throws IOException {
