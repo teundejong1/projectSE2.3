@@ -10,6 +10,13 @@ import player.PlayerType;
  */
 public class GameFactory {
 
+    /**
+     * Factory method
+     * @param startingPlayer the starting player
+     * @param game the game that needs to be created
+     * @param playType the playEnum of this game
+     * @return a new game 
+     */
     public static Game createGame(PlayerType startingPlayer, GameEnum game, PlayEnum playType) {
         switch (game) {
             case TTT: return new TicTacToe(startingPlayer, playType);
@@ -17,26 +24,5 @@ public class GameFactory {
             default: return null;
         }
     }
-
-    // TODO remove constructors, moove javadoc to createGame
-    // /**
-    //  * Method to create a tictactoe game
-    //  * @param startingPlayer the starting player
-    //  * @param playType the playEnum of this game
-    //  * @return a new TicTacToe game
-    //  */
-    // public static Game createTicTacToeGame(PlayerType startingPlayer, PlayEnum playType) {
-    //     return new TicTacToe(startingPlayer, playType);
-    // }
-
-    // /**
-    //  * Method used to create an Othello game
-    //  * @param startingPlayer the starting player
-    //  * @param playType the playEnum of this game
-    //  * @return a new Othello game
-    //  */
-    // public static Game createOthelloGame(PlayerType startingPlayer, PlayEnum playType) {
-    //     return new Othello(startingPlayer, playType);
-    // }
 
 }

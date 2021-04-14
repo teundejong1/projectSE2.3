@@ -1,5 +1,8 @@
 package games;
 
+/**
+ * @author Jeroen Lammersma
+ */
 public class IllegalGameStateException extends Exception {
     
     private static final long serialVersionUID = 7474711587716493464L;
