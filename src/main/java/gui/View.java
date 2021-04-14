@@ -95,9 +95,12 @@ public class View {
         });
         System.out.println("lijst gecleard");
         for (String speler:spelers) {
-            System.out.println("ik probeer nu " + speler);
+            Label label = new Label(speler);
+            label.setOnMouseClicked(e ->{
+                controller.challengeConfirmation(speler);
+            });
             Platform.runLater(() -> {
-                spelerLijst.getChildren().add(new Label(speler));
+                spelerLijst.getChildren().add(label);
             });
         }
     }

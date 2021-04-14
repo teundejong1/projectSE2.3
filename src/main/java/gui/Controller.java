@@ -1,9 +1,6 @@
 package gui;
 
-import games.Game;
-import games.GameStatus;
-import games.Othello;
-import games.TicTacToe;
+import games.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -167,6 +164,21 @@ public class Controller {
         } catch (IllegalStateException e) {
             View.illegalStateException();
         }
+    }
+
+    public void challengeConfirmation(String spelernaam) {
+        VBox vBox = (VBox) mainWindow.getLeft();
+        Label label = new Label("Klik om " + spelernaam + " uit te dagen.");
+        //deze actie moet challengen
+        label.setOnMouseClicked(e -> {
+            try {
+                networkManager.challengePlayer(spelernaam, GameEnum.OTHELLO);
+            } catch (IllegalStateException ex) {
+                View.illegalStateException();
+            }
+        });
+
+        vBox.getChildren().add(label);
     }
 
     public void setSpelerNaam(String spelernaam) {
