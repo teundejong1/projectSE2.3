@@ -13,6 +13,7 @@ import networking.eventhandlers.*;
 public class Parser {
 
     public static void parseResponse(String response) {
+        System.out.println("parsing");
         Handler handler = getHandler(response);
         if (handler != null) handler.handle(response);
         
@@ -33,6 +34,7 @@ public class Parser {
         String[] words = response.split(" ");
         String first = words[2];
         String second = words[3];
+        System.out.println(first);
 
         if (first.equalsIgnoreCase("MATCH")) handler = new MatchHandler();
         else if (first.equalsIgnoreCase("YOURTURN")) handler = new TurnHandler();

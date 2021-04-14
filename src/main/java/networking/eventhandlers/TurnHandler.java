@@ -13,6 +13,8 @@ import player.inputBehaviour.InputAI;
 public class TurnHandler implements Handler {
 
     public void handle(String response) {
+        System.out.println(response);
+        System.out.println("turn");
         Map<String, String> map = Parser.parseMap(response);
         System.out.println(map.get("YOURTURN"));
         View.ourTurn = true;

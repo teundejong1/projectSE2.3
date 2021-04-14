@@ -15,6 +15,7 @@ public class ResultHandler implements Handler {
     Map<String, String> map;
 
     public void handle(String response) {
+        System.out.println(response);
         networkManager.setState(new LoggedInState());
         map = Parser.parseMap(response);
 

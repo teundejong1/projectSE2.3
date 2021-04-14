@@ -13,6 +13,7 @@ public class ReceivedMoveHandler implements Handler {
     private Map<String, String> map;
 
     public void handle(String response) {
+        System.out.println(response);
         gameManager = GameManager.getInstance();
         map = Parser.parseMap(response);
         

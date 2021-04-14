@@ -325,8 +325,10 @@ public class Othello extends Game {
                     System.out.println("speler één is aan de beurt");
                     try {
                         move = one.requestMove(this);
-                    } catch (SetOutOfBoundsException sobe) {
-                        throw new IllegalGameStateException("Exception duruing one.requestMove", sobe);
+                        NetworkManager nManager = NetworkManager.getInstance("", 0);
+                        nManager.sendMove(move, board.getSize());
+                    } catch (SetOutOfBoundsException | IllegalStateException sobe) {
+                        throw new IllegalGameStateException("Exception during one.requestMove", sobe);
                     }
                     
                 } else {
@@ -339,6 +341,8 @@ public class Othello extends Game {
                         e.printStackTrace();
                     }
                     move = View.remoteMove;
+                    View.remoteMoveSet = true;
+
                 }
             } else {
                 try {
