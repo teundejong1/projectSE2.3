@@ -9,7 +9,7 @@ import games.GameEnum;
 public class ChallengePlayerCommand implements Command {
 
     private String opponent;
-    private GameEnum game;
+    private String game;
 
     /**
      * contructor 
@@ -18,7 +18,13 @@ public class ChallengePlayerCommand implements Command {
      */
     public ChallengePlayerCommand(String opponent, GameEnum game) {
         this.opponent = opponent;
-        this.game = game;
+        switch(game){
+            case OTHELLO:
+                this.game = "Reversi";
+                break;
+            case TTT:
+                this.game = "Tic-tac-toe";
+        }
     }
 
     /**
