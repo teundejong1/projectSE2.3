@@ -249,4 +249,8 @@ public class View {
             loginScherm.setTitle("Je hebt een challenge, kut");
             loginScherm.show();});
     }
+
+    public void setWinner(String winner){
+        controller.showWinner(winner);
+    }
 }

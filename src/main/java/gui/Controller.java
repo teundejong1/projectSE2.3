@@ -127,6 +127,9 @@ public class Controller {
         game.setRunning(false);
         gameThread.interrupt();
         setMenu();
+        Platform.runLater( () -> {
+            mainWindow.setTop(new Label(" "));
+        });
     }
 
 //    public void initLoggedInStatus() throws IOException{
@@ -194,5 +197,15 @@ public class Controller {
 
     public Game getGame() {
         return game;
+    }
+
+    public void showWinner(String winner){
+        Label label = new Label("Player " + winner + " has won");
+        label.setStyle("-fx-font-weight: bold");
+        label.setStyle("-fx-font: normal bold 30px 'serif' ");
+        Platform.runLater( () -> {
+            mainWindow.setTop(label);
+        }
+        );
     }
 }
