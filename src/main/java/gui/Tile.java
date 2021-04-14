@@ -92,11 +92,13 @@ public class Tile extends Rectangle {
                 setFill(normalColor);
             });
             setOnMouseReleased(e -> {
-                //placeholder actie
-                View.xwaarde = ywaarde;
-                View.ywaarde = xwaarde;
-
-                View.moveSet = true;
+                TicTacToe ticTacToe = (TicTacToe) this.game;
+                GameManager gm = GameManager.getInstance();
+                try {
+                    gm.doMove(new Move(ywaarde, xwaarde), ticTacToe.getCurrentTurn());
+                } catch (IllegalMoveException illegalMoveException) {
+                    illegalMoveException.printStackTrace();
+                }
             });
         } else if(game.getClass() == Othello.class) {
             setOnMouseEntered(e -> {
@@ -116,7 +118,11 @@ public class Tile extends Rectangle {
         for (Move move : othello.getPossibleMoves()) {
             if (move.getY() == xwaarde && move.getX() == ywaarde) {
                 System.out.println(othello.getCurrentTurn());
-//                    gm.doMove(move, othello.getCurrentTurn());
+                try {
+                    gm.doMove(move, othello.getCurrentTurn());
+                } catch (IllegalMoveException ex) {
+                    ex.printStackTrace();
+                }
 
                 View.moveSet = true;
             }

@@ -40,8 +40,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class Controller {
     NetworkManager networkManager;
+    GameManager gameManager;
     Game game;
-    Thread gameThread;
     String spelernaam;
 
     @FXML
@@ -86,26 +86,26 @@ public class Controller {
     public void setOthello(PlayEnum playType) {
         System.out.println("sets Othello");
 
-        GameManager gm = GameManager.getInstance();
+        gameManager = GameManager.getInstance();
         ThreadPoolExecutor tpe = ThreadPool.getInstance();
 
         forfeit.setVisible(true);
         gameAnchor.getChildren().clear();
         Othello othello = null;
         if(playType == PlayEnum.ONLINEAI) {
-            othello = (Othello) gm.getGame();
+            othello = (Othello) gameManager.getGame();
         }
         else if(playType == PlayEnum.ONLINEPLAYER){
-            othello = (Othello) gm.getGame();
+            othello = (Othello) gameManager.getGame();
         }
         else if(playType == PlayEnum.PVE){
             Player p1 = PlayerFactory.createAIPlayer("Player1", GameEnum.OTHELLO, PlayerType.ONE);
             Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO);
-            Game game = gm.createGame(PlayerType.ONE, GameEnum.OTHELLO,  p1, p2, PlayEnum.PVE);
+            Game game = gameManager.createGame(PlayerType.ONE, GameEnum.OTHELLO,  p1, p2, PlayEnum.PVE);
             othello = (Othello) game;
             gameAnchor.getChildren().add(View.setOthello(othello));
             try {
-                gm.start();
+                gameManager.start();
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -114,11 +114,11 @@ public class Controller {
         else if (playType == PlayEnum.PVP){
             Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.OTHELLO, PlayerType.ONE);
             Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.OTHELLO, PlayerType.TWO);
-            Game game = gm.createGame(PlayerType.ONE, GameEnum.OTHELLO, p1, p2, PlayEnum.PVP );
+            Game game = gameManager.createGame(PlayerType.ONE, GameEnum.OTHELLO, p1, p2, PlayEnum.PVP );
             othello = (Othello) game;
             gameAnchor.getChildren().add(View.setOthello(othello));
             try {
-                gm.start();
+                gameManager.start();
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -134,7 +134,7 @@ public class Controller {
     }
 
     public void setTTT(PlayEnum playType) {
-        GameManager gm = GameManager.getInstance();
+        gameManager = GameManager.getInstance();
         ThreadPoolExecutor tpe = ThreadPool.getInstance();
 
         forfeit.setVisible(true);
@@ -149,9 +149,10 @@ public class Controller {
         else if(playType == PlayEnum.PVE){
             Player p1 = PlayerFactory.createAIPlayer("AI", GameEnum.TTT, PlayerType.ONE);
             Player p2 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.TWO);
-            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT,  p1, p2, PlayEnum.PVE);
+            Game game = gameManager.createGame(PlayerType.ONE, GameEnum.TTT,  p1, p2, PlayEnum.PVE);
+            ticTacToe = (TicTacToe) game;
             try {
-                gm.start();
+                gameManager.start();
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -160,7 +161,15 @@ public class Controller {
         else if (playType == PlayEnum.PVP){
             Player p1 = PlayerFactory.createGUIPlayer("Player1", GameEnum.TTT, PlayerType.ONE);
             Player p2 = PlayerFactory.createGUIPlayer("Player2", GameEnum.TTT, PlayerType.TWO);
-            Game game = gm.createGame(PlayerType.ONE, GameEnum.TTT, p1, p2, PlayEnum.PVP );
+            Game game = gameManager.createGame(PlayerType.ONE, GameEnum.TTT, p1, p2, PlayEnum.PVP );
+            ticTacToe = (TicTacToe) game;
+            try {
+                gameManager.start();
+            } catch (IllegalGameStateException e) {
+                e.printStackTrace();
+            } catch (NotReadyException e) {
+                e.printStackTrace();
+            }
         }
         else {
             System.out.println("HIER MAG JE NIET KOMEN");
@@ -176,13 +185,9 @@ public class Controller {
          rekening houden met mogelijke andere spelers, verbinding verbreken
          mischien een popup maken die om bevestiging vraagt?
          */
-        game.setRunning(false);
-        System.out.println(gameThread);
-        gameThread.interrupt();
+
         setMenu();
-        Platform.runLater( () -> {
-            mainWindow.setTop(new Label(" "));
-        });
+        gameManager.forfeit();
     }
 
 //    public void initLoggedInStatus() throws IOException{

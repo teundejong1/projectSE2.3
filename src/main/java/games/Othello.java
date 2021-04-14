@@ -318,6 +318,7 @@ public class Othello extends Game {
         } catch (SetOutOfBoundsException sobe) {
             throw new IllegalGameStateException("Game init failed", sobe);
         }
+        View.othelloRefresh(this);
     }
 
 }

@@ -3,6 +3,7 @@ package games;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import games.board.Mark;
+import gui.View;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
@@ -34,6 +35,12 @@ public class GameManager {
         return game;
     }
 
+    /**
+     * For placing a move locally
+     * @param move
+     * @param type
+     * @throws IllegalMoveException
+     */
     public void doMove(Move move, PlayerType type) throws IllegalMoveException {
         Mark mark = Mark.ONE;
         if (type == PlayerType.TWO) {
@@ -41,6 +48,12 @@ public class GameManager {
         }
 
         game.doMove(move, mark);
+
+        if(game.getClass() == Othello.class) {
+            View.othelloRefresh(game);
+        } else if(game.getClass() == TicTacToe.class) {
+            View.tttRefresh(game);
+        }
 
 //        System.out.println(game.getBoard()); //  1 print
     }
@@ -73,7 +86,8 @@ public class GameManager {
     }
 
     public void forfeit() {
-        // hoe dit gebeurt hoeft gui niet te weten
+        //TODO set on loss if that's acceptable
+        game.setStatus(GameStatus.WON);
     }
 
     private boolean isGameReady() {
