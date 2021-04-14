@@ -18,7 +18,7 @@ public class PlayerFactory {
                 inputGUI = new InputGUITTT();
                 break;
             case OTHELLO:
-                inputGUI =  new InputGUIOthello();
+                inputGUI = new InputGUIOthello();
                 break;
         }
 
