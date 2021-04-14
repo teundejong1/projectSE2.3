@@ -2,6 +2,7 @@ package networking.eventhandlers;
 
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import games.Game;
 import games.GameEnum;
@@ -26,6 +27,12 @@ public class MatchHandler implements Handler {
     
     public void handle(String response) {
         System.out.println(response);
+
+//        try {
+//            TimeUnit.SECONDS.sleep(1);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         networkManager.setState(new PlayingState());
         System.out.println(networkManager.getState());
