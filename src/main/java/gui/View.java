@@ -85,17 +85,14 @@ public class View {
         Pane root = new Pane();
         root.setPrefSize(OTHELLO_SIZE * OTHELLO_SIZE, OTHELLO_SIZE * OTHELLO_SIZE);
         elements.getChildren().clear();
-        System.out.println("abortus");
         root.getChildren().addAll(elements);
         for(int y = 0; y < OTHELLO_SIZE; y++) {
-            System.out.println("rij");
             for (int x = 0; x < OTHELLO_SIZE; x++) {
                 // Tile Maken
                 Tile tile =  new Tile(x, y, othello);
                 elements.getChildren().add(tile);
             }
         }
-        System.out.println("kut-teun");
 //        skipButton = new Button();
 //        root.getChildren().add(skipButton);
 //        skipButton.setVisible(false);

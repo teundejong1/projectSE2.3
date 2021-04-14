@@ -181,18 +181,18 @@ public class Controller {
     }
 
     public void initGame(Game game){
-        System.out.println("clear");
-        
-        gameAnchor.getChildren().clear();
+        Platform.runLater(() -> {
+            gameAnchor.getChildren().clear();
+        });
+
         if(game.getClass() == TicTacToe.class) {
             gameAnchor.getChildren().add(View.setTTT((TicTacToe) game));
         } else {
-            System.out.println("nu echt");
             Othello othello = (Othello) game;
             Pane pane = (Pane) View.setOthello(othello);
-            System.out.println("de mensen zijn niet gelijk");
-            gameAnchor.getChildren().add(pane);
-            System.out.println("aangemaakt");
+            Platform.runLater(() -> {
+                gameAnchor.getChildren().add(pane);
+            });
         }
 
     }
