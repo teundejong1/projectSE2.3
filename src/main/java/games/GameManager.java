@@ -1,8 +1,11 @@
 package games;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
+import threadpool.ThreadPool;
 
 public class GameManager {
 
@@ -51,7 +54,16 @@ public class GameManager {
         if (!isPlayerOneReady()) throw new NotReadyException("PlayerOne is null");
         if (!isPlayerTwoReady()) throw new NotReadyException("PlayerTwo is null");
 
-        game.start(playerOne, playerTwo);
+        ThreadPoolExecutor executor = ThreadPool.getInstance();
+
+        executor.submit(() -> {
+            try {
+                game.start(playerOne, playerTwo);
+            } catch (IllegalGameStateException e) {
+                // Stop the game
+                e.printStackTrace();
+            }
+        });
     }
 
     private boolean isGameReady() {
