@@ -34,6 +34,7 @@ public class Parser {
 
     private static Handler getHandler(String response) {
         Handler handler = null;
+        System.out.println("response in parser: " + response);
         String[] words = response.split(" ");
         String first = words[2];
         String second = words[3];

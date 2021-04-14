@@ -19,6 +19,7 @@ public class ReceivedMoveHandler implements Handler {
         map = Parser.parseMap(response);
         System.out.println("BOARD NA RECEIVED MOVE: \n" + gameManager.getGame().getBoard());
         Move move = getMove();
+        System.out.println("MOVE : " + move);
         String player = getPlayer();
 
 //        if (player.equals(gameManager.getPlayerTwo().getName())) {

@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import games.board.Mark;
 import gui.View;
+import javafx.application.Platform;
 import player.PlayEnum;
 import player.Player;
 import player.PlayerType;
@@ -46,15 +47,20 @@ public class GameManager {
      * @throws IllegalMoveException
      */
     public void doMove(Move move, PlayerType type) throws IllegalMoveException {
+        System.out.println("Voor het stellen van de Mark");
         Mark mark = Mark.ONE;
         if (type == PlayerType.TWO) {
             mark = Mark.TWO;
         }
 
+        System.out.println("Voor de game.doMove");
         game.doMove(move, mark);
 
-        if(game.getClass() == Othello.class) {
-            View.othelloRefresh(game);
+        System.out.println("Na de game.doMove, voor de othelloRefresh.");
+
+        //if(game.getClass() == Othello.class) {
+        if (game instanceof Othello) {
+            Platform.runLater(() -> View.othelloRefresh(game));
         } else if(game.getClass() == TicTacToe.class) {
             View.tttRefresh(game);
         }

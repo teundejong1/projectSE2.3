@@ -235,8 +235,8 @@ public class View {
             });
         }
         int[] score = gameManager.getScore();
-        controller.setScore(PlayerType.ONE, score[0]);
-        controller.setScore(PlayerType.TWO, score[1]);
+//        controller.setScore(PlayerType.ONE, score[0]);
+//        controller.setScore(PlayerType.TWO, score[1]);
 //        System.out.println(game.getBoard());
 //        System.out.println("Size " + elements.getChildren().size());
     }
