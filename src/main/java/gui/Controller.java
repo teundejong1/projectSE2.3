@@ -186,7 +186,7 @@ public class Controller {
         });
 
         if(game.getClass() == TicTacToe.class) {
-            gameAnchor.getChildren().add(View.setTTT((TicTacToe) game));
+            Platform.runLater(() -> {gameAnchor.getChildren().add(View.setTTT((TicTacToe) game));});
         } else {
             Othello othello = (Othello) game;
             Pane pane = (Pane) View.setOthello(othello);
@@ -251,19 +251,29 @@ public class Controller {
 
     public void challengeConfirmation(String spelernaam) {
         VBox vBox = (VBox) mainWindow.getLeft();
-        Button button = new Button();
-        button.setText("Klik om " + spelernaam + "\r\nuit te dagen.");
-        Label label = new Label("Klik om " + spelernaam + " uit te dagen.");
+        Button othello = new Button();
+        othello.setText("Klik om met " + spelernaam + "\r\nothello te spelen.");
         //deze actie moet challengen
-        button.setOnAction(e -> {
+        othello.setOnAction(e -> {
             try {
                 networkManager.challengePlayer(spelernaam, GameEnum.OTHELLO);
             } catch (IllegalStateException ex) {
                 View.illegalStateException();
             }
         });
+        vBox.getChildren().add(othello);
+        Button ttt = new Button();
+        ttt.setText("Klik om met " + spelernaam + "\r\nTicTacToe te spelen.");
+        //deze actie moet challengen
+        ttt.setOnAction(e -> {
+            try {
+                networkManager.challengePlayer(spelernaam, GameEnum.TTT);
+            } catch (IllegalStateException ex) {
+                View.illegalStateException();
+            }
+        });
 
-        vBox.getChildren().add(button);
+        vBox.getChildren().add(ttt);
     }
 
     public void setSpelerNaam(String spelernaam) {
